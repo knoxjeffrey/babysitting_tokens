@@ -3,10 +3,12 @@
   margin: 20px 0;
   padding:30px;
 }
+
 .dp {
   border:10px solid #eee;
   transition: all 0.2s ease-in-out;
 }
+
 .dp:hover {
   border:2px solid #eee;
   transform:rotate(360deg);
@@ -14,6 +16,7 @@
   -webkit-transform:rotate(360deg);  
   /*-webkit-font-smoothing:antialiased;*/
 }
+
 .media-name {
   margin-top: 25px;
   font-size: 30px;
@@ -21,4 +24,12 @@
 
 .home-body {
   padding:30px;
+}
+
+.user_nights {
+  margin-top: 50px;
+}
+
+.other_nights {
+  margin-top: 50px;
 }
