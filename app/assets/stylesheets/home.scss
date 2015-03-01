@@ -1,29 +1,26 @@
-.media {
-  /*box-shadow:0px 0px 4px -2px #000;*/
-  margin: 20px 0;
-  padding:30px;
-}
-
-.dp {
-  border:10px solid #eee;
-  transition: all 0.2s ease-in-out;
-}
-
-.dp:hover {
-  border:2px solid #eee;
-  transform:rotate(360deg);
-  -ms-transform:rotate(360deg);  
-  -webkit-transform:rotate(360deg);  
-  /*-webkit-font-smoothing:antialiased;*/
-}
-
 .media-name {
   margin-top: 25px;
   font-size: 30px;
 }
 
 .home-body {
-  padding:30px;
+  padding-left:30px;
+  padding-right:30px;
+}
+
+.freedom-button {
+  white-space:normal !important;
+  -ms-word-break: break-all;
+
+  /* Be VERY careful with this, breaks normal words wh_erever */
+  word-break: break-all;
+
+  /* Non standard for webkit */
+  word-break: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 
 .user_nights {
