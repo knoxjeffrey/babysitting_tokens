@@ -1,0 +1,38 @@
+.home-body   
+  %ul{ class: "nav nav-pills pull-right" }
+    %li{ class: "active" }
+      %a{ href: "" }
+        %span Tokens
+        %span{ class: "badge" }20
+.row
+  .col-lg-5
+    .media
+      %a{class: "pull-left", href: "#"}
+        = image_tag("user-placeholder.png", class: "media-object dp img-circle", width: "100", height: "100")
+      .media-body
+        %h4{ class: "media-name" } Jeff Knox
+        
+.home-body       
+  %section.register.container
+    .row
+      .col-sm-10.col-sm-offset-1
+        %form.form-horizontal
+          %header
+            %h1 Your Day Of Freedom
+            %br
+          %fieldset
+            .form-group
+              %label.control-label.col-sm-2 Date
+              .col-sm-6
+                %input.form-control(type="date")
+            .form-group
+              %label.control-label.col-sm-2 Start
+              .col-sm-6
+                %input.form-control(type="time")
+            .form-group
+              %label.control-label.col-sm-2 End
+              .col-sm-6
+                %input.form-control(type="time")
+          %fieldset.actions.control-group.col-sm-offset-2
+            .controls
+              %input(type="submit" value="Freedom!" class="btn btn-success")
