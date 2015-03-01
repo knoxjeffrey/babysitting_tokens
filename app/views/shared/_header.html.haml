@@ -1,24 +1,24 @@
 .navbar.navbar-default
   .container-fluid
     .navbar-header
-      %button{type: "button", class: "navbar-toggle collapsed", 'data-toggle' => "collapse", 'data-target' => "#bs-example-navbar-collapse-2"}
-        %span{ class: "sr-only" } Toggle navigation
-        %span{ class: "icon-bar" }
-        %span{ class: "icon-bar" }
-        %span{ class: "icon-bar" }
+      - if logged_in?
+        %button{type: "button", class: "navbar-toggle collapsed", 'data-toggle' => "collapse", 'data-target' => "#bs-example-navbar-collapse-2"}
+          %span{ class: "sr-only" } Toggle navigation
+          %span{ class: "icon-bar" }
+          %span{ class: "icon-bar" }
+          %span{ class: "icon-bar" }
       %a{ class: "navbar-brand", href: "/" } 
         %span Freedom Tokens
         %span= image_tag("glyphicons-38-coins@3x.png", class: 'tokens', alt: "tokens", width: "25", height: "25")
     
-    .collapse.navbar-collapse#bs-example-navbar-collapse-2
-      %ul 
-        .nav.navbar-nav.navbar-right
-          %li.dropdown
-            %a{ href: "#", class: "dropdown-toggle", 'data-toggle' => "dropdown", role: "button", 'aria-expanded' => "false" } 
-              Dropdown 
-              %span{ class: "caret" }
-            %ul{ class: "dropdown-menu", role: "menu" }
-              %li
-                %a{ href: "#" }Action
-              %li
-                %a{ href: "#" }Another action
+    - if logged_in?
+      .collapse.navbar-collapse#bs-example-navbar-collapse-2
+        %ul 
+          .nav.navbar-nav.navbar-right
+            %li.dropdown
+              %a{ href: "#", class: "dropdown-toggle", 'data-toggle' => "dropdown", role: "button", 'aria-expanded' => "false" } 
+                Welcome, #{current_user.full_name} 
+                %span{ class: "caret" }
+              %ul{ class: "dropdown-menu", role: "menu" }
+                %li
+                  %a{ href: "/sign_out" }Sign Out

@@ -10,6 +10,7 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
 gem 'bcrypt'
+gem 'bootstrap_form'
 
 group :development do
   gem 'thin'
@@ -20,7 +21,7 @@ end
 group :development, :test do
   gem 'pry'
   gem 'pry-nav'
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails', '~> 3.1'
   gem 'faker', '~> 1.4.3'
 end
 
