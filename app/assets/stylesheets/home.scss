@@ -1,0 +1,32 @@
+.media-name {
+  margin-top: 25px;
+  font-size: 30px;
+}
+
+.home-body {
+  padding-left:30px;
+  padding-right:30px;
+}
+
+.freedom-button {
+  white-space:normal !important;
+  -ms-word-break: break-all;
+
+  /* Be VERY careful with this, breaks normal words wh_erever */
+  word-break: break-all;
+
+  /* Non standard for webkit */
+  word-break: break-word;
+
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+.user_nights {
+  margin-top: 50px;
+}
+
+.other_nights {
+  margin-top: 50px;
+}
