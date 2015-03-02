@@ -15,7 +15,7 @@
 .home-body       
   .row
     .col-lg-5
-      %a{ href: "", class: "freedom-button btn btn-success btn-lg btn-block" }Pick Your Next Day Of Freedom
+      %a{ href: my_request_path, class: "freedom-button btn btn-success btn-lg btn-block" }Pick Your Next Day Of Freedom
      
   .row
     .col-lg-5
@@ -30,12 +30,10 @@
                   %th Date
                   %th Status
               %tbody
-                %tr{ class: 'warning'}
-                  %td 27/02/2015
-                  %td Waiting...
-                %tr{ class: 'success'}
-                  %td 25/04/2015
-                  %td Accepted
+                - @user_requests.each do |user_request|
+                  %tr{ class: row_color(user_request.status) }
+                    %td= display_friendly_date(user_request.start)
+                    %td= user_request.status
                 
     .col-lg-6.col-lg-offset-1
       .other_nights
@@ -49,18 +47,9 @@
                   %th Name
                   %th Date
               %tbody
-                %tr
-                  %td Lisa McKibbon
-                  %td 01/04/2015
-                  %td
-                    %a{ href: "#", class: "btn btn-success btn-xs" }Open
-                %tr
-                  %td Rachel Macauley
-                  %td 06/04/2015
-                  %td
-                    %a{ href: "#", class: "btn btn-success btn-xs" }Open
-                %tr
-                  %td Peter Lord
-                  %td 21/04/2015
-                  %td
-                    %a{ href: "#", class: "btn btn-success btn-xs" }Open
+                - @friend_requests.each do |friend_request|
+                  %tr
+                    %td= friend_request.user.full_name
+                    %td= display_friendly_date(friend_request.start)
+                    %td
+                      %a{ href: "#", class: "btn btn-success btn-xs" }Open

@@ -7,8 +7,13 @@ class User < ActiveRecord::Base
   
   has_secure_password validations: false
   
+  def requests_except_complete
+    self.requests.where.not(status: 'complete')
+  end
+  
   def friend_requests
-    Request.where.not(user_id: self).order('start ASC')
+    requests = Request.where(status: 'waiting')
+    requests.where.not(user_id: self).order('start ASC')
   end
   
 end

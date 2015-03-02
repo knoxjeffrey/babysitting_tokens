@@ -2,6 +2,7 @@ Rails.application.routes.draw do
  root to: 'pages#index'
  
  get '/home', to: 'requests#index'
+ get '/my_request', to: 'requests#new'
  
  get '/register', to: 'users#new'
  
