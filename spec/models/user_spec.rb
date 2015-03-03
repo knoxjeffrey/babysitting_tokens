@@ -12,11 +12,9 @@ describe User do
   
   it { should validate_length_of(:password).is_at_least(5) } 
   
-  it "has a default status value of waiting" do
+  it "has a default of 20 tokens" do
     user1 = object_generator(:user)
-    new_request = object_generator(:request)
-    
-    expect(new_request.status).to eq('waiting')
+    expect(user1.tokens).to eq(20)
   end
   
   describe :requests_except_complete do
@@ -38,6 +36,27 @@ describe User do
       request3 = object_generator(:request, user: friend_user, status: 'accepted')
       
       expect(current_user.friend_requests).to eq([request2])
+    end
+  end
+  
+  describe :has_insufficient_tokens? do
+    it "returns true if user does not have enough tokens for request" do 
+      current_user = object_generator(:user)
+      current_user.tokens = 0
+      request1 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: current_user)
+      
+      expect(current_user.has_insufficient_tokens?(request1)).to be true
+    end
+  end
+  
+  describe :add_tokens do
+    it "adds tokens to the current user" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user)
+      current_user.add_tokens(request1)
+      
+      expect(current_user.tokens).to eq(23)
     end
   end
   

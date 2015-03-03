@@ -16,4 +16,27 @@ class User < ActiveRecord::Base
     requests.where.not(user_id: self).order('start ASC')
   end
   
+  def has_insufficient_tokens?(request)
+    if request.user.tokens < tokens_for_request(request)
+      true
+    else
+      subtract_tokens(request)
+      false
+    end
+  end
+  
+  def add_tokens(request)
+    updated_tokens = self.tokens + tokens_for_request(request)
+    self.update_attribute(:tokens, updated_tokens)
+  end
+  
+  def tokens_for_request(request)
+    ((request.finish - request.start) / 1.hour).round
+  end
+  
+  def subtract_tokens(request)
+    updated_tokens = self.tokens - tokens_for_request(request)
+    self.update_attribute(:tokens, updated_tokens)
+  end
+  
 end

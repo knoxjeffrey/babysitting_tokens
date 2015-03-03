@@ -90,7 +90,7 @@ describe RequestsController do
       
       context "with valid user input" do
         before do   
-          post :create, request: generate_attributes_for(:request, start: 3.days.from_now, finish: 4.days.from_now)
+          post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00")
         end
     
         it "creates a new request" do
@@ -109,12 +109,35 @@ describe RequestsController do
           expect(response).to redirect_to home_path
         end
         
+        it "removes tokens from friend of current user" do
+          expect(current_user.tokens).to eq(17)
+        end
+        
       end
       
-      context "with user not having enough tokens" do
-        it "does not create a new request"
-        it "renders the my_request_path"
-        it "sets @request"
+      context "with user having insufficient tokens" do
+        
+        before do 
+          current_user.tokens = 1
+          post :create, request: generate_attributes_for(:request, start: 3.days.from_now, finish: 4.days.from_now)
+        end
+        
+        it "does not create a new request" do
+          expect(Request.count).to eq(0)
+        end
+        
+        it "generates a warning flash message" do
+          expect(flash[:danger]).to be_present
+        end
+        
+        it "redirect to my_request_path" do
+          expect(response).to redirect_to my_request_path
+        end
+        
+        it "sets @request" do
+          expect(assigns(:request)).to be_new_record
+        end
+        
       end
       
       context "with invalid user input" do
@@ -173,7 +196,7 @@ describe RequestsController do
     context "with authenticated user" do
       
       let(:friend_user) { object_generator(:user) }
-      let(:request1) { object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user) }
+      let(:request1) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user) }
       
       before { set_current_user_session }
       
@@ -192,8 +215,11 @@ describe RequestsController do
         expect(response).to redirect_to home_path
       end
       
-      it "adds tokens to current user"
-      it "removes tokens from friend of current user"
+      it "adds tokens to current user" do
+        put :update, id: request1
+        expect(current_user.tokens).to eq(23)
+      end
+    
     end
     
     context "with unauthenticated user" do
