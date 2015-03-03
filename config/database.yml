@@ -3,14 +3,14 @@ development:
   encoding: unicode
   database: freedom_tokens_development
   pool: 5
-  username: knoxjeffrey
-  password: 
+  username: <%= ENV['freedom_token_username'] %>
+  password: <%= ENV['freedom_token_password'] %>
 
 test:
   adapter: postgresql
   encoding: unicode
   database: freedom_tokens_test
   pool: 5
-  username: knoxjeffrey
-  password: 
+  username: <%= ENV['freedom_token_username'] %>
+  password: <%= ENV['freedom_token_password'] %>
 
