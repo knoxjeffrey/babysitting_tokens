@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'bcrypt'
 gem 'bootstrap_form'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 
 group :development do
   gem 'thin'

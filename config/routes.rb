@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
  root to: 'pages#index'
  
- get '/home', to: 'pages#temp'
+ get '/home', to: 'requests#index'
+ get '/my_request', to: 'requests#new'
  
  get '/register', to: 'users#new'
  
@@ -11,5 +12,8 @@ Rails.application.routes.draw do
  
  get 'ui(/:action)', controller: 'ui'
  
- resources :users
+ resources :users, only: [:create]
+ 
+ resources :requests
+ 
 end

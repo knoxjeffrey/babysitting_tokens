@@ -1,0 +1,25 @@
+.home-body   
+  %ul{ class: "nav nav-pills pull-right" }
+    %li{ class: "active" }
+      %a{ href: "" }
+        %span Tokens
+        %span{ class: "badge" } #{ current_user.tokens }
+        
+= render 'shared/profile'
+    
+.home-body       
+  %section.register.container
+    .row
+      .col-sm-6.col-sm-offset-1
+        = bootstrap_form_for @request do |f|
+          %header
+            %h1 Your Day Of Freedom
+          %br
+          = f.text_field :start, { data: { date_format: 'DD/MM/YYYY HH:mm' }, id: 'datetimepicker1' }
+          = f.text_field :finish, { data: { date_format: 'DD/MM/YYYY HH:mm' }, id: 'datetimepicker2' }
+          = f.submit "Freedom", class: "btn btn-success"
+      :javascript
+        $(function () {
+          $('#datetimepicker1').datetimepicker();
+          $('#datetimepicker2').datetimepicker();
+        });
