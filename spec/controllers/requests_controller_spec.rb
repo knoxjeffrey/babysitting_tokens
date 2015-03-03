@@ -111,6 +111,12 @@ describe RequestsController do
         
       end
       
+      context "with user not having enough tokens" do
+        it "does not create a new request"
+        it "renders the my_request_path"
+        it "sets @request"
+      end
+      
       context "with invalid user input" do
 
         before do 
@@ -162,20 +168,41 @@ describe RequestsController do
     end
   end
   
-  describe "POST update" do
+  describe "PUT update" do
     
     context "with authenticated user" do
+      
+      let(:friend_user) { object_generator(:user) }
+      let(:request1) { object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user) }
+      
+      before { set_current_user_session }
+      
       it "changes the status from waiting to accepted" do
-        set_current_user_session
-        friend_user = object_generator(:user)
-        request1 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user)
+        put :update, id: request1
+        expect(friend_user.requests.first.status).to eq('accepted')
       end
       
-      it "redirects to home_page"
+      it "generates a successful flash message" do
+        put :update, id: request1
+        expect(flash[:success]).to be_present
+      end
+      
+      it "redirects to home_page" do
+        put :update, id: request1
+        expect(response).to redirect_to home_path
+      end
+      
+      it "adds tokens to current user"
+      it "removes tokens from friend of current user"
     end
     
     context "with unauthenticated user" do
+      let(:friend_user) { object_generator(:user) }
+      let(:request1) { object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user) }
       
+      it_behaves_like "require_sign_in" do
+        let(:action) { put :update, id: request1 }
+      end
     end
     
   end

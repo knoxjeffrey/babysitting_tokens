@@ -14,7 +14,7 @@ User.create(email: 'peterlord@hotmail.com', password: 'password', full_name: "Pe
 
 Request.create(user_id: 1, start: DateTime.new(2015, 03, 17, 19, 00, 0), finish: DateTime.new(2015, 03, 17, 22, 00, 0), status: 'accepted')
 Request.create(user_id: 1, start: DateTime.new(2015, 04, 02, 18, 00, 0), finish: DateTime.new(2015, 04, 02, 23, 00, 0), status: 'waiting')
-Request.create(user_id: 2, start: DateTime.new(2015, 03, 21, 19, 00, 0), finish: DateTime.new(2015, 03, 19, 22, 00, 0), status: 'waiting')
+Request.create(user_id: 2, start: DateTime.new(2015, 03, 21, 19, 00, 0), finish: DateTime.new(2015, 03, 21, 22, 00, 0), status: 'waiting')
 Request.create(user_id: 3, start: DateTime.new(2015, 03, 23, 19, 00, 0), finish: DateTime.new(2015, 03, 23, 22, 00, 0), status: 'waiting')
 Request.create(user_id: 4, start: DateTime.new(2015, 03, 25, 19, 00, 0), finish: DateTime.new(2015, 03, 25, 22, 00, 0), status: 'waiting')
 Request.create(user_id: 5, start: DateTime.new(2015, 03, 30, 19, 00, 0), finish: DateTime.new(2015, 03, 30, 22, 00, 0), status: 'accepted')

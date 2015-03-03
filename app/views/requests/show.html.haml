@@ -4,7 +4,7 @@
 .row
   .col-lg-4
     .media
-      %a{class: "pull-left", href: "#"}
+      %a{class: "pull-left", href: ""}
         = image_tag("user-placeholder.png", class: "media-object dp img-circle", width: "100", height: "100")
       .media-body
         %h4{ class: "media-name" } #{ @request.user.full_name }
@@ -30,4 +30,4 @@
                 %td 4
   
   .col-lg-2              
-    %a{ href: "#", class: "accept btn btn-success btn-lg" }Accept
+    = button_to "Accept", {controller: :requests, action: :update}, {:method => :put, class: "accept btn btn-success btn-lg" }
