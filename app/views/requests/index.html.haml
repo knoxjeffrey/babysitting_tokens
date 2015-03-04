@@ -48,3 +48,10 @@
                     %td= display_friendly_date(friend_request.start)
                     %td
                       %a{ href: request_path(friend_request), class: "btn btn-success btn-xs" }Open
+
+.home-body                      
+  - if @next_babysitting_info.present?
+    .col-lg-12
+      .alert.alert-dismissible.alert-danger
+        You next have to babysit on:
+        = display_next_baby_sitting_date_info(@next_babysitting_info)

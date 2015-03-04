@@ -198,26 +198,29 @@ describe RequestsController do
       let(:friend_user) { object_generator(:user) }
       let(:request1) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user) }
       
-      before { set_current_user_session }
+      before do 
+        set_current_user_session
+        put :update, id: request1
+      end
       
       it "changes the status from waiting to accepted" do
-        put :update, id: request1
         expect(friend_user.requests.first.status).to eq('accepted')
       end
       
       it "generates a successful flash message" do
-        put :update, id: request1
         expect(flash[:success]).to be_present
       end
       
       it "redirects to home_page" do
-        put :update, id: request1
         expect(response).to redirect_to home_path
       end
       
       it "adds tokens to current user" do
-        put :update, id: request1
         expect(current_user.tokens).to eq(23)
+      end
+      
+      it "adds the current user to babysitter_id column" do
+        expect(friend_user.requests.first.babysitter_id).to eq(current_user.id)
       end
     
     end

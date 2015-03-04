@@ -9,11 +9,15 @@ feature "user accepts date for freedom" do
   end
   
   scenario "user presses accept button" do
-    expect(page).to have_content("Mar 17th, 2015")
+    expect_page_to_have_open_button
     press_open_button
     press_accept_button
-    expect(current_path).to eq(home_path)
-    expect(page).not_to have_content("Mar 17th, 2015")
+    expect_current_path_to_be_home_path
+    expect_page_not_to_have_open_button
+  end
+  
+  def expect_page_to_have_open_button
+    expect(page).to have_content("Open")
   end
   
   def press_open_button
@@ -22,6 +26,14 @@ feature "user accepts date for freedom" do
   
   def press_accept_button
     click_button "Accept"
+  end
+  
+  def expect_current_path_to_be_home_path
+    expect(current_path).to eq(home_path)
+  end
+  
+  def expect_page_not_to_have_open_button
+    expect(page).not_to have_content("Open")
   end
   
 end
