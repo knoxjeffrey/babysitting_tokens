@@ -4,6 +4,7 @@ class RequestsController < ApplicationController
   def index
     @user_requests = current_user.requests_except_complete
     @friend_requests = current_user.friend_requests
+    @next_babysitting_info = Request.babysitting_info(current_user)
   end
   
   def new
@@ -31,6 +32,7 @@ class RequestsController < ApplicationController
   def update
     @request = Request.find(params[:id])
     update_status
+    update_babysitter_id
     add_tokens_to_current_user
     flash[:success] = "Well done, you've given a friend freedom!"
     redirect_to home_path
@@ -53,6 +55,10 @@ class RequestsController < ApplicationController
   
   def update_status
     @request.update_attribute(:status, 'accepted')
+  end
+  
+  def update_babysitter_id
+    @request.update_attribute(:babysitter_id, current_user.id)
   end
   
   def add_tokens_to_current_user

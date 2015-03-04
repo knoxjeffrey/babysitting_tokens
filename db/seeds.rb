@@ -18,5 +18,5 @@ Request.create(user_id: 2, start: DateTime.new(2015, 03, 21, 19, 00, 0), finish:
 Request.create(user_id: 3, start: DateTime.new(2015, 03, 23, 19, 00, 0), finish: DateTime.new(2015, 03, 23, 22, 00, 0), status: 'waiting')
 Request.create(user_id: 4, start: DateTime.new(2015, 03, 25, 19, 00, 0), finish: DateTime.new(2015, 03, 25, 22, 00, 0), status: 'waiting')
 Request.create(user_id: 5, start: DateTime.new(2015, 03, 30, 19, 00, 0), finish: DateTime.new(2015, 03, 30, 22, 00, 0), status: 'accepted')
-Request.create(user_id: 1, start: DateTime.new(2015, 04, 25, 17, 00, 0), finish: DateTime.new(2015, 04, 25, 23, 00, 0), status: 'complete')
+Request.create(user_id: 1, start: DateTime.new(2015, 04, 25, 17, 00, 0), finish: DateTime.new(2015, 04, 25, 23, 00, 0), status: 'complete', babysitter_id: 2)
 Request.create(user_id: 2, start: DateTime.new(2015, 04, 05, 18, 00, 0), finish: DateTime.new(2015, 04, 05, 22, 00, 0), status: 'complete')
