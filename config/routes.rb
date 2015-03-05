@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
- root to: 'pages#index'
  
  get '/home', to: 'requests#index'
  get '/my_request', to: 'requests#new'
@@ -10,10 +9,11 @@ Rails.application.routes.draw do
  post '/sign_in', to: 'sessions#create'
  get '/sign_out', to: 'sessions#destroy'
  
- get 'ui(/:action)', controller: 'ui'
- 
  resources :users, only: [:create]
  
- resources :requests
+ resources :requests, only: [:create, :show, :update]
+ 
+ root to: 'pages#index'
+ get 'ui(/:action)', controller: 'ui'
  
 end
