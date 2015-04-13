@@ -10,6 +10,7 @@ describe RequestsController do
       
       let!(:request1) { object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: current_user) }
       let!(:request2) { object_generator(:request, start: 2.days.from_now, finish: 3.days.from_now, user: current_user) }
+      let(:group) { object_generator(:group, user: current_user)}
       
       it "assigns @user_requests" do
         get :index
@@ -52,6 +53,21 @@ describe RequestsController do
         get :index
         
         expect(assigns(:friend_requests)).to eq([request4])
+      end
+      
+      it "only shows friend requests for people in the users group" do
+        friend_user = object_generator(:user)
+        stranger_user = object_generator(:user)
+        request3 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user)
+        request4 = object_generator(:request, start: 2.days.from_now, finish: 3.days.from_now, user: stranger_user)
+        get :index
+        
+        expect(assigns(:friend_requests)).to eq([request3])
+      end
+      
+      it "assigns @user_groups" do
+        get :index
+        expect(assigns(:user_groups)).to match_array([group])
       end
       
     end

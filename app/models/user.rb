@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :requests, -> { order start: :asc }
+  has_many :groups
   
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: {minimum: 5}

@@ -9,9 +9,13 @@ Rails.application.routes.draw do
  post '/sign_in', to: 'sessions#create'
  get '/sign_out', to: 'sessions#destroy'
  
+ get '/new_group', to: 'groups#new'
+ 
  resources :users, only: [:create]
  
  resources :requests, only: [:create, :show, :update]
+ 
+ resources :groups, only: [:create]
  
  root to: 'pages#index'
  get 'ui(/:action)', controller: 'ui'

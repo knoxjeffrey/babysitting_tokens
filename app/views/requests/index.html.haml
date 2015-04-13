@@ -9,11 +9,11 @@
         
 .home-body       
   .row
-    .col-lg-5
-      %a{ href: my_request_path, class: "freedom-button btn btn-success btn-lg btn-block" }Pick Your Next Day Of Freedom
+    .col-lg-3
+      %a{ href: my_request_path, class: "freedom-button btn btn-success btn-md btn-block" }Pick Your Next Day Of Freedom
      
   .row
-    .col-lg-5
+    .col-lg-3
       .user_nights
         .panel.panel-primary
           .panel-heading
@@ -30,7 +30,7 @@
                     %td= display_friendly_date(user_request.start)
                     %td= user_request.status
                 
-    .col-lg-6.col-lg-offset-1
+    .col-lg-5
       .other_nights
         .panel.panel-primary
           .panel-heading
@@ -48,6 +48,26 @@
                     %td= display_friendly_date(friend_request.start)
                     %td
                       %a{ href: request_path(friend_request), class: "btn btn-success btn-xs" }Open
+                      
+    .col-lg-4
+      .user_circles
+        .panel.panel-primary
+          .panel-heading
+            %h3{ class: 'panel-title' } Babysitting Groups
+          .panel-body
+            %table{ class: "table table-striped table-hover" }
+              %thead
+                %tr
+                  %th Name
+                  %th Tokens
+              %tbody
+                - @user_groups.each do |user_group|
+                  %tr
+                    %td= user_group.group_name
+                    %td= 100000
+                    %td
+                      %a{ href: "#", class: "btn btn-success btn-xs" }Details
+            %a{ href: new_group_path, class: "btn btn-success btn-xs" }Create New Circle
 
 .home-body                      
   - if @next_babysitting_info.present?

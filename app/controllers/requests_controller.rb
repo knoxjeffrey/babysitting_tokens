@@ -4,6 +4,7 @@ class RequestsController < ApplicationController
   def index
     @user_requests = current_user.requests_except_complete
     @friend_requests = current_user.friend_requests
+    @user_groups = current_user.groups
     @next_babysitting_info = Request.babysitting_info(current_user)
   end
   
