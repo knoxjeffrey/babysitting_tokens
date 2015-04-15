@@ -3,9 +3,13 @@ require 'spec_helper'
 feature "user accepts date for freedom" do
   
   background do
+    current_user = object_generator(:user)
     friend_user = object_generator(:user)
-    request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user)
-    sign_in_user
+    group = object_generator(:group)
+    group_member1 = object_generator(:user_group, user: current_user, group: group) 
+    group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+    request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id)
+    sign_in_user(current_user)
   end
   
   scenario "user presses accept button" do
