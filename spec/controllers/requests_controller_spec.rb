@@ -227,7 +227,7 @@ describe RequestsController do
           end
         end
         
-        context "when the user is a member of more than one group" do
+        context "when the user is a member of more than one group and has insufficient tokens for at least one group request" do
           let!(:group2) { object_generator(:group, admin: current_user) }
           let!(:group_membe2) { object_generator(:user_group, user: current_user, group: group2, tokens: 50) }
           
@@ -253,34 +253,7 @@ describe RequestsController do
         end
         
       end
-      
-      
-=begin      
-      context "with user having insufficient tokens" do
-        
-        before do 
-          current_user.tokens = 1
-          post :create, request: generate_attributes_for(:request, start: 3.days.from_now, finish: 4.days.from_now)
-        end
-        
-        it "does not create a new request" do
-          expect(Request.count).to eq(0)
-        end
-        
-        it "generates a warning flash message" do
-          expect(flash[:danger]).to be_present
-        end
-        
-        it "redirect to my_request_path" do
-          expect(response).to redirect_to my_request_path
-        end
-        
-        it "sets @request" do
-          expect(assigns(:request)).to be_new_record
-        end
-        
-      end
-=end     
+          
       context "with invalid user input" do
         
         let!(:group) { object_generator(:group, admin: current_user) }

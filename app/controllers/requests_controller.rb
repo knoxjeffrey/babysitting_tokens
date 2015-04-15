@@ -16,11 +16,11 @@ class RequestsController < ApplicationController
     @request = current_user.requests.build(request_params)
     if @request.valid?
       if insufficient_tokens?
-        flash.now[:danger] = "Sorry, you don't have enough freedom tokens"
+        flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups"
         render :new
       else
         @request.save
-        subtract_tokens_from_each_group
+        subtract_tokens_from_each_group_selected
         flash[:success] = "You successfully created your request for freedom!"
         redirect_to home_path
       end
@@ -56,15 +56,15 @@ class RequestsController < ApplicationController
   end
   
   def insufficient_tokens?
-    current_user.has_insufficient_tokens?(array_of_groups_selected, @request)
+    current_user.has_insufficient_tokens?(array_of_group_ids_selected, @request)
   end
   
-  def array_of_groups_selected
+  def array_of_group_ids_selected
     request_params[:group_ids].reject { |string| string.empty? }
   end
   
-  def subtract_tokens_from_each_group
-    current_user.subtract_tokens(array_of_groups_selected, @request)
+  def subtract_tokens_from_each_group_selected
+    current_user.subtract_tokens(array_of_group_ids_selected, @request)
   end
   
   def update_status

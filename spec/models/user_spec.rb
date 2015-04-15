@@ -57,7 +57,6 @@ describe User do
       expect(current_user.friend_requests).to eq([request2, request1])
     end
     
-    it "only returns requests for groups in which friend has enough tokens"
   end
   
   describe :has_insufficient_tokens? do
@@ -72,8 +71,40 @@ describe User do
     end
   end
   
+  describe :subtract_tokens do
+    
+    let!(:current_user) { object_generator(:user) }
+    let!(:group) { object_generator(:group) }
+    let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
+    
+    context "when user belongs to one group" do
+      
+      it "removes tokens from the current user for that group" do
+        request = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id)
+        current_user.subtract_tokens([group.id], request)
+        
+        expect(current_user.user_groups.first.tokens).to eq(17)
+      end
+      
+    end
+    
+    context "when user belong to nore than one group" do
+      
+      it "removes tokens from the current user for all groups" do
+        group2 = object_generator(:group)
+        group_member2 = object_generator(:user_group, user: current_user, group: group2)
+        request = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id])
+        current_user.subtract_tokens([group.id, group2.id], request)
+        
+        tokens_array = current_user.user_groups.map { |group| group.tokens }
+        expect(tokens_array.sum).to eq(34)
+      end
+    end
+    
+  end
+  
   describe :add_tokens do
-    it "adds tokens to the current user" do
+    it "adds tokens to the user" do
       current_user = object_generator(:user)
       friend_user = object_generator(:user)
       group = object_generator(:group)

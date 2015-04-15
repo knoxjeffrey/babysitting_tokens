@@ -40,12 +40,12 @@ class User < ActiveRecord::Base
     updated_tokens = self.user_groups.first.tokens + tokens_for_request(request)
     self.user_groups.first.update_attribute(:tokens, updated_tokens)
   end
+    
+  private
   
   def tokens_for_request(request)
     ((request.finish - request.start) / 1.hour).round
   end
-  
-  private
   
   def all_requests_from_current_users_groups
     group_ids = self.group_ids
