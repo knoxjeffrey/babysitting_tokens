@@ -16,7 +16,7 @@ class RequestsController < ApplicationController
     @request = current_user.requests.build(request_params)
     if @request.valid?
       if insufficient_tokens?
-        flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups"
+        flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
         render :new
       else
         @request.save
@@ -55,22 +55,30 @@ class RequestsController < ApplicationController
     end
   end
   
+  # User can make a baby sitting request to more than one of their groups.
+  # If they don't have enough tokens for one of more requests then true is returned 
   def insufficient_tokens?
     current_user.has_insufficient_tokens?(array_of_group_ids_selected, @request)
   end
   
+  # group_ids in params returns an empty string as the first element in the array
+  # This strips the array of any empty strings
   def array_of_group_ids_selected
     request_params[:group_ids].reject { |string| string.empty? }
   end
   
+  # If the user has enough tokens for all the groups they request a night out to
+  # then tokens will immediately be removed from each group they are a member of
   def subtract_tokens_from_each_group_selected
     current_user.subtract_tokens(array_of_group_ids_selected, @request)
   end
   
+  # request status is changed from waiting to accepted when another group member accepts the users babysitting request
   def update_status
     @request.update_attribute(:status, 'accepted')
   end
   
+  # sets the babysitter_id to the id of the user that has accepted the request for a babysitter
   def update_babysitter_id
     @request.update_attribute(:babysitter_id, current_user.id)
   end

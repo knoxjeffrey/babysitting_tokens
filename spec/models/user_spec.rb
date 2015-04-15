@@ -3,6 +3,8 @@ require 'spec_helper'
 describe User do
   
   it { should have_many :requests }
+  it { should have_many :user_groups}
+  it { should have_many(:groups).through(:user_groups) }
   
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
