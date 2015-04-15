@@ -1,16 +1,9 @@
-.home-body   
-  %ul{ class: "nav nav-pills pull-right" }
-    %li{ class: "active" }
-      %a{ href: "" }
-        %span Tokens
-        %span{ class: "badge" } #{ current_user.tokens }
-        
 = render 'shared/profile'
         
 .home-body       
   .row
     .col-lg-3
-      %a{ href: my_request_path, class: "freedom-button btn btn-success btn-md btn-block" }Pick Your Next Day Of Freedom
+      %a{ href: my_request_path, class: "freedom-button btn btn-success btn-md btn-block" }Request For Freedom
      
   .row
     .col-lg-3
@@ -44,7 +37,7 @@
               %tbody
                 - @friend_requests.each do |friend_request|
                   %tr
-                    %td= friend_request.user.full_name
+                    %td= friend_request.full_name
                     %td= display_friendly_date(friend_request.start)
                     %td
                       %a{ href: request_path(friend_request), class: "btn btn-success btn-xs" }Open
@@ -59,15 +52,15 @@
               %thead
                 %tr
                   %th Name
-                  %th Tokens
+                  %th Your Tokens
               %tbody
                 - @user_groups.each do |user_group|
                   %tr
-                    %td= user_group.group_name
-                    %td= 100000
+                    %td= user_group.group.group_name
+                    %td= user_group.tokens
                     %td
                       %a{ href: "#", class: "btn btn-success btn-xs" }Details
-            %a{ href: new_group_path, class: "btn btn-success btn-xs" }Create New Circle
+            %a{ href: new_group_path, class: "btn btn-success btn-xs" }Create New Group
 
 .home-body                      
   - if @next_babysitting_info.present?

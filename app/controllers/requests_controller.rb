@@ -4,7 +4,7 @@ class RequestsController < ApplicationController
   def index
     @user_requests = current_user.requests_except_complete
     @friend_requests = current_user.friend_requests
-    @user_groups = current_user.groups
+    @user_groups = current_user.user_groups
     @next_babysitting_info = Request.babysitting_info(current_user)
   end
   
@@ -14,13 +14,16 @@ class RequestsController < ApplicationController
   
   def create
     @request = current_user.requests.build(request_params)
-    render :new and return if !@request.valid?
-    
-    redirect_to my_request_path and return if insufficient_tokens?
-    
-    if @request.save
-      flash[:success] = "You successfully created your request for freedom!"
-      redirect_to home_path
+    if @request.valid?
+      if insufficient_tokens?
+        flash.now[:danger] = "Sorry, you don't have enough freedom tokens"
+        render :new
+      else
+        @request.save
+        subtract_tokens_from_each_group
+        flash[:success] = "You successfully created your request for freedom!"
+        redirect_to home_path
+      end
     else
       render :new
     end
@@ -41,17 +44,27 @@ class RequestsController < ApplicationController
   
   private
   
+  # If a user is only a member of one group I don't want them to have to keep checking a box for their group
+  # when making a request. In this case there will be no group option and group_ids will be merged in with 
+  # the id of the group they are a member of
   def request_params
-    params.require(:request).permit(:start, :finish)
+    if params[:request][:group_ids].present?
+      params.require(:request).permit(:start, :finish, group_ids: [])
+    else
+      params.require(:request).permit(:start, :finish).merge!(group_ids: ["#{current_user.user_groups.first.group_id}"])
+    end
   end
   
   def insufficient_tokens?
-    if current_user.has_insufficient_tokens?(@request)
-      flash[:danger] = "Sorry, you don't have enough freedom tokens"
-      true
-    else
-      false
-    end
+    current_user.has_insufficient_tokens?(array_of_groups_selected, @request)
+  end
+  
+  def array_of_groups_selected
+    request_params[:group_ids].reject { |string| string.empty? }
+  end
+  
+  def subtract_tokens_from_each_group
+    current_user.subtract_tokens(array_of_groups_selected, @request)
   end
   
   def update_status

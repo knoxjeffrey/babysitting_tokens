@@ -7,6 +7,7 @@ feature "user picks new date of freedom" do
   end
   
   scenario "user fills in start and finish times and dates" do
+    create_new_group
     press_pick_freedom_date_button
     enter_start_date("20/03/2015 18:00")
     enter_finish_date("20/03/2015 23:00")
@@ -16,6 +17,7 @@ feature "user picks new date of freedom" do
   end
   
   scenario "user fills in start and finish times and dates with not enough tokens" do
+    create_new_group
     press_pick_freedom_date_button
     enter_start_date("20/03/2015 18:00")
     enter_finish_date("20/03/2020 23:00")
@@ -24,7 +26,7 @@ feature "user picks new date of freedom" do
   end
   
   def press_pick_freedom_date_button
-    click_link "Pick Your Next Day Of Freedom"
+    click_link "Request For Freedom"
   end
   
   def enter_start_date(date)

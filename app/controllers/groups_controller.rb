@@ -7,8 +7,10 @@ class GroupsController < ApplicationController
   
   def create
     @group = current_user.groups.build(request_params)
+    @group.admin = current_user
   
     if @group.save
+      UserGroup.create(user: current_user, group: @group)
       flash[:success] = "You successfully created your request for freedom!"
       redirect_to home_path
     else

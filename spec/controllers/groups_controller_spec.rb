@@ -34,7 +34,7 @@ describe GroupsController do
         end
         
         it "creates a new group associated with the user" do
-          expect(Group.first.user).to eq(current_user)
+          expect(Group.first.admin).to eq(current_user)
         end
         
         it "generates a successful flash message" do
