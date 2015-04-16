@@ -26,7 +26,7 @@ describe User do
     end
   end
   
-  describe :friend_requests do
+  describe :friend_request_groups do
     
     let!(:current_user) { object_generator(:user) }
     let!(:friend_user) { object_generator(:user) }
@@ -39,7 +39,7 @@ describe User do
       request2 = object_generator(:request, user: friend_user, group_ids: group1.id)
       request3 = object_generator(:request, user: friend_user, status: 'accepted', group_ids: group1.id)
       
-      expect(current_user.friend_requests).to eq([request2])
+      expect(current_user.friend_request_groups).to eq([RequestGroup.second])
     end
     
     it "only returns requests made by people in same groups as current user" do
@@ -49,14 +49,14 @@ describe User do
       request1 = object_generator(:request, user: current_user, group_ids: group1.id)
       request2 = object_generator(:request, user: friend_user, group_ids: group1.id)
       request3 = object_generator(:request, user: stranger_user, group_ids: group2.id)
-      expect(current_user.friend_requests).to eq([request2])
+      expect(current_user.friend_request_groups).to eq([RequestGroup.second])
     end
     
     it "returns all requests by date ascending" do
       request1 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user, group_ids: group1.id)
       request2 = object_generator(:request, start: 2.days.from_now, finish: 3.days.from_now, user: friend_user, group_ids: group1.id)
       
-      expect(current_user.friend_requests).to eq([request2, request1])
+      expect(current_user.friend_request_groups).to eq([RequestGroup.second, RequestGroup.first])
     end
     
   end
@@ -112,7 +112,7 @@ describe User do
       group = object_generator(:group)
       group_member = object_generator(:user_group, user: current_user, group: group) 
       request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id)
-      current_user.add_tokens(request1)
+      current_user.add_tokens(RequestGroup.first)
       
       expect(current_user.user_groups.first.tokens).to eq(23)
     end

@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include TokensCalculated
+  
   has_many :requests, -> { order start: :asc }
   has_many :user_groups
   has_many :groups, through: :user_groups
@@ -15,9 +17,9 @@ class User < ActiveRecord::Base
   end
   
   # returns all requests by people in the same groups as the user that are waiting to be accepted
-  def friend_requests
-    all_requests_from_current_users_groups
-    only_friend_requests(all_requests_from_current_users_groups)
+  def friend_request_groups
+    all_request_groups_from_current_users_groups
+    only_friend_request_groups( all_request_groups_from_current_users_groups)
   end
   
   # A user can make a request for babysitting to more than one of their groups
@@ -43,31 +45,25 @@ class User < ActiveRecord::Base
     end
   end
   
-  def add_tokens(request)
-    updated_tokens = self.user_groups.first.tokens + tokens_for_request(request)
-    self.user_groups.first.update_attribute(:tokens, updated_tokens)
+  def add_tokens(request_group)
+    user_group = UserGroup.find_by(user: self, group_id: request_group.group)
+    updated_tokens = user_group.tokens + tokens_for_request(request_group.request)
+    user_group.update_attribute(:tokens, updated_tokens)
   end
     
   private
   
-  # Each full hour of babysitting amounts to 1 token
-  # eg  1 hour = 1 token
-  #     1 hour 59 mins = 1 token
-  def tokens_for_request(request)
-    ((request.finish - request.start) / 1.hour).round
-  end
-  
-  # Returns an array of all requests from the groups the user is in, including the user
-  def all_requests_from_current_users_groups
+  # Returns an array of all request_groups from the groups the user is in, including the user
+  def all_request_groups_from_current_users_groups
     group_ids = self.group_ids
     request_groups = group_ids.map { |id| RequestGroup.where(["group_id = ?", id]) }.flatten
-    request_groups.map { |request_group| request_group.request }
   end
   
-  # Removes any requests in the groups the user is a member of that were made by the user
-  def only_friend_requests(all_requests)
-    friends_with_requests = all_requests.reject { |requests| requests.user_id == self.id }
-    friends_with_requests.select { |request| request.status == 'waiting' }.sort_by { |date| date[:start] }
+  # Removes any request_groups in the groups the user is a member of that were made by the user
+  def only_friend_request_groups(all_request_groups_from_current_users_groups)
+    friends_with_request_groups = all_request_groups_from_current_users_groups.reject { |request_group| request_group.request.user == self}
+    request_groups = friends_with_request_groups.select { |request_group| request_group.request.status == 'waiting' }.sort_by { |request_group| request_group.request[:start] }
+    request_groups.sort_by { |request_group| request_group.request[:start] }
   end
   
 end

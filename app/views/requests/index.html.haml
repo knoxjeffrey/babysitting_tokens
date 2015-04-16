@@ -33,14 +33,16 @@
               %thead
                 %tr
                   %th Name
+                  %th Circle
                   %th Date
               %tbody
-                - @friend_requests.each do |friend_request|
+                - @friend_request_groups.each do |request_group|
                   %tr
-                    %td= friend_request.full_name
-                    %td= display_friendly_date(friend_request.start)
+                    %td= request_group.request.full_name
+                    %td= request_group.group.group_name
+                    %td= display_friendly_date(request_group.request.start)
                     %td
-                      %a{ href: request_path(friend_request), class: "btn btn-success btn-xs" }Open
+                      %a{ href: request_group_path(request_group), class: "btn btn-success btn-xs" }Open
                       
     .col-lg-4
       .user_circles

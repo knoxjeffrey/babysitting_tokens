@@ -13,9 +13,9 @@ Rails.application.routes.draw do
  
  get '/new_group', to: 'groups#new'
  
- resources :requests, only: [:show, :update]
- 
  resources :groups, only: [:create]
+ 
+ resources :request_groups, only: [:show, :update]
  
  root to: 'pages#index'
  get 'ui(/:action)', controller: 'ui'
