@@ -3,7 +3,7 @@ class RequestsController < ApplicationController
   
   def index
     @user_requests = current_user.requests_except_complete
-    @friend_requests = current_user.friend_requests
+    @friend_request_groups = current_user.friend_request_groups
     @user_groups = current_user.user_groups
     @next_babysitting_info = Request.babysitting_info(current_user)
   end
@@ -27,19 +27,6 @@ class RequestsController < ApplicationController
     else
       render :new
     end
-  end
-  
-  def show
-    @request = Request.find(params[:id])
-  end
-  
-  def update
-    @request = Request.find(params[:id])
-    update_status
-    update_babysitter_id
-    add_tokens_to_current_user
-    flash[:success] = "Well done, you've given a friend freedom!"
-    redirect_to home_path
   end
   
   private
@@ -72,19 +59,5 @@ class RequestsController < ApplicationController
   def subtract_tokens_from_each_group_selected
     current_user.subtract_tokens(array_of_group_ids_selected, @request)
   end
-  
-  # request status is changed from waiting to accepted when another group member accepts the users babysitting request
-  def update_status
-    @request.update_attribute(:status, 'accepted')
-  end
-  
-  # sets the babysitter_id to the id of the user that has accepted the request for a babysitter
-  def update_babysitter_id
-    @request.update_attribute(:babysitter_id, current_user.id)
-  end
-  
-  def add_tokens_to_current_user
-    current_user.add_tokens(@request)
-  end
-  
+
 end

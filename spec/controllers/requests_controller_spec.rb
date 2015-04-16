@@ -34,41 +34,41 @@ describe RequestsController do
         
       end
       
-      context "for friend user requests" do
+      context "for users friend requests" do
         let!(:friend_user) { object_generator(:user) }
         let!(:group) { object_generator(:group, admin: current_user) }
         let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
         let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
         let!(:request1) { object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user, group_ids: group.id) }
         
-        it "assigns @friend_requests" do
+        it "assigns @friend_request_groups" do
           get :index
   
-          expect(assigns(:friend_requests)).to eq([request1])
+          expect(assigns(:friend_request_groups)).to eq([RequestGroup.first])
         end
       
-        it "sorts @friend_requests in ascending order by date" do 
+        it "sorts @friend_request_groups in ascending order by date" do 
           request2 = object_generator(:request, start: 2.days.from_now, finish: 3.days.from_now, user: friend_user, group_ids: group.id)
           get :index
         
-          expect(assigns(:friend_requests)).to eq([request2, request1])
+          expect(assigns(:friend_request_groups)).to eq([RequestGroup.second, RequestGroup.first])
         end  
       
-        it "only shows @friend_requests with status waiting" do
+        it "only shows @friend_request_groups with status waiting" do
           request2 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: friend_user, status: 'accepted', group_ids: group.id)
           get :index
         
-          expect(assigns(:friend_requests)).to eq([request1])
+          expect(assigns(:friend_request_groups)).to eq([RequestGroup.first])
         end
       
-        it "only shows friend requests for people in the users group" do
+        it "only shows @friend_request_groups for people in the users group" do
           stranger_user = object_generator(:user)
           group2 = object_generator(:group, admin: stranger_user) 
           group_member3 = object_generator(:user_group, user: stranger_user, group: group2)
           request2 = object_generator(:request, start: 2.days.from_now, finish: 3.days.from_now, user: stranger_user, group_ids: group2.id)
           get :index
           
-          expect(assigns(:friend_requests)).to eq([request1])
+          expect(assigns(:friend_request_groups)).to eq([RequestGroup.first])
         end
         
       end
@@ -165,7 +165,7 @@ describe RequestsController do
         let!(:group) { object_generator(:group, admin: current_user) }
         let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
         let!(:group2) { object_generator(:group, admin: current_user) }
-        let!(:group_membe2) { object_generator(:user_group, user: current_user, group: group2) }
+        let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
         
         before do
           post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", group_ids: [group.id, group2.id])
@@ -282,81 +282,6 @@ describe RequestsController do
     context "with unauthenticated user" do
       it_behaves_like "require_sign_in" do
         let(:action) { post :create }
-      end
-    end
-    
-  end
-  
-  describe "GET show" do
-    
-    context "with authenticated user" do
-      it "assigns @show_request" do
-        set_current_user_session
-        group = object_generator(:group, admin: current_user)
-        request1 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, user: current_user, group_ids: group.id)
-        get :show, id: request1
-        expect(assigns(:request)).to eq(request1)
-      end
-    end
-    
-    context "with unauthenticated user" do
-      it "redirects to root path" do
-        signed_out_user = object_generator(:user)
-        group = object_generator(:group, admin: signed_out_user)
-        request1 = object_generator(:request, start: 3.days.from_now, finish: 4.days.from_now, group_ids: group.id)
-        get :show, id: request1
-        
-        expect(response).to redirect_to root_path
-      end
-    end
-  end
-  
-  describe "PUT update" do
-    
-    context "with authenticated user" do
-      
-      let(:user) { object_generator(:user) }
-      let(:friend_user) { object_generator(:user) }
-      let!(:group) { object_generator(:group, admin: friend_user) }
-      let!(:group_member) { object_generator(:user_group, user: friend_user, group: group) }
-      let(:request1) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id) }
-      
-      before do 
-        set_current_user_session
-        group_member = object_generator(:user_group, user: current_user, group: group)
-        put :update, id: request1
-      end
-      
-      it "changes the status from waiting to accepted" do
-        expect(friend_user.requests.first.status).to eq('accepted')
-      end
-      
-      it "generates a successful flash message" do
-        expect(flash[:success]).to be_present
-      end
-      
-      it "redirects to home_page" do
-        expect(response).to redirect_to home_path
-      end
-      
-      it "adds tokens to current user" do
-        expect(current_user.user_groups.first.tokens).to eq(23)
-      end
-      
-      it "adds the current user to babysitter_id column" do
-        expect(friend_user.requests.first.babysitter_id).to eq(current_user.id)
-      end
-    
-    end
-    
-    context "with unauthenticated user" do
-      let(:friend_user) { object_generator(:user) }
-      let!(:group) { object_generator(:group, admin: friend_user) }
-      let!(:group_member) { object_generator(:user_group, user: friend_user, group: group) }
-      let(:request1) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id) }
-      
-      it_behaves_like "require_sign_in" do
-        let(:action) { put :update, id: request1 }
       end
     end
     

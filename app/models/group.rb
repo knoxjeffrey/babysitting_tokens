@@ -8,6 +8,6 @@ class Group < ActiveRecord::Base
   
   belongs_to :admin, foreign_key: 'user_id', class_name: 'User'
   
-  validates :group_name, presence: true, uniqueness: true, length: {minimum: 5}
+  validates :group_name, presence: true, uniqueness: true, length: {minimum: 3}
   validates :location, presence: true
 end
