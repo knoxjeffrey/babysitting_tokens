@@ -31,36 +31,84 @@ describe RequestGroupsController do
     context "with authenticated user" do
       
       let!(:friend_user) { object_generator(:user) }
-      let!(:group) { object_generator(:group, admin: friend_user) }
-      let!(:group_member1) { object_generator(:user_group, user: friend_user, group: group) }
-      let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id) }
-      let!(:request_group) { object_generator(:request_group, request: request, group: group)}
+      let!(:group1) { object_generator(:group, admin: friend_user) }
+      let!(:group_member1) { object_generator(:user_group, user: friend_user, group: group1) }
       
-      before do 
-        set_current_user_session
-        group_member2 = object_generator(:user_group, user: current_user, group: group)
+      context "when the request has been made to one group" do
+
+        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group1.id) }
+      
+        before do 
+          set_current_user_session
+          group_member2 = object_generator(:user_group, user: current_user, group: group1)
+
+          put :update, id: RequestGroup.first.id
+        end
+      
+        it "changes the status from waiting to accepted" do
+          expect(request.reload.status).to eq('accepted')
+        end
+      
+        it "generates a successful flash message" do
+          expect(flash[:success]).to be_present
+        end
+      
+        it "redirects to home_page" do
+          expect(response).to redirect_to home_path
+        end
+      
+        it "adds tokens to current user for the correct group" do
+          expect(UserGroup.second.tokens).to eq(23)
+        end
+      
+        it "adds the current user to babysitter_id column" do
+          expect(request.reload.babysitter_id).to eq(current_user.id)
+        end
+      
+        it "does not credit the friend user account" do
+          expect(UserGroup.first.tokens).to eq(20)
+        end
         
-        put :update, id: request_group.id
       end
       
-      it "changes the status from waiting to accepted" do
-        expect(request.reload.status).to eq('accepted')
-      end
+      context "when the request has been made to more than one group" do
+        
+        let!(:group2) { object_generator(:group, admin: friend_user) }
+        let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group2) }
+        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: [group1.id, group2.id]) }
       
-      it "generates a successful flash message" do
-        expect(flash[:success]).to be_present
-      end
+        before do 
+          set_current_user_session
+          group_member3 = object_generator(:user_group, user: current_user, group: group1)
+          group_member4 = object_generator(:user_group, user: current_user, group: group2)
+          
+          put :update, id: RequestGroup.first.id
+        end
       
-      it "redirects to home_page" do
-        expect(response).to redirect_to home_path
-      end
+        it "changes the status from waiting to accepted" do
+          expect(request.reload.status).to eq('accepted')
+        end
       
-      it "adds tokens to current user" do
-        expect(current_user.user_groups.first.tokens).to eq(23)
-      end
+        it "generates a successful flash message" do
+          expect(flash[:success]).to be_present
+        end
       
-      it "adds the current user to babysitter_id column" do
-        expect(friend_user.requests.first.babysitter_id).to eq(current_user.id)
+        it "redirects to home_page" do
+          expect(response).to redirect_to home_path
+        end
+      
+        it "adds tokens to current user for the correct group" do
+          expect(UserGroup.third.tokens).to eq(23)
+        end
+      
+        it "adds the current user to babysitter_id column" do
+          expect(request.reload.babysitter_id).to eq(current_user.id)
+        end
+      
+        it "credits the friend for the group the babysitting request wasn't accepted from" do
+          expect(UserGroup.second.tokens).to eq(23)
+        end
+        
       end
     
     end

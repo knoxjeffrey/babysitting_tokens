@@ -24,7 +24,35 @@ describe Request do
       group_member2 = object_generator(:user_group, user: friend_user, group: group) 
       request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
       
-      expect(Request.babysitting_info(current_user)). to eq(request1)
+      expect(Request.babysitting_info(current_user)).to eq(request1)
+    end
+  end
+  
+  describe :change_status_to_accepted do
+    it "changes the status of the request to accepted" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.change_status_to_accepted
+      expect(request1.status).to eq('accepted')
+    end
+  end
+  
+  describe :update_babysitter do
+    it "sets the id of the person doing the babysitting" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.update_babysitter(current_user)
+      expect(request1.babysitter_id).to eq(current_user.id)
     end
   end
   

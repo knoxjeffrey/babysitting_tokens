@@ -14,4 +14,12 @@ class Request < ActiveRecord::Base
     where(["babysitter_id = ?", user.id]).first
   end
   
+  def change_status_to_accepted
+    self.update_attribute(:status, 'accepted')
+  end
+  
+  def update_babysitter(current_user)
+    self.update_attribute(:babysitter_id, current_user.id)
+  end
+  
 end

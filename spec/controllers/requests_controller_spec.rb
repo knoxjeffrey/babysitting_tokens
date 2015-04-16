@@ -165,7 +165,7 @@ describe RequestsController do
         let!(:group) { object_generator(:group, admin: current_user) }
         let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
         let!(:group2) { object_generator(:group, admin: current_user) }
-        let!(:group_membe2) { object_generator(:user_group, user: current_user, group: group2) }
+        let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
         
         before do
           post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", group_ids: [group.id, group2.id])
