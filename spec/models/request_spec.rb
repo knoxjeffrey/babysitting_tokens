@@ -56,4 +56,17 @@ describe Request do
     end
   end
   
+  describe :babysitter_name do
+    it "returns the full name of the babysitter" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      expect(request1.babysitter_name).to eq(current_user.full_name)
+    end
+  end
+  
 end
