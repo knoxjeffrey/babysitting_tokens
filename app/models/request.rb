@@ -22,4 +22,8 @@ class Request < ActiveRecord::Base
     self.update_attribute(:babysitter_id, current_user.id)
   end
   
+  def babysitter_name
+    User.find(self.babysitter_id).full_name if self.babysitter_id
+  end
+  
 end
