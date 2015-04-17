@@ -26,7 +26,7 @@ UserGroup.create(user_id: 3, group_id: 1)
 UserGroup.create(user_id: 3, group_id: 2)
 UserGroup.create(user_id: 4, group_id: 1)
 
-Request.create(user_id: 1, start: DateTime.new(2015, 03, 17, 19, 00, 0), finish: DateTime.new(2015, 03, 17, 22, 00, 0), status: 'accepted', babysitter_id: 2, group_ids: [1,2])
+Request.create(user_id: 1, start: DateTime.new(2015, 03, 17, 19, 00, 0), finish: DateTime.new(2015, 03, 17, 22, 00, 0), status: 'accepted', babysitter_id: 2, group_ids: [1,2], group_id: 1)
 Request.create(user_id: 1, start: DateTime.new(2015, 04, 02, 18, 00, 0), finish: DateTime.new(2015, 04, 02, 23, 00, 0), status: 'waiting', group_ids: [1])
 Request.create(user_id: 2, start: DateTime.new(2015, 03, 21, 19, 00, 0), finish: DateTime.new(2015, 03, 21, 22, 00, 0), status: 'waiting', group_ids: [1,2,3])
 Request.create(user_id: 3, start: DateTime.new(2015, 03, 23, 19, 00, 0), finish: DateTime.new(2015, 03, 23, 22, 00, 0), status: 'waiting', group_ids: [1])

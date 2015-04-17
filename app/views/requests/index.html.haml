@@ -4,7 +4,15 @@
   .row
     .col-lg-3
       %a{ href: my_request_path, class: "freedom-button btn btn-success btn-md btn-block" }Request For Freedom
-     
+  
+  .row
+    %br
+    - if @next_babysitting_info.present?
+      .col-lg-12
+        .alert.alert-dismissible.alert-danger
+          You next have to babysit on:
+          = display_next_baby_sitting_date_info(@next_babysitting_info)
+          %a{ href: babysitting_dates_path, class: "btn btn-success btn-xs pull-right" }See All Dates
   .row
     .col-lg-3
       .user_nights
@@ -65,10 +73,3 @@
                     %td
                       %a{ href: group_path(user_group.group), class: "btn btn-success btn-xs" }Details
             %a{ href: new_group_path, class: "btn btn-success btn-xs" }Create New Group
-
-.home-body                      
-  - if @next_babysitting_info.present?
-    .col-lg-12
-      .alert.alert-dismissible.alert-danger
-        You next have to babysit on:
-        = display_next_baby_sitting_date_info(@next_babysitting_info)

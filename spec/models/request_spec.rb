@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Request do
   it { should belong_to :user}
+  it { should belong_to :group}
   
   it { should validate_presence_of :start }
   it { should validate_presence_of :finish }
@@ -22,9 +23,9 @@ describe Request do
       group = object_generator(:group)
       group_member1 = object_generator(:user_group, user: current_user, group: group) 
       group_member2 = object_generator(:user_group, user: friend_user, group: group) 
-      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
-      
-      expect(Request.babysitting_info(current_user)).to eq(request1)
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
+
+      expect(Request.babysitting_info(current_user)).to eq([request1])
     end
   end
   
@@ -66,6 +67,33 @@ describe Request do
       request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
       
       expect(request1.babysitter_name).to eq(current_user.full_name)
+    end
+  end
+  
+  describe :update_babysitter_group do
+    it "sets the id of the person doing the babysitting" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.update_babysitter_group(group)
+      expect(request1.group_id).to eq(group.id)
+    end
+  end
+  
+  describe :group_for_babysitting_date do
+    it "returns the name of the group the request was accepted by" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member = object_generator(:user_group, user: current_user, group: group) 
+      group_member = object_generator(:user_group, user: friend_user, group: group) 
+      request = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, group: group )
+      
+      expect(request.group).to eq(group)
     end
   end
   

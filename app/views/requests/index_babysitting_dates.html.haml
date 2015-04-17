@@ -1,0 +1,35 @@
+= render 'shared/tokens'
+        
+= render 'shared/profile'
+    
+.home-body       
+  %section.register.container
+    .row
+      .col-lg-7.col-lg-offset-1
+        %header
+          %h1 Babysitting Dates
+        %br
+    .row
+      .col-lg-5.col-lg-offset-1
+        .request-detail
+          .panel.panel-primary
+            .panel-heading
+              %h3{ class: 'panel-title' } Babysitting Information
+            .panel-body
+              %table{ class: "table table-striped table-hover" }
+                %thead
+                  %tr
+                    %th Who For
+                    %th Circle
+                    %th Date
+                    %th Start
+                    %th Finish
+                %tbody
+                  - @current_user_babysitting_dates.each do |date|
+                    %tr
+                      %td= date.full_name
+                      %td= date.group_for_babysitting_date
+                      %td= display_friendly_date(date.start)
+                      %td= display_time(date.start)
+                      %td= display_time(date.finish)
+                        

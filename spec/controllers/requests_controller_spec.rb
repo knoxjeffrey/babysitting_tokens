@@ -96,6 +96,39 @@ describe RequestsController do
         
       end
       
+      context "for next date current user is babysitting" do
+        
+        let!(:friend_user) { object_generator(:user) }
+        let!(:group) { object_generator(:group, admin: current_user) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
+        
+        context "if user has not accepted any request" do
+          
+          let!(:request1) { object_generator(:request, user: friend_user, status: 'waiting', group_ids: group.id) }
+          let!(:request2) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'complete', group_ids: group.id, group_id: group.id) }
+          
+          it "does not return any information" do
+            get :index
+            expect(assigns(:next_babysitting_info)).to be nil
+          end
+          
+        end
+        
+        context "if user has accepted requests" do
+          
+          let!(:request1) { object_generator(:request, start: 3.days.from_now, finish: 3.days.from_now, user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+          let!(:request2) { object_generator(:request, start: 2.days.from_now, finish: 2.days.from_now, user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+          
+          it "returns the next date the current user is babysitting" do
+            get :index
+            expect(assigns(:next_babysitting_info)).to eq(request2)
+          end
+          
+        end
+        
+      end
+      
     end
   
     context "with unauthenticated user" do
@@ -286,5 +319,34 @@ describe RequestsController do
     end
     
   end
+  
+  describe "GET index_babysitting_dates" do
+    
+    context "with authenticated user" do
+      
+      before { set_current_user_session }
+      
+      let!(:friend_user) { object_generator(:user) }
+      let!(:group) { object_generator(:group, admin: current_user) }
+      let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+      let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
+      let!(:request1) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+      let!(:request2) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'complete', group_ids: group.id, group_id: group.id) }
+      
+      it "only shows the requests the current user is babysitting for" do
+        get :index_babysitting_dates
+        expect(assigns(:current_user_babysitting_dates)).to eq([request1])
+      end
+
+    end
+    
+    context "with unauthenticated user" do
+      it_behaves_like "require_sign_in" do
+        let(:action) { get :index_babysitting_dates }
+      end
+    end
+  end
+  
+  describe "PUT update_babysitting_date"
   
 end

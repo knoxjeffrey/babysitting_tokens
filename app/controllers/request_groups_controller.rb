@@ -10,6 +10,7 @@ class RequestGroupsController < ApplicationController
     @request_group = RequestGroup.find(params[:id])
     update_status
     set_babysitter
+    set_babysitter_group
     add_tokens_to_babysitter_user_group
     credit_requester_for_unused_group_requests
     flash[:success] = "Well done, you've given a friend freedom!"
@@ -26,6 +27,10 @@ class RequestGroupsController < ApplicationController
   # sets the babysitter_id to the id of the current user that has accepted the request for a babysitter
   def set_babysitter
     @request_group.request.update_babysitter(current_user)
+  end
+  
+  def set_babysitter_group
+    @request_group.request.update_babysitter_group(@request_group.group)
   end
   
   def add_tokens_to_babysitter_user_group

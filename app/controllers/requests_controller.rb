@@ -5,7 +5,7 @@ class RequestsController < ApplicationController
     @user_requests = current_user.requests_except_complete
     @friend_request_groups = current_user.friend_request_groups
     @user_groups = current_user.user_groups
-    @next_babysitting_info = Request.babysitting_info(current_user)
+    @next_babysitting_info = Request.babysitting_info(current_user).first
   end
   
   def new
@@ -27,6 +27,14 @@ class RequestsController < ApplicationController
     else
       render :new
     end
+  end
+  
+  def index_babysitting_dates
+    @current_user_babysitting_dates = Request.babysitting_info(current_user)
+  end
+  
+  def update_babysitting_date
+    
   end
   
   private
