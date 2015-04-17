@@ -10,7 +10,7 @@
           %h1 Babysitting Dates
         %br
     .row
-      .col-lg-5.col-lg-offset-1
+      .col-lg-7.col-lg-offset-1
         .request-detail
           .panel.panel-primary
             .panel-heading
@@ -25,11 +25,12 @@
                     %th Start
                     %th Finish
                 %tbody
-                  - @current_user_babysitting_dates.each do |date|
+                  - @current_user_babysitting_for_requests.each do |request|
                     %tr
-                      %td= date.full_name
-                      %td= date.group_for_babysitting_date
-                      %td= display_friendly_date(date.start)
-                      %td= display_time(date.start)
-                      %td= display_time(date.finish)
-                        
+                      %td= request.full_name
+                      %td= request.group_for_babysitting_date
+                      %td= display_friendly_date(request.start)
+                      %td= display_time(request.start)
+                      %td= display_time(request.finish)
+                      %td
+                        =link_to 'Cancel', cancel_babysitting_date_path(request), method: :put, class: "btn btn-success btn-xs"

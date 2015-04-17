@@ -3,7 +3,7 @@
 .home-body       
   .row
     .col-lg-3
-      %a{ href: my_request_path, class: "freedom-button btn btn-success btn-md btn-block" }Request For Freedom
+      =link_to 'Request For Freedom', my_request_path, class: "freedom-button btn btn-success btn-md btn-block"
   
   .row
     %br
@@ -12,7 +12,8 @@
         .alert.alert-dismissible.alert-danger
           You next have to babysit on:
           = display_next_baby_sitting_date_info(@next_babysitting_info)
-          %a{ href: babysitting_dates_path, class: "btn btn-success btn-xs pull-right" }See All Dates
+          =link_to 'See All Dates', my_babysitting_dates_path, class: "btn btn-success btn-xs pull-right"
+          
   .row
     .col-lg-3
       .user_nights
@@ -52,7 +53,7 @@
                     %td= request_group.group.group_name
                     %td= display_friendly_date(request_group.request.start)
                     %td
-                      %a{ href: request_group_path(request_group), class: "btn btn-success btn-xs" }Open
+                      =link_to 'Open', request_group_path(request_group), class: "btn btn-success btn-xs"
                       
     .col-lg-4
       .user_circles
@@ -71,5 +72,5 @@
                     %td= user_group.group.group_name
                     %td= user_group.tokens
                     %td
-                      %a{ href: group_path(user_group.group), class: "btn btn-success btn-xs" }Details
-            %a{ href: new_group_path, class: "btn btn-success btn-xs" }Create New Group
+                      =link_to 'Details', group_path(user_group.group), class: "btn btn-success btn-xs"
+            =link_to 'Create New Group', new_group_path, class: "btn btn-success btn-xs"

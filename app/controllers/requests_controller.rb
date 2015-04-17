@@ -29,11 +29,12 @@ class RequestsController < ApplicationController
     end
   end
   
-  def index_babysitting_dates
-    @current_user_babysitting_dates = Request.babysitting_info(current_user)
+  # An array of all the requests the current user is babysitting for with status accepted
+  def my_babysitting_dates
+    @current_user_babysitting_for_requests = Request.babysitting_info(current_user)
   end
   
-  def update_babysitting_date
+  def cancel_babysitting_date
     
   end
   

@@ -334,19 +334,19 @@ describe RequestsController do
       let!(:request2) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'complete', group_ids: group.id, group_id: group.id) }
       
       it "only shows the requests the current user is babysitting for" do
-        get :index_babysitting_dates
-        expect(assigns(:current_user_babysitting_dates)).to eq([request1])
+        get :my_babysitting_dates
+        expect(assigns(:current_user_babysitting_for_requests)).to eq([request1])
       end
 
     end
     
     context "with unauthenticated user" do
       it_behaves_like "require_sign_in" do
-        let(:action) { get :index_babysitting_dates }
+        let(:action) { get :my_babysitting_dates }
       end
     end
   end
   
-  describe "PUT update_babysitting_date"
+  describe "PUT babysitting_date"
   
 end
