@@ -13,7 +13,7 @@ Rails.application.routes.draw do
  
  get '/new_group', to: 'groups#new'
  
- resources :groups, only: [:create]
+ resources :groups, only: [:create, :show]
  
  resources :request_groups, only: [:show, :update]
  

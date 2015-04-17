@@ -63,7 +63,7 @@
                     %td= user_group.group.group_name
                     %td= user_group.tokens
                     %td
-                      %a{ href: "#", class: "btn btn-success btn-xs" }Details
+                      %a{ href: group_path(user_group.group), class: "btn btn-success btn-xs" }Details
             %a{ href: new_group_path, class: "btn btn-success btn-xs" }Create New Group
 
 .home-body                      

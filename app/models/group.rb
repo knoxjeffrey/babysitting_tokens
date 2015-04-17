@@ -10,4 +10,9 @@ class Group < ActiveRecord::Base
   
   validates :group_name, presence: true, uniqueness: true, length: {minimum: 3}
   validates :location, presence: true
+  
+  def friends_in_group(current_user)
+    self.users.reject { |user| user == current_user }
+  end
+  
 end

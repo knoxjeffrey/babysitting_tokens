@@ -22,10 +22,6 @@ describe SessionsController do
         expect(session[:user_id]).to eq(valid_user.id)
       end
       
-      it "generates a successful flash message" do
-        expect(flash[:success]).to be_present
-      end
-  
       it "redirects to home page" do
         expect(response).to redirect_to home_path
       end
