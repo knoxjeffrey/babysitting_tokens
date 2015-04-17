@@ -5,7 +5,7 @@ class RequestsController < ApplicationController
     @user_requests = current_user.requests_except_complete
     @friend_request_groups = current_user.friend_request_groups
     @user_groups = current_user.user_groups
-    @next_babysitting_info = Request.babysitting_info(current_user)
+    @next_babysitting_info = Request.babysitting_info(current_user).first
   end
   
   def new
@@ -29,11 +29,30 @@ class RequestsController < ApplicationController
     end
   end
   
+  # An array of all the requests the current user is babysitting for with status accepted
+  def my_babysitting_dates
+    @current_user_babysitting_for_requests = Request.babysitting_info(current_user)
+  end
+  
+  # Cancels the agreement by the current user to babysit by clearing the columns for babysitter_id and group_id in the request
+  # and sets the status of the request back to waiting
+  # Deducts the tokens from the current user group they were allocated for agreeing to babysit
+  # Deduct the tokens from all the requesters groups that the original request was made to except the user group that the 
+  # request had originally been accepted from
+  def cancel_babysitting_date
+    request = Request.find(params[:id])
+    deduct_tokens_from_current_user(request)
+    deduct_tokens_from_original_request_groups_not_accepted(request)
+    request.cancel_babysitting_agreement
+    flash[:danger] = "You have cancelled your date to babysit.  We will let the other person know"
+    redirect_to my_babysitting_dates_path
+  end
+  
   private
   
   # If a user is only a member of one group I don't want them to have to keep checking a box for their group
   # when making a request. In this case there will be no group option and group_ids will be merged in with 
-  # the id of the group they are a member of
+  # the id of the only group they are a member of
   def request_params
     if params[:request][:group_ids].present?
       params.require(:request).permit(:start, :finish, group_ids: [])
@@ -54,10 +73,22 @@ class RequestsController < ApplicationController
     request_params[:group_ids].reject { |string| string.empty? }
   end
   
-  # If the user has enough tokens for all the groups they request a night out to
+  # After checking if the user has enough tokens for all the groups they request a night out to
   # then tokens will immediately be removed from each group they are a member of
   def subtract_tokens_from_each_group_selected
     current_user.subtract_tokens(array_of_group_ids_selected, @request)
+  end
+  
+  # Deducts the tokens from the current user they were given for agreeing to babysit
+  def deduct_tokens_from_current_user(request)
+    current_user.subtract_tokens([request.group_id], request)
+  end
+  
+  #Deduct the tokens from all the requesters groups that the original request was made to except the user group that the 
+  # request had originally been accepted from
+  def deduct_tokens_from_original_request_groups_not_accepted(request)
+    selected_group_ids = request.groups_original_request_not_accepted_from
+    request.user.subtract_tokens(selected_group_ids, request)
   end
 
 end

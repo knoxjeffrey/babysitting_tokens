@@ -3,6 +3,8 @@ Rails.application.routes.draw do
  get '/home', to: 'requests#index'
  get '/my_request', to: 'requests#new'
  post '/my_request', to: 'requests#create'
+ get '/my_babysitting_dates', to: 'requests#my_babysitting_dates'
+ put '/cancel_babysitting_date/:id', to: 'requests#cancel_babysitting_date', as: :cancel_babysitting_date
  
  get '/register', to: 'users#new'
  post '/register', to: 'users#create'
