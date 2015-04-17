@@ -357,7 +357,7 @@ describe RequestsController do
       let!(:group) { object_generator(:group, admin: current_user) }
       let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
       let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
-      let!(:request) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+      let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
       
       it "clears the babysitter_id" do
         put :cancel_babysitting_date, id: request.id
@@ -372,6 +372,36 @@ describe RequestsController do
       it "changes the status to waiting" do
         put :cancel_babysitting_date, id: request.id
         expect(request.reload.status).to eq('waiting')
+      end
+      
+      it "removes the tokens from the babysitter that were originally allocated when the request was accepted" do
+        put :cancel_babysitting_date, id: request.id
+        expect(current_user.user_groups.first.tokens).to eq(17)
+      end
+      
+      context "if the original request was made to one group" do
+        it "does not change the tokens for the user group the request was originally made from" do
+          put :cancel_babysitting_date, id: request.id
+          expect(friend_user.user_groups.first.tokens).to eq(20)
+        end
+      end
+      
+      context "if the original request was made to more than one group" do
+        
+        let!(:group2) { object_generator(:group, admin: current_user) }
+        let!(:group_member3) { object_generator(:user_group, user: current_user, group: group2) }
+        let!(:group_member4) { object_generator(:user_group, user: friend_user, group: group2) }
+        let!(:request2) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: [group.id, group2.id], group_id: group.id) }
+        
+        it "does not change the tokens for the requester user group the request was originally made from" do
+          put :cancel_babysitting_date, id: request2.id
+          expect(friend_user.user_groups.first.tokens).to eq(20)
+        end
+        
+        it "removes the tokens from the other requester user groups the request was originally made from" do
+          put :cancel_babysitting_date, id: request2.id
+          expect(friend_user.user_groups.second.tokens).to eq(17)
+        end
       end
       
     end

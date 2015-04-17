@@ -34,12 +34,12 @@ class User < ActiveRecord::Base
     insufficient_tokens
   end
   
-  # When a user makes a request to one or more of their groups then tokens are
-  # subracted from each of their groups
-  def subtract_tokens(current_user_groups_array, request)
-    current_user_groups_array.each do |user_group|
+  # Subtracts tokens from a selected list of groups a user is a member of
+  # The subtracted tokens depends on the length of the request
+  def subtract_tokens(array_of_groups, request)
+    array_of_groups.each do |group|
       tokens_requested = tokens_for_request(request)
-      user_group_record = UserGroup.find_by(user: self, group_id: user_group)
+      user_group_record = UserGroup.find_by(user: self, group_id: group)
       updated_tokens = user_group_record.tokens - tokens_for_request(request)
       user_group_record.update_attributes(tokens: updated_tokens)
     end

@@ -29,14 +29,19 @@ class RequestGroupsController < ApplicationController
     @request_group.request.update_babysitter(current_user)
   end
   
+  # sets the group_id to the id of the group that the request for babysitting was accepted from
   def set_babysitter_group
     @request_group.request.update_babysitter_group(@request_group.group)
   end
   
+  # credit the current user tokens fro accepting the request to babysit
   def add_tokens_to_babysitter_user_group
     current_user.add_tokens(@request_group)
   end
   
+  # When a request for babysitting is made, it can be made to multiple groups.
+  # All groups selected in the request are deducted tokens.
+  # When a request is accepted then tokens are added back to the requester for the groups the request was not accepted from
   def credit_requester_for_unused_group_requests
     requester_request_groups = RequestGroup.where(["request_id = ?", @request_group.request_id])
     if requester_request_groups.count > 1
