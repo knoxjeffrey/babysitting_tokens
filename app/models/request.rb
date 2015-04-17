@@ -35,4 +35,8 @@ class Request < ActiveRecord::Base
     self.group.group_name
   end
   
+  def cancel_babysitting_agreement
+    self.update_columns(status: 'waiting', babysitter_id: nil, group_id: nil)
+  end
+  
 end

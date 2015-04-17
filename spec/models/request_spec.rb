@@ -97,4 +97,28 @@ describe Request do
     end
   end
   
+  describe :cancel_babysitting_agreement do
+    let!(:current_user) { object_generator(:user) }
+    let!(:friend_user) { object_generator(:user) }
+    let!(:group) { object_generator(:group) }
+    let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
+    let!(:group_member) { object_generator(:user_group, user: friend_user, group: group) }
+    let!(:request) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, group: group, status: 'accepted' ) }
+    
+    it "sets the babysitter_id to nil" do
+      request.cancel_babysitting_agreement
+      expect(request.babysitter_id).to be nil
+    end
+    
+    it "sets the group_id to nil" do
+      request.cancel_babysitting_agreement
+      expect(request.group_id).to be nil
+    end
+    
+    it "sets the status to waiting" do
+      request.cancel_babysitting_agreement
+      expect(request.status).to eq('waiting')
+    end
+  end
+  
 end

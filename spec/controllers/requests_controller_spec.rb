@@ -347,6 +347,49 @@ describe RequestsController do
     end
   end
   
-  describe "PUT babysitting_date"
+  describe "PUT cancel_babysitting_date" do
+    
+    context "with authenticated user" do
+      
+      before { set_current_user_session }
+      
+      let!(:friend_user) { object_generator(:user) }
+      let!(:group) { object_generator(:group, admin: current_user) }
+      let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+      let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
+      let!(:request) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+      
+      it "clears the babysitter_id" do
+        put :cancel_babysitting_date, id: request.id
+        expect(request.reload.babysitter_id).to be nil
+      end
+      
+      it "clears the group_id" do
+        put :cancel_babysitting_date, id: request.id
+        expect(request.reload.group_id).to be nil
+      end
+      
+      it "changes the status to waiting" do
+        put :cancel_babysitting_date, id: request.id
+        expect(request.reload.status).to eq('waiting')
+      end
+      
+    end
+    
+    context "with unauthenticated user" do
+      
+      let!(:current_user) { object_generator(:user) }
+      let!(:friend_user) { object_generator(:user) }
+      let!(:group) { object_generator(:group, admin: current_user) }
+      let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+      let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
+      let!(:request) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+      
+      it_behaves_like "require_sign_in" do
+        let(:action) { put :cancel_babysitting_date, id: request.id}
+      end
+    end
+    
+  end
   
 end

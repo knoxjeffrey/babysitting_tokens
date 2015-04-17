@@ -35,7 +35,10 @@ class RequestsController < ApplicationController
   end
   
   def cancel_babysitting_date
-    
+    request = Request.find(params[:id])
+    request.cancel_babysitting_agreement
+    flash[:notice] = "You have cancelled your date to babysit.  We will let the other person know"
+    redirect_to my_babysitting_dates_path
   end
   
   private
