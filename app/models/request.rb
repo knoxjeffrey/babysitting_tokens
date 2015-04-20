@@ -2,7 +2,7 @@ class Request < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
   
-  has_many :request_groups
+  has_many :request_groups, dependent: :destroy
   has_many :groups, through: :request_groups
   
   validates :start, presence: true

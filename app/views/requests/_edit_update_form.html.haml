@@ -1,12 +1,8 @@
-= render 'shared/tokens'
-        
-= render 'shared/profile'
-    
 .home-body       
   %section.register.container
     .row
       .col-sm-6.col-sm-offset-1
-        = bootstrap_form_for @request, url: my_request_path do |f|
+        = bootstrap_form_for @request, url: update_my_request_path(@request), method: :put do |f|
           %header
             %h1 Your Day Of Freedom
           %br
