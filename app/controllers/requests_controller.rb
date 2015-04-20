@@ -33,21 +33,34 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
   end
   
+  # Entry in Request table is updated and all associated entries in RequestGroup table are automatically updated - this includes adding and deleting entries. 
   def update
     @request = Request.find(params[:id])
-    @request.assign_attributes(request_params)
-    if @request.valid?
-      if insufficient_tokens?
-        flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
-        render :update
+    
+    if @request.status == "waiting"
+      @request.assign_attributes(request_params)
+      if @request.valid?
+        if insufficient_tokens?
+          flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+          render :update
+        else
+          @request.save
+          flash[:success] = "You successfully altered your request for freedom!"
+          redirect_to home_path
+        end
       else
-        @request.save
-        flash[:success] = "You successfully altered your request for freedom!"
-        redirect_to home_path
+        render :update
       end
     else
-      render :update
+      flash.now[:danger] = "Sorry, you cannot update a request after it has been accepted."
+      redirect_to home_path
     end
+  end
+  
+  def destroy
+    @request = Request.find(params[:id])
+    Request.destroy(@request.id)
+    redirect_to home_path
   end
   
   # An array of all the requests the current user is babysitting for with status accepted

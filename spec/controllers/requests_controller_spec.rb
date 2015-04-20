@@ -360,121 +360,144 @@ describe RequestsController do
       
       before { set_current_user_session }
       
-      let!(:group) { object_generator(:group, admin: current_user) }
-      let!(:group2) { object_generator(:group, admin: current_user) }
-      let!(:group3) { object_generator(:group, admin: current_user) }
-      let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
-      let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
-      let!(:group_member3) { object_generator(:user_group, user: current_user, group: group3) }
-      let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id) }
+      context "with request having status of waiting" do
       
-      context "with changes" do
+        let!(:group) { object_generator(:group, admin: current_user) }
+        let!(:group2) { object_generator(:group, admin: current_user) }
+        let!(:group3) { object_generator(:group, admin: current_user) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
+        let!(:group_member3) { object_generator(:user_group, user: current_user, group: group3) }
+        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id) }
+      
+        context "with changes" do
         
-        before do
-          put :update, id: request.id, request: { start: "2015-03-17 20:00:00", finish: "2015-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
-          request.reload
-        end  
+          before do
+            put :update, id: request.id, request: { start: "2015-03-17 20:00:00", finish: "2015-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
+            request.reload
+          end  
             
         
-        it "redirects back to the home page do" do
-          expect(response).to redirect_to home_path
-        end
+          it "redirects back to the home page do" do
+            expect(response).to redirect_to home_path
+          end
         
-        it "changes the start date of the request" do
-          expect(request.start).to eq("2015-03-17 20:00:00")
-        end
+          it "changes the start date of the request" do
+            expect(request.start).to eq("2015-03-17 20:00:00")
+          end
         
-        it "changes the finish date of the request" do
-          expect(request.finish).to eq("2015-03-17 23:00:00")
-        end
+          it "changes the finish date of the request" do
+            expect(request.finish).to eq("2015-03-17 23:00:00")
+          end
         
-        it "deletes any unchecked boxes from RequestGroup table" do
-          request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
-          expect(request_groups).not_to include(group.id)
-        end
+          it "deletes any unchecked boxes from RequestGroup table" do
+            request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
+            expect(request_groups).not_to include(group.id)
+          end
         
-        it "adds any checked boxes to UserGroup table" do
-          request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
-          expect(request_groups).to eq([group2.id, group3.id])
-        end
+          it "adds any checked boxes to UserGroup table" do
+            request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
+            expect(request_groups).to eq([group2.id, group3.id])
+          end
         
-      end
+        end
 
-      context "with no changes" do
+        context "with no changes" do
         
+          before do
+            put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id] }
+            request.reload
+          end
+        
+          it "redirects back to the home page do" do
+            expect(response).to redirect_to home_path
+          end
+        
+          it "keeps the start date of the request" do
+            expect(request.start).to eq("2015-03-17 19:00:00")
+          end
+        
+          it "keeps the finish date of the request" do
+            expect(request.finish).to eq("2015-03-17 22:00:00")
+          end
+        
+          it "keeps the same entry in RequestGroup table" do
+            request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
+            expect(request_groups).to include(group.id)
+          end
+        
+        end
+      
+        context "with invalid user input" do
+        
+          before do
+            put :update, id: request.id, request: { start: "2015-03-17 18:00:00", finish: "", user: current_user, group_ids: [group.id] }
+            request.reload
+          end
+        
+          it "keeps the start date of the original request" do
+            expect(request.start).to eq("2015-03-17 19:00:00")
+          end
+        
+          it "keeps the finish date of the original request" do
+            expect(request.finish).to eq("2015-03-17 22:00:00")
+          end
+        
+          it "renders the update template" do
+            expect(response).to render_template :update
+          end
+        
+        end
+      
+        context "with user having insufficient tokens" do
+        
+          before do
+            put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-27 22:00:00", user: current_user, group_ids: [group.id] }
+            request.reload
+          end
+        
+          it "keeps the start date of the original request" do
+            expect(request.start).to eq("2015-03-17 19:00:00")
+          end
+        
+          it "keeps the finish date of the original request" do
+            expect(request.finish).to eq("2015-03-17 22:00:00")
+          end
+        
+          it "renders the update template" do
+            expect(response).to render_template :update
+          end
+        
+          it "generates a warning flash.now message" do
+            expect(flash[:danger]).to be_present
+          end
+        
+        end
+      end
+      
+      context "with request not having status of waiting" do
+
+        let!(:group) { object_generator(:group, admin: current_user) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id, status: "accepted") }
+      
         before do
-          put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id] }
+          put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id], status: "accepted" }
           request.reload
         end
-        
-        it "redirects back to the home page do" do
+      
+        it "redirects to home path" do
           expect(response).to redirect_to home_path
         end
-        
-        it "keeps the start date of the request" do
-          expect(request.start).to eq("2015-03-17 19:00:00")
-        end
-        
-        it "keeps the finish date of the request" do
-          expect(request.finish).to eq("2015-03-17 22:00:00")
-        end
-        
-        it "keeps the same entry in RequestGroup table" do
-          request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
-          expect(request_groups).to include(group.id)
-        end
-        
-      end
       
-      context "with invalid user input" do
-        
-        before do
-          put :update, id: request.id, request: { start: "2015-03-17 18:00:00", finish: "", user: current_user, group_ids: [group.id] }
-          request.reload
-        end
-        
-        it "keeps the start date of the original request" do
-          expect(request.start).to eq("2015-03-17 19:00:00")
-        end
-        
-        it "keeps the finish date of the original request" do
-          expect(request.finish).to eq("2015-03-17 22:00:00")
-        end
-        
-        it "renders the update template" do
-          expect(response).to render_template :update
-        end
-        
-      end
-      
-      context "with user having insufficient tokens" do
-        
-        before do
-          put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-27 22:00:00", user: current_user, group_ids: [group.id] }
-          request.reload
-        end
-        
-        it "keeps the start date of the original request" do
-          expect(request.start).to eq("2015-03-17 19:00:00")
-        end
-        
-        it "keeps the finish date of the original request" do
-          expect(request.finish).to eq("2015-03-17 22:00:00")
-        end
-        
-        it "renders the update template" do
-          expect(response).to render_template :update
-        end
-        
         it "generates a warning flash.now message" do
           expect(flash[:danger]).to be_present
         end
-        
       end
       
     end
     
-    context "with authenticated user" do
+    context "with unauthenticated user" do
       
       let!(:friend_user) { object_generator(:user) }
       let!(:group) { object_generator(:group, admin: friend_user) }
@@ -486,6 +509,43 @@ describe RequestsController do
       end
       
     end
+  end
+  
+  describe "GET destroy" do
+    
+    before { set_current_user_session }
+    
+    let!(:friend_user) { object_generator(:user) }
+    let!(:group) { object_generator(:group, admin: current_user) }
+    let!(:group2) { object_generator(:group, admin: current_user) }
+    let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+    let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
+    let!(:group_member3) { object_generator(:user_group, user: friend_user, group: group) }
+    let!(:group_member3) { object_generator(:user_group, user: friend_user, group: group2) }
+    let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id], group_id: group.id, babysitter_id: friend_user.id) }
+  
+    context "with authenticated user" do
+      
+      before do
+        get :destroy, id: request.id
+      end
+      
+      it "deletes the request" do
+        expect(Request.count).to eq(0)
+      end
+      
+      it "deletes all associated records in RequestGroup table" do
+        expect(RequestGroup.count).to eq(0)
+      end
+      
+    end
+    
+    context "with unauthenticated user" do
+      it_behaves_like "require_sign_in" do
+        let(:action) { get :destroy, id: request.id }
+      end
+    end
+
   end
   
   describe "GET index_babysitting_dates" do

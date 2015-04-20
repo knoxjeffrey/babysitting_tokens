@@ -36,6 +36,8 @@
                     - if user_request.status == 'waiting'
                       %td
                         =link_to 'Edit', edit_my_request_path(user_request), class: "btn btn-success btn-xs"
+                    %td
+                      =link_to 'Delete', request_path(user_request), method: 'delete', class: "btn btn-success btn-xs"
                 
     .col-lg-5
       .other_nights
