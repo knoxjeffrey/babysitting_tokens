@@ -43,6 +43,34 @@ describe Request do
     end
   end
   
+  describe :change_status_to_expired do
+    it "changes the status of the request to accepted" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.change_status_to_expired
+      expect(request1.status).to eq('expired')
+    end
+  end
+  
+  describe :change_status_to_completed do
+    it "changes the status of the request to accepted" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.change_status_to_completed
+      expect(request1.status).to eq('completed')
+    end
+  end
+  
   describe :update_babysitter do
     it "sets the id of the person doing the babysitting" do
       current_user = object_generator(:user)

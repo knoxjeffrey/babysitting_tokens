@@ -8,7 +8,7 @@ feature "user accepts date for freedom" do
     group = object_generator(:group)
     group_member1 = object_generator(:user_group, user: current_user, group: group) 
     group_member2 = object_generator(:user_group, user: friend_user, group: group) 
-    request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id)
+    request1 = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, group_ids: group.id)
     sign_in_user(current_user)
   end
   

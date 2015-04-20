@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
   before_action :require_user
   
   def index
-    @user_requests = current_user.requests_except_complete
+    @user_requests = current_user.waiting_and_accepted_requests
     @friend_request_groups = current_user.friend_request_groups
     @user_groups = current_user.user_groups
     @next_babysitting_info = Request.babysitting_info(current_user).first

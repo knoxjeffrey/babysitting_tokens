@@ -34,7 +34,7 @@ class RequestGroupsController < ApplicationController
     @request_group.request.update_babysitter_group(@request_group.group)
   end
   
-  # credit the current user tokens fro accepting the request to babysit
+  # credit the current user tokens for accepting the request to babysit
   def add_tokens_to_babysitter_user_group
     current_user.add_tokens(@request_group)
   end

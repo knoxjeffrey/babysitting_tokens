@@ -20,6 +20,14 @@ class Request < ActiveRecord::Base
     self.update_attribute(:status, 'accepted')
   end
   
+  def change_status_to_expired
+    self.update_attribute(:status, 'expired')
+  end
+  
+  def change_status_to_completed
+    self.update_attribute(:status, 'completed')
+  end
+  
   # Sets the babysitter_id to the id of the user that accepted the request
   def update_babysitter(current_user)
     self.update_attribute(:babysitter_id, current_user.id)
@@ -50,5 +58,5 @@ class Request < ActiveRecord::Base
   def groups_original_request_not_accepted_from
     self.group_ids.reject { |group_id| group_id == self.group_id }
   end
-  
+
 end

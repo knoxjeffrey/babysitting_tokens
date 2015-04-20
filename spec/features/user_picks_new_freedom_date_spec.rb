@@ -9,11 +9,11 @@ feature "user picks new date of freedom" do
   scenario "user fills in start and finish times and dates" do
     create_new_group
     press_pick_freedom_date_button
-    enter_start_date("20/03/2015 18:00")
-    enter_finish_date("20/03/2015 23:00")
+    enter_start_date("20/03/2030 18:00")
+    enter_finish_date("20/03/2030 23:00")
     press_freedom_button
     expect(current_path).to eq(home_path)
-    expect(page).to have_content("Mar 20th, 2015")
+    expect(page).to have_content("Mar 20th, 2030")
   end
   
   scenario "user fills in start and finish times and dates with not enough tokens" do
