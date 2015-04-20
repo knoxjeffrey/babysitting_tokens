@@ -12,8 +12,13 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
   
   # returns all the users requests that aren't complete
-  def requests_except_complete
-    self.requests.where.not(status: 'complete')
+  def waiting_and_accepted_requests
+    requests = self.requests.where(status: ['waiting', 'accepted'])
+    if requests.where(["start < ?", DateTime.now])
+      handle_waiting_requests_with_past_start_date(requests)
+      handle_accepted_requests_with_past_start_date(requests)
+      return self.requests.where(status: ['waiting', 'accepted'])
+    end
   end
   
   # returns all requests by people in the same groups as the user that are waiting to be accepted
@@ -36,8 +41,8 @@ class User < ActiveRecord::Base
   
   # Subtracts tokens from a selected list of groups a user is a member of
   # The subtracted tokens depends on the length of the request
-  def subtract_tokens(array_of_groups, request)
-    array_of_groups.each do |group|
+  def subtract_tokens(array_of_group_ids, request)
+    array_of_group_ids.each do |group|
       tokens_requested = tokens_for_request(request)
       user_group_record = UserGroup.find_by(user: self, group_id: group)
       updated_tokens = user_group_record.tokens - tokens_for_request(request)
@@ -53,6 +58,21 @@ class User < ActiveRecord::Base
     
   private
   
+  def handle_waiting_requests_with_past_start_date(requests)
+    expired_requests = requests.where(["status = ? and start < ?", 'waiting', DateTime.now])
+    expired_requests.each do |request| 
+      request.change_status_to_expired
+      request.request_groups.each { |request_group| self.add_tokens(request_group) }
+    end
+  end 
+  
+  def handle_accepted_requests_with_past_start_date(requests)
+    old_accepted_requests = requests.where(["status = ? and start < ?", 'accepted', DateTime.now])
+    old_accepted_requests.each do |request| 
+      request.change_status_to_completed
+    end
+  end
+  
   # Returns an array of all request_groups from the groups the user is in, including the user
   def all_request_groups_from_current_users_groups
     group_ids = self.group_ids
@@ -60,9 +80,10 @@ class User < ActiveRecord::Base
   end
   
   # Removes any request_groups in the groups the user is a member of that were made by the user
+  # Returns friend requests with a status of waiting that have a date in the future
   def only_friend_request_groups(all_request_groups_from_current_users_groups)
     friends_with_request_groups = all_request_groups_from_current_users_groups.reject { |request_group| request_group.request.user == self}
-    request_groups = friends_with_request_groups.select { |request_group| request_group.request.status == 'waiting' }.sort_by { |request_group| request_group.request[:start] }
+    request_groups = friends_with_request_groups.select { |request_group| request_group.request.status == 'waiting' && request_group.request.start >= DateTime.now }
     request_groups.sort_by { |request_group| request_group.request[:start] }
   end
   

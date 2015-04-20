@@ -1,4 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
+8# This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # Examples:
@@ -26,10 +26,11 @@ UserGroup.create(user_id: 3, group_id: 1)
 UserGroup.create(user_id: 3, group_id: 2)
 UserGroup.create(user_id: 4, group_id: 1)
 
-Request.create(user_id: 1, start: DateTime.new(2015, 03, 17, 19, 00, 0), finish: DateTime.new(2015, 03, 17, 22, 00, 0), status: 'accepted', babysitter_id: 2, group_ids: [1,2], group_id: 1)
-Request.create(user_id: 1, start: DateTime.new(2015, 04, 02, 18, 00, 0), finish: DateTime.new(2015, 04, 02, 23, 00, 0), status: 'waiting', group_ids: [1])
-Request.create(user_id: 2, start: DateTime.new(2015, 03, 21, 19, 00, 0), finish: DateTime.new(2015, 03, 21, 22, 00, 0), status: 'waiting', group_ids: [1,2,3])
-Request.create(user_id: 3, start: DateTime.new(2015, 03, 23, 19, 00, 0), finish: DateTime.new(2015, 03, 23, 22, 00, 0), status: 'waiting', group_ids: [1])
-Request.create(user_id: 4, start: DateTime.new(2015, 03, 25, 19, 00, 0), finish: DateTime.new(2015, 03, 25, 22, 00, 0), status: 'waiting', group_ids: [1])
-Request.create(user_id: 1, start: DateTime.new(2015, 04, 25, 17, 00, 0), finish: DateTime.new(2015, 04, 25, 23, 00, 0), status: 'complete', babysitter_id: 2, group_ids: [1,2,3])
-Request.create(user_id: 2, start: DateTime.new(2015, 04, 05, 18, 00, 0), finish: DateTime.new(2015, 04, 05, 22, 00, 0), status: 'complete', babysitter_id: 3, group_ids: [1])
+Request.create(user_id: 1, start: DateTime.new(2018, 03, 17, 19, 00, 0), finish: DateTime.new(2018, 03, 17, 22, 00, 0), status: 'accepted', babysitter_id: 2, group_ids: [1,2], group_id: 1)
+Request.create(user_id: 1, start: DateTime.new(2020, 03, 17, 19, 00, 0), finish: DateTime.new(2020, 03, 17, 22, 00, 0), status: 'accepted', babysitter_id: 2, group_ids: [1,2], group_id: 1)
+Request.create(user_id: 1, start: DateTime.new(2018, 04, 02, 18, 00, 0), finish: DateTime.new(2018, 04, 02, 23, 00, 0), status: 'waiting', group_ids: [1])
+Request.create(user_id: 2, start: DateTime.new(2018, 03, 21, 19, 00, 0), finish: DateTime.new(2018, 03, 21, 22, 00, 0), status: 'waiting', group_ids: [1,2,3])
+Request.create(user_id: 3, start: DateTime.new(2018, 03, 23, 19, 00, 0), finish: DateTime.new(2018, 03, 23, 22, 00, 0), status: 'waiting', group_ids: [1])
+Request.create(user_id: 4, start: DateTime.new(2018, 03, 25, 19, 00, 0), finish: DateTime.new(2018, 03, 25, 22, 00, 0), status: 'waiting', group_ids: [1])
+Request.create(user_id: 1, start: DateTime.new(2015, 04, 19, 17, 00, 0), finish: DateTime.new(2015, 04, 19, 23, 00, 0), status: 'complete', babysitter_id: 2, group_ids: [1,2,3])
+Request.create(user_id: 2, start: DateTime.new(2015, 04, 20, 18, 00, 0), finish: DateTime.new(2015, 04, 20, 22, 00, 0), status: 'complete', babysitter_id: 3, group_ids: [1])

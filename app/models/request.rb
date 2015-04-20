@@ -11,13 +11,21 @@ class Request < ActiveRecord::Base
   
   delegate :full_name, to: :user
   
-  # Returns an array of requests for a given user that have status of accepted
+  # Returns an array of future requests that a given user is babysitting for that have status of accepted
   def self.babysitting_info(user)
-    where(["babysitter_id = ? and status = ?", user.id, 'accepted']).sort_by { |request| request[:start] }
+    where(["babysitter_id = ? and status = ? and start > ?", user.id, 'accepted', DateTime.now]).sort_by { |request| request[:start] }
   end
   
   def change_status_to_accepted
     self.update_attribute(:status, 'accepted')
+  end
+  
+  def change_status_to_expired
+    self.update_attribute(:status, 'expired')
+  end
+  
+  def change_status_to_completed
+    self.update_attribute(:status, 'completed')
   end
   
   # Sets the babysitter_id to the id of the user that accepted the request
@@ -50,5 +58,5 @@ class Request < ActiveRecord::Base
   def groups_original_request_not_accepted_from
     self.group_ids.reject { |group_id| group_id == self.group_id }
   end
-  
+
 end

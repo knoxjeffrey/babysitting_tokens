@@ -17,15 +17,16 @@ describe Request do
   end
   
   describe :babysitting_info do
-    it "returns an array of dates where the current user is the babysitter" do
+    it "returns an array of only future dates where the current user is the babysitter" do
       current_user = object_generator(:user)
       friend_user = object_generator(:user)
       group = object_generator(:group)
       group_member1 = object_generator(:user_group, user: current_user, group: group) 
-      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
-      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
+      group_member2 = object_generator(:user_group, user: friend_user, group: group)
+      request1 = object_generator(:request, start: "2013-03-17 19:00:00", finish: "2013-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
+      request2 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
 
-      expect(Request.babysitting_info(current_user)).to eq([request1])
+      expect(Request.babysitting_info(current_user)).to eq([request2])
     end
   end
   
@@ -40,6 +41,34 @@ describe Request do
       
       request1.change_status_to_accepted
       expect(request1.status).to eq('accepted')
+    end
+  end
+  
+  describe :change_status_to_expired do
+    it "changes the status of the request to accepted" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.change_status_to_expired
+      expect(request1.status).to eq('expired')
+    end
+  end
+  
+  describe :change_status_to_completed do
+    it "changes the status of the request to accepted" do
+      current_user = object_generator(:user)
+      friend_user = object_generator(:user)
+      group = object_generator(:group)
+      group_member1 = object_generator(:user_group, user: current_user, group: group) 
+      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
+      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id)
+      
+      request1.change_status_to_completed
+      expect(request1.status).to eq('completed')
     end
   end
   

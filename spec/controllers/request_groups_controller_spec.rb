@@ -36,7 +36,7 @@ describe RequestGroupsController do
       
       context "when the request has been made to one group" do
 
-        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group1.id) }
+        let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, group_ids: group1.id) }
       
         before do 
           set_current_user_session
@@ -75,7 +75,7 @@ describe RequestGroupsController do
         
         let!(:group2) { object_generator(:group, admin: friend_user) }
         let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group2) }
-        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: [group1.id, group2.id]) }
+        let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, group_ids: [group1.id, group2.id]) }
       
         before do 
           set_current_user_session
@@ -117,7 +117,7 @@ describe RequestGroupsController do
       let(:friend_user) { object_generator(:user) }
       let!(:group) { object_generator(:group, admin: friend_user) }
       let!(:group_member) { object_generator(:user_group, user: friend_user, group: group) }
-      let(:request1) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id) }
+      let(:request1) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, group_ids: group.id) }
       
       it_behaves_like "require_sign_in" do
         let(:action) { put :update, id: request1 }

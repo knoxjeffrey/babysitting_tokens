@@ -14,15 +14,59 @@ describe User do
   
   it { should validate_length_of(:password).is_at_least(5) } 
   
-  describe :requests_except_complete do
-    it "returns all current user requests without a status of complete" do
+  describe :waiting_and_accepted_requests do
+    it "returns all current user requests with a status of waiting or accepted" do
       user = object_generator(:user)
       group = object_generator(:group)
       group_member = object_generator(:user_group, user: user, group: group) 
       request1 = object_generator(:request, user: user, status: 'complete', group_ids: group.id)
       request2 = object_generator(:request, user: user, group_ids: group.id)
       
-      expect(user.requests_except_complete).to eq([request2])
+      expect(user.waiting_and_accepted_requests).to eq([request2])
+    end
+    
+    context "with a status of waiting that is past the start date" do
+      
+      let!(:user) { object_generator(:user) }
+      let!(:group) { object_generator(:group) }
+      let!(:group2) { object_generator(:group) }
+      let!(:group_member) { object_generator(:user_group, user: user, group: group) }
+      let!(:group_member2) { object_generator(:user_group, user: user, group: group2) }
+      let!(:request) { object_generator(:request, start: "2013-03-17 19:00:00", finish: "2013-03-17 22:00:00", user: user, group_ids: [group.id, group2.id]) }
+      
+      it "does not return the request" do
+        expect(user.waiting_and_accepted_requests).to eq([])
+      end
+      
+      it "changes the request status to expired" do
+        user.waiting_and_accepted_requests
+        expect(Request.first.status).to eq('expired')
+      end
+      
+      it "adds the tokens for the request back to the usergroups it was made for" do
+        user.waiting_and_accepted_requests
+        tokens_array = user.user_groups.map { |group| group.tokens }
+        expect(tokens_array.sum).to eq(46)
+      end
+      
+    end
+    
+    context "with a status of accepted that is past the start date" do
+      
+      let!(:user) { object_generator(:user) }
+      let!(:group) { object_generator(:group) }
+      let!(:group_member) { object_generator(:user_group, user: user, group: group) }
+      let!(:request) { object_generator(:request, start: "2013-03-17 19:00:00", finish: "2013-03-17 22:00:00", user: user, group_ids: group.id, status: 'accepted') }
+      
+      it "does not return the request" do
+        expect(user.waiting_and_accepted_requests).to eq([])
+      end
+      
+      it "changes the request status to expired" do
+        user.waiting_and_accepted_requests
+        expect(Request.first.status).to eq('completed')
+      end
+      
     end
   end
   
@@ -82,7 +126,7 @@ describe User do
     context "when user belongs to one group" do
       
       it "removes tokens from the current user for that group" do
-        request = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id)
+        request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id)
         current_user.subtract_tokens([group.id], request)
         
         expect(current_user.user_groups.first.tokens).to eq(17)
@@ -95,7 +139,7 @@ describe User do
       it "removes tokens from the current user for all groups" do
         group2 = object_generator(:group)
         group_member2 = object_generator(:user_group, user: current_user, group: group2)
-        request = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id])
+        request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id])
         current_user.subtract_tokens([group.id, group2.id], request)
         
         tokens_array = current_user.user_groups.map { |group| group.tokens }
@@ -111,7 +155,7 @@ describe User do
       friend_user = object_generator(:user)
       group = object_generator(:group)
       group_member = object_generator(:user_group, user: current_user, group: group) 
-      request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id)
+      request1 = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, group_ids: group.id)
       current_user.add_tokens(RequestGroup.first)
       
       expect(current_user.user_groups.first.tokens).to eq(23)
