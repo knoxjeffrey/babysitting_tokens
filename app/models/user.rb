@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
     if requests.where(["start < ?", DateTime.now])
       handle_waiting_requests_with_past_start_date(requests)
       handle_accepted_requests_with_past_start_date(requests)
+      return self.requests.where(status: ['waiting', 'accepted'])
     end
   end
   
@@ -63,7 +64,6 @@ class User < ActiveRecord::Base
       request.change_status_to_expired
       request.request_groups.each { |request_group| self.add_tokens(request_group) }
     end
-    return self.requests.where(status: ['waiting', 'accepted'])
   end 
   
   def handle_accepted_requests_with_past_start_date(requests)
@@ -71,7 +71,6 @@ class User < ActiveRecord::Base
     old_accepted_requests.each do |request| 
       request.change_status_to_completed
     end
-    return self.requests.where(status: ['waiting', 'accepted'])
   end
   
   # Returns an array of all request_groups from the groups the user is in, including the user

@@ -17,15 +17,16 @@ describe Request do
   end
   
   describe :babysitting_info do
-    it "returns an array of dates where the current user is the babysitter" do
+    it "returns an array of future dates where the current user is the babysitter" do
       current_user = object_generator(:user)
       friend_user = object_generator(:user)
       group = object_generator(:group)
       group_member1 = object_generator(:user_group, user: current_user, group: group) 
-      group_member2 = object_generator(:user_group, user: friend_user, group: group) 
-      request1 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
+      group_member2 = object_generator(:user_group, user: friend_user, group: group)
+      request1 = object_generator(:request, start: "2013-03-17 19:00:00", finish: "2013-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
+      request2 = object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, status: 'accepted')
 
-      expect(Request.babysitting_info(current_user)).to eq([request1])
+      expect(Request.babysitting_info(current_user)).to eq([request2])
     end
   end
   

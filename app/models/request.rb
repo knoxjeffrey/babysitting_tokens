@@ -11,9 +11,9 @@ class Request < ActiveRecord::Base
   
   delegate :full_name, to: :user
   
-  # Returns an array of requests for a given user that have status of accepted
+  # Returns an array of future requests that a given user is babysitting for that have status of accepted
   def self.babysitting_info(user)
-    where(["babysitter_id = ? and status = ?", user.id, 'accepted']).sort_by { |request| request[:start] }
+    where(["babysitter_id = ? and status = ? and start > ?", user.id, 'accepted', DateTime.now]).sort_by { |request| request[:start] }
   end
   
   def change_status_to_accepted
