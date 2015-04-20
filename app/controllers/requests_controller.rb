@@ -29,6 +29,27 @@ class RequestsController < ApplicationController
     end
   end
   
+  def edit
+    @request = Request.find(params[:id])
+  end
+  
+  def update
+    @request = Request.find(params[:id])
+    @request.assign_attributes(request_params)
+    if @request.valid?
+      if insufficient_tokens?
+        flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+        render :update
+      else
+        @request.save
+        flash[:success] = "You successfully altered your request for freedom!"
+        redirect_to home_path
+      end
+    else
+      render :update
+    end
+  end
+  
   # An array of all the requests the current user is babysitting for with status accepted
   def my_babysitting_dates
     @current_user_babysitting_for_requests = Request.babysitting_info(current_user)

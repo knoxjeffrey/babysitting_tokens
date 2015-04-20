@@ -33,6 +33,9 @@
                   %tr{ class: row_color(user_request.status) }
                     %td= display_friendly_date(user_request.start)
                     %td= user_request.babysitter_name
+                    - if user_request.status == 'waiting'
+                      %td
+                        =link_to 'Edit', edit_my_request_path(user_request), class: "btn btn-success btn-xs"
                 
     .col-lg-5
       .other_nights
