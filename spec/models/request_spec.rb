@@ -17,7 +17,7 @@ describe Request do
   end
   
   describe :babysitting_info do
-    it "returns an array of future dates where the current user is the babysitter" do
+    it "returns an array of only future dates where the current user is the babysitter" do
       current_user = object_generator(:user)
       friend_user = object_generator(:user)
       group = object_generator(:group)

@@ -126,7 +126,7 @@ describe User do
     context "when user belongs to one group" do
       
       it "removes tokens from the current user for that group" do
-        request = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id)
+        request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id)
         current_user.subtract_tokens([group.id], request)
         
         expect(current_user.user_groups.first.tokens).to eq(17)
@@ -139,7 +139,7 @@ describe User do
       it "removes tokens from the current user for all groups" do
         group2 = object_generator(:group)
         group_member2 = object_generator(:user_group, user: current_user, group: group2)
-        request = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id])
+        request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id])
         current_user.subtract_tokens([group.id, group2.id], request)
         
         tokens_array = current_user.user_groups.map { |group| group.tokens }
@@ -155,7 +155,7 @@ describe User do
       friend_user = object_generator(:user)
       group = object_generator(:group)
       group_member = object_generator(:user_group, user: current_user, group: group) 
-      request1 = object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, group_ids: group.id)
+      request1 = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, group_ids: group.id)
       current_user.add_tokens(RequestGroup.first)
       
       expect(current_user.user_groups.first.tokens).to eq(23)

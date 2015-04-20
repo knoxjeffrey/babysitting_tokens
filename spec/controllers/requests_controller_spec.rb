@@ -169,7 +169,7 @@ describe RequestsController do
         let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
   
         before do   
-          post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", group_ids: [group.id])
+          post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id])
         end
     
         it "creates a new request" do
@@ -201,7 +201,7 @@ describe RequestsController do
         let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
         
         before do
-          post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", group_ids: [group.id, group2.id])
+          post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id, group2.id])
         end
         
         it "creates one request" do
@@ -240,7 +240,7 @@ describe RequestsController do
         context "when the user is only a member of one group" do
           
           before do
-            post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", group_ids: [group.id])
+            post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id])
           end
           
           it "does not create a new request" do
@@ -265,7 +265,7 @@ describe RequestsController do
           let!(:group_membe2) { object_generator(:user_group, user: current_user, group: group2, tokens: 50) }
           
           before do
-            post :create, request: generate_attributes_for(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", group_ids: [group.id, group2.id])
+            post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id, group2.id])
           end
           
           it "does not create a new request" do
@@ -368,12 +368,12 @@ describe RequestsController do
         let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
         let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
         let!(:group_member3) { object_generator(:user_group, user: current_user, group: group3) }
-        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id) }
+        let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id) }
       
         context "with changes" do
         
           before do
-            put :update, id: request.id, request: { start: "2015-03-17 20:00:00", finish: "2015-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
+            put :update, id: request.id, request: { start: "2030-03-17 20:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
             request.reload
           end  
             
@@ -383,11 +383,11 @@ describe RequestsController do
           end
         
           it "changes the start date of the request" do
-            expect(request.start).to eq("2015-03-17 20:00:00")
+            expect(request.start).to eq("2030-03-17 20:00:00")
           end
         
           it "changes the finish date of the request" do
-            expect(request.finish).to eq("2015-03-17 23:00:00")
+            expect(request.finish).to eq("2030-03-17 23:00:00")
           end
         
           it "deletes any unchecked boxes from RequestGroup table" do
@@ -405,7 +405,7 @@ describe RequestsController do
         context "with no changes" do
         
           before do
-            put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id] }
+            put :update, id: request.id, request: { start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id] }
             request.reload
           end
         
@@ -414,11 +414,11 @@ describe RequestsController do
           end
         
           it "keeps the start date of the request" do
-            expect(request.start).to eq("2015-03-17 19:00:00")
+            expect(request.start).to eq("2030-03-17 19:00:00")
           end
         
           it "keeps the finish date of the request" do
-            expect(request.finish).to eq("2015-03-17 22:00:00")
+            expect(request.finish).to eq("2030-03-17 22:00:00")
           end
         
           it "keeps the same entry in RequestGroup table" do
@@ -431,16 +431,16 @@ describe RequestsController do
         context "with invalid user input" do
         
           before do
-            put :update, id: request.id, request: { start: "2015-03-17 18:00:00", finish: "", user: current_user, group_ids: [group.id] }
+            put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "", user: current_user, group_ids: [group.id] }
             request.reload
           end
         
           it "keeps the start date of the original request" do
-            expect(request.start).to eq("2015-03-17 19:00:00")
+            expect(request.start).to eq("2030-03-17 19:00:00")
           end
         
           it "keeps the finish date of the original request" do
-            expect(request.finish).to eq("2015-03-17 22:00:00")
+            expect(request.finish).to eq("2030-03-17 22:00:00")
           end
         
           it "renders the update template" do
@@ -452,16 +452,16 @@ describe RequestsController do
         context "with user having insufficient tokens" do
         
           before do
-            put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-27 22:00:00", user: current_user, group_ids: [group.id] }
+            put :update, id: request.id, request: { start: "2030-03-17 19:00:00", finish: "2030-03-27 22:00:00", user: current_user, group_ids: [group.id] }
             request.reload
           end
         
           it "keeps the start date of the original request" do
-            expect(request.start).to eq("2015-03-17 19:00:00")
+            expect(request.start).to eq("2030-03-17 19:00:00")
           end
         
           it "keeps the finish date of the original request" do
-            expect(request.finish).to eq("2015-03-17 22:00:00")
+            expect(request.finish).to eq("2030-03-17 22:00:00")
           end
         
           it "renders the update template" do
@@ -479,10 +479,10 @@ describe RequestsController do
 
         let!(:group) { object_generator(:group, admin: current_user) }
         let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
-        let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: group.id, status: "accepted") }
+        let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id, status: "accepted") }
       
         before do
-          put :update, id: request.id, request: { start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id], status: "accepted" }
+          put :update, id: request.id, request: { start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id], status: "accepted" }
           request.reload
         end
       
@@ -522,7 +522,7 @@ describe RequestsController do
     let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
     let!(:group_member3) { object_generator(:user_group, user: friend_user, group: group) }
     let!(:group_member3) { object_generator(:user_group, user: friend_user, group: group2) }
-    let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id], group_id: group.id, babysitter_id: friend_user.id) }
+    let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id], group_id: group.id, babysitter_id: friend_user.id) }
   
     context "with authenticated user" do
       
@@ -585,7 +585,7 @@ describe RequestsController do
       let!(:group) { object_generator(:group, admin: current_user) }
       let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
       let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
-      let!(:request) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
+      let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: group.id, group_id: group.id) }
       
       it "clears the babysitter_id" do
         put :cancel_babysitting_date, id: request.id
@@ -619,7 +619,7 @@ describe RequestsController do
         let!(:group2) { object_generator(:group, admin: current_user) }
         let!(:group_member3) { object_generator(:user_group, user: current_user, group: group2) }
         let!(:group_member4) { object_generator(:user_group, user: friend_user, group: group2) }
-        let!(:request2) { object_generator(:request, start: "2015-03-17 19:00:00", finish: "2015-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: [group.id, group2.id], group_id: group.id) }
+        let!(:request2) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: friend_user, babysitter_id: current_user.id, status: 'accepted', group_ids: [group.id, group2.id], group_id: group.id) }
         
         it "does not change the tokens for the requester user group the request was originally made from" do
           put :cancel_babysitting_date, id: request2.id
