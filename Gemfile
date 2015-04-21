@@ -35,6 +35,6 @@ group :test do
   gem 'launchy', '~> 2.4.3'
 end
 
-group :production do
+group :production, :staging  do
   gem 'rails_12factor'
 end
