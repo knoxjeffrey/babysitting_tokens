@@ -8,13 +8,13 @@ deployment:
     commands:
       - heroku maintenance:on --app babysitting-tokens
       - heroku pg:backups capture --app babysitting-tokens
-      - git push git@heroku.com:babysitting-tokens.git $CIRCLE_SHA1:refs/heads/master
+      - git push git@heroku.com:babysitting-tokens.git $CIRCLE_SHA1:master
       - heroku run rake db:migrate --app babysitting-tokens
       - heroku maintenance:off --app babysitting-tokens
   staging:
     branch: staging
     commands:
       - heroku maintenance:on --app babysitting-tokens-staging
-      - git push git@heroku.com:babysitting-tokens-staging.git $CIRCLE_SHA1:refs/heads/master
+      - git push git@heroku.com:babysitting-tokens-staging.git $CIRCLE_SHA1:master
       - heroku run rake db:migrate --app babysitting-tokens-staging
       - heroku maintenance:off --app babysitting-tokens-staging
