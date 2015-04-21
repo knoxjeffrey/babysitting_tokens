@@ -18,3 +18,4 @@ deployment:
       - git push git@heroku.com:babysitting-tokens-staging.git $CIRCLE_SHA1:refs/heads/master
       - heroku run rake db:migrate --app babysitting-tokens-staging
       - heroku maintenance:off --app babysitting-tokens-staging
+      
