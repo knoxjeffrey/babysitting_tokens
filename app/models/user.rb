@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   
   has_many :requests, -> { order start: :asc }
   has_many :user_groups
-  has_many :groups, through: :user_groups
+  has_many :groups, -> { order group_name: :asc }, through: :user_groups
   
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: {minimum: 5}
@@ -11,7 +11,10 @@ class User < ActiveRecord::Base
   
   has_secure_password validations: false
   
-  # returns all the users requests that aren't complete
+  # returns all the users requests with a status of waiting or accepted
+  # Also acts as a database tidy up by changing any status of waiting with a start date that has now passed
+  # to a status of expired and will add the tokens back to the user groups
+  # Also changes any accepted status with a start date that has now passed to a status of completed
   def waiting_and_accepted_requests
     requests = self.requests.where(status: ['waiting', 'accepted'])
     if requests.where(["start < ?", DateTime.now])
@@ -42,22 +45,24 @@ class User < ActiveRecord::Base
   # Subtracts tokens from a selected list of groups a user is a member of
   # The subtracted tokens depends on the length of the request
   def subtract_tokens(array_of_group_ids, request)
-    array_of_group_ids.each do |group|
+    array_of_group_ids.each do |group_id|
       tokens_requested = tokens_for_request(request)
-      user_group_record = UserGroup.find_by(user: self, group_id: group)
+      user_group_record = UserGroup.find_by(user: self, group_id: group_id)
       updated_tokens = user_group_record.tokens - tokens_for_request(request)
-      user_group_record.update_attributes(tokens: updated_tokens)
+      user_group_record.update_tokens(updated_tokens)
     end
   end
   
   def add_tokens(request_group)
     user_group = UserGroup.find_by(user: self, group_id: request_group.group)
     updated_tokens = user_group.tokens + tokens_for_request(request_group.request)
-    user_group.update_attribute(:tokens, updated_tokens)
+    user_group.update_tokens(updated_tokens)
   end
     
   private
   
+  # Changes any status of waiting with a start date that has now passed
+  # to a status of expired and will add the tokens back to the user groups
   def handle_waiting_requests_with_past_start_date(requests)
     expired_requests = requests.where(["status = ? and start < ?", 'waiting', DateTime.now])
     expired_requests.each do |request| 
@@ -65,12 +70,10 @@ class User < ActiveRecord::Base
       request.request_groups.each { |request_group| self.add_tokens(request_group) }
     end
   end 
-  
+  # Changes any accepted status with a start date that has now passed to a status of completed
   def handle_accepted_requests_with_past_start_date(requests)
     old_accepted_requests = requests.where(["status = ? and start < ?", 'accepted', DateTime.now])
-    old_accepted_requests.each do |request| 
-      request.change_status_to_completed
-    end
+    old_accepted_requests.each { |request| request.change_status_to_completed }
   end
   
   # Returns an array of all request_groups from the groups the user is in, including the user

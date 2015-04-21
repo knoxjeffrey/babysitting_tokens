@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
   
   def create
     @group = current_user.groups.build(request_params)
-    @group.admin = current_user
+    @group.admin = current_user #set user_id for group to represent the group admin
   
     if @group.save
       UserGroup.create(user: current_user, group: @group)

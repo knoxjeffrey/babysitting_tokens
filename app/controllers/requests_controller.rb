@@ -118,7 +118,7 @@ class RequestsController < ApplicationController
     current_user.subtract_tokens([request.group_id], request)
   end
   
-  #Deduct the tokens from all the requesters groups that the original request was made to except the user group that the 
+  # Deduct the tokens from all the requesters groups that the original request was made to except the user group that the 
   # request had originally been accepted from
   def deduct_tokens_from_original_request_groups_not_accepted(request)
     selected_group_ids = request.groups_original_request_not_accepted_from
