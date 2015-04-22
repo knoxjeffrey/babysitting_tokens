@@ -18,13 +18,9 @@ BabysittingTokens::Application.configure do
 
   config.active_support.deprecation = :notify
   
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :user_name => ENV['MAILTRAP_USERNAME'],
-    :password => ENV['MAILTRAP_PASSWORD'],
-    :address => 'mailtrap.io',
-    :domain => 'mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
-  }
+  MandrillMailer.configure do |config|
+    config.api_key = ENV['MANDRILL_API_TEST_KEY']
+  end
+
+  config.mandrill_mailer.default_url_options = { host: 'http://babysitting-tokens-staging.herokuapp.com/' }
 end

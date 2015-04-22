@@ -8,7 +8,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     
-    @user.save ? (redirect_to sign_in_path) : (render :new)
+    if @user.save
+      InvitationMailer.notify_on_user_signup(@user).deliver
+      redirect_to sign_in_path
+    else
+      render :new
+    end
   end 
   
   private
