@@ -15,6 +15,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 gem "figaro"
 gem 'puma'
 gem 'mandrill_mailer'
+gem 'sidekiq'
+gem 'sinatra', :require => nil
 
 group :development do
   gem 'thin'
