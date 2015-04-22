@@ -14,12 +14,12 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 gem "figaro"
 gem 'puma'
+gem 'mandrill_mailer'
 
 group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'letter_opener'
 end
 
 group :development, :test do

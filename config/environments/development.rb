@@ -20,4 +20,10 @@ BabysittingTokens::Application.configure do
   config.assets.debug = true
 
   config.eager_load = false
+  
+  MandrillMailer.configure do |config|
+    config.api_key = ENV['MANDRILL_API_TEST_KEY']
+  end
+  
+  config.mandrill_mailer.default_url_options = { :host => 'localhost' }
 end

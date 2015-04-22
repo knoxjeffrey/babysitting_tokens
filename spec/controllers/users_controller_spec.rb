@@ -44,5 +44,33 @@ describe UsersController do
         expect(assigns(:user)).to be_instance_of(User)
       end
     end
+    
+    context "sending emails" do
+      context "valid input details" do
+        before do
+          MandrillMailer.deliveries.clear 
+          post :create, user: { email: 'knoxjeffrey@outlook.com', password: 'password', full_name: 'Jeff Knox' }
+        end
+        
+        it "sends out the email" do
+          expect(MandrillMailer.deliveries.first.message["to"].first["email"]).to eq('knoxjeffrey@outlook.com')
+        end
+      
+        it "sends email containing the users full name" do
+          expect(MandrillMailer.deliveries.first.message["global_merge_vars"].first["content"]).to include("Jeff Knox")
+        end
+      end
+      
+      context "invalid input details" do
+        before do
+          MandrillMailer.deliveries.clear 
+          post :create, user: { email: 'junk' }
+        end
+        
+        it "does not send an email" do
+          expect(ActionMailer::Base.deliveries).to be_empty
+        end
+      end
+    end
   end
 end
