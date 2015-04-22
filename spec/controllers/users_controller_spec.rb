@@ -68,7 +68,7 @@ describe UsersController do
         end
         
         it "does not send an email" do
-          expect(ActionMailer::Base.deliveries).to be_empty
+          expect(MandrillMailer.deliveries.first).to be nil
         end
       end
     end
