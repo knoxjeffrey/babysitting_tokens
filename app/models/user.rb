@@ -58,6 +58,14 @@ class User < ActiveRecord::Base
     updated_tokens = user_group.tokens + tokens_for_request(request_group.request)
     user_group.update_tokens(updated_tokens)
   end
+  
+  def generate_token
+    self.update_column(:password_token, SecureRandom.urlsafe_base64)
+  end
+  
+  def remove_token!
+    self.update_column(:password_token, nil)
+  end
     
   private
   
