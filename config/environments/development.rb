@@ -24,6 +24,6 @@ BabysittingTokens::Application.configure do
   MandrillMailer.configure do |config|
     config.api_key = ENV['MANDRILL_API_TEST_KEY']
   end
-  
-  config.mandrill_mailer.default_url_options = { :host => 'localhost' }
+
+  config.mandrill_mailer.default_url_options = { host: 'localhost:3000' }
 end

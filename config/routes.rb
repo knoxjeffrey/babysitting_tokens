@@ -17,12 +17,19 @@ Rails.application.routes.draw do
   get '/sign_out', to: 'sessions#destroy'
 
   get '/new_group', to: 'groups#new'
-
   resources :groups, only: [:create, :show]
 
   resources :request_groups, only: [:show, :update]
-
+  
+  get '/forgot_password', to: 'forgot_passwords#new'
+  post '/forgot_password', to: 'forgot_passwords#create'
+  get '/forgot_password_confirmation', to: 'forgot_passwords#confirm'
+  
+  resources :password_resets, only: [:show, :create]
+  
+  get '/expired_token', to: 'pages#expired_token'
   root to: 'pages#index'
+  
   get 'ui(/:action)', controller: 'ui'
  
 end
