@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      MyMailer.notify_on_user_signup(@user).deliver
+      MyMailer.delay.notify_on_user_signup(@user)
       redirect_to sign_in_path
     else
       render :new
