@@ -35,8 +35,10 @@ describe GroupInvitationsController do
     
     context "with authenticated user" do
       
-      before { set_current_user_session }
-      #after { ActionMailer::Base.deliveries.clear }
+      before do
+        MandrillMailer.deliveries.clear 
+        set_current_user_session
+      end
       
       context "with valid input" do
         
@@ -54,7 +56,7 @@ describe GroupInvitationsController do
         end
         
         it "sends an email to the invited friend" do
-          #expect(ActionMailer::Base.deliveries.last.to).to eq(['test@test.com'])
+          expect(MandrillMailer.deliveries.first.message["to"].first["email"]).to eq('test@test.com')
         end
         
         it "generates a successful flash message" do
@@ -67,14 +69,14 @@ describe GroupInvitationsController do
         let!(:group) { object_generator(:group, admin: current_user) }
         let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
         
-        before { post :create, id: group.id, group_invitation: generate_attributes_for(:group_invitation, friend_name: "", friend_email: "test@test.com") }
+        before { post :create, id: group.id, group_invitation: generate_attributes_for(:group_invitation, friend_name: nil, friend_email: "test@test.com") }
         
         it "does not create a new invitation" do
           expect(GroupInvitation.count).to eq(0)
         end
         
         it "does not send out an invitation email" do
-          #expect(ActionMailer::Base.deliveries).to be_empty
+          expect(MandrillMailer.deliveries.first).to be nil
         end
   
         it "renders the new template" do

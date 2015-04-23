@@ -16,6 +16,10 @@ class UsersController < ApplicationController
     end
   end 
   
+  def new_invitation_with_identifier
+    
+  end
+  
   private
   
   def user_params

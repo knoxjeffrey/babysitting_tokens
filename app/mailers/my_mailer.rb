@@ -4,7 +4,7 @@ class MyMailer < MandrillMailer::TemplateMailer
   def notify_on_user_signup(user)
     
     mandrill_mail(
-      template: 'freedom-tokens-new-user',
+      template: 'babysitting-tokens-new-user',
       subject: 'Welcome from Babysitting Tokens',
 
       to: user.email,
@@ -25,7 +25,25 @@ class MyMailer < MandrillMailer::TemplateMailer
       to: user.email,
       vars: {
         'USER_NAME' => user.full_name,
-        'PASSWORD_RESET_URL' => password_reset_url(user.password_token),
+        'PASSWORD_RESET_URL' => password_reset_url(user.password_token)
+      },
+      important: true,
+      inline_css: true,
+     )
+  end
+  
+  def send_invite(group_invitation)
+    
+    mandrill_mail(
+      template: 'babysitting-tokens-friend-invite',
+      subject: "Invitation from #{group_invitation.inviter.full_name} to join Babysitting Tokens",
+      
+      from: group_invitation.inviter.email,
+      to: group_invitation.friend_email,
+      vars: {
+        'INVITER_NAME' => group_invitation.inviter.full_name,
+        'MESSAGE' => group_invitation.message,
+        'INVITATION_URL' => register_with_identifier_url(group_invitation.identifier)
       },
       important: true,
       inline_css: true,
