@@ -11,15 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422151703) do
+ActiveRecord::Schema.define(version: 20150423140537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "group_invitations", force: :cascade do |t|
+    t.integer  "inviter_id"
+    t.integer  "group_id"
+    t.string   "friend_name"
+    t.string   "friend_email"
+    t.string   "token"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string   "group_name"
     t.string   "location"
-    t.integer  "user_id"
+    t.integer  "admin_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

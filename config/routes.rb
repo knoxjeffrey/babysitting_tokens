@@ -19,7 +19,12 @@ Rails.application.routes.draw do
   get '/sign_out', to: 'sessions#destroy'
 
   get '/new_group', to: 'groups#new'
-  resources :groups, only: [:create, :show]
+  resources :groups, only: [:create, :show] do
+    member do
+      get '/invite_friend', to: 'group_invitations#new'
+      post '/invite_friend', to: 'group_invitations#create'
+    end
+  end
 
   resources :request_groups, only: [:show, :update]
   
