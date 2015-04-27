@@ -8,6 +8,10 @@ class GroupInvitation < ActiveRecord::Base
   validates :friend_email, presence: true, uniqueness: true
   validates_presence_of :friend_name, :message
   
+  def clear_identifier_column
+    self.update_column(:identifier, nil)
+  end
+  
   private
   
   def generate_identifier

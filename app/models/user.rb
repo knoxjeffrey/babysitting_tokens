@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
     self.update_column(:password_token, SecureRandom.urlsafe_base64)
   end
   
-  def remove_token!
+  def remove_password_token!
     self.update_column(:password_token, nil)
   end
     

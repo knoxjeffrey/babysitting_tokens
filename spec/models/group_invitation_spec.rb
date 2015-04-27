@@ -17,5 +17,13 @@ describe GroupInvitation do
       expect(group_invitation.identifier).not_to be nil
     end
   end
+  
+  describe :clear_identifier_column do
+    it "sets identifier column to nil" do
+      group_invitation = object_generator(:group_invitation)
+      group_invitation.clear_identifier_column
+      expect(GroupInvitation.last.identifier).to eq(nil)
+    end
+  end
 
 end

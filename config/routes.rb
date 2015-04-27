@@ -35,7 +35,8 @@ Rails.application.routes.draw do
   
   resources :password_resets, only: [:show, :create]
   
-  get '/expired_token', to: 'pages#expired_token'
+  get '/expired_password_token', to: 'pages#expired_password_token'
+  get '/expired_identifier', to: 'pages#expired_identifier'
   root to: 'pages#index'
   
   get 'ui(/:action)', controller: 'ui'
