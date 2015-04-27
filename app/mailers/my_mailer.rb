@@ -36,7 +36,7 @@ class MyMailer < MandrillMailer::TemplateMailer
     
     mandrill_mail(
       template: 'babysitting-tokens-friend-invite',
-      subject: "Invitation from #{group_invitation.inviter.full_name} to join Babysitting Tokens",
+      subject: "Invitation from #{group_invitation.inviter.full_name} to join a Babysitting Tokens group",
       
       from: group_invitation.inviter.email,
       to: group_invitation.friend_email,

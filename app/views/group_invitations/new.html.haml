@@ -1,14 +1,14 @@
 = render 'shared/profile'
-    
+
 .home-body       
   %section.register.container
     .row
-      .col-sm-6.col-sm-offset-1
+      .col-sm-7.col-sm-offset-1
         = bootstrap_form_for @group_invitation, url: invite_friend_group_path do |f|
           %header
-            %h1 Invite a friend to join
+            %h1 Invite a friend to join #{@group.group_name}
           %br
           = f.text_field :friend_name
           = f.text_field :friend_email
-          = f.text_area :message, rows: 6, placeholder: "Please join this really cool site!"
+          = f.text_area :message, rows: 6
           = f.submit "Send Invitation", class: "btn btn-success"

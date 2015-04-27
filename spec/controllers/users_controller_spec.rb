@@ -51,7 +51,7 @@ describe UsersController do
         let(:inviter) { object_generator(:user) }
         let(:group_invitation) { object_generator(:group_invitation, inviter: inviter) }
       
-        it "delegates to InvitationHandler to handle invitation" do
+        it "delegates to GroupInvitationHandler to handle invitation" do
           handled_group_invitation = double("handled_group_invitation")                         
           allow(GroupInvitationHandler).to receive(:new).and_return(handled_group_invitation)
           expect(handled_group_invitation).to receive(:handle_group_invitation)
@@ -65,7 +65,7 @@ describe UsersController do
         let(:inviter) { object_generator(:user) }
         let(:group_invitation) { object_generator(:group_invitation, inviter: inviter) }
       
-        it "does not delegate to InvitationHandler to handle invitation" do
+        it "does not delegate to GroupInvitationHandler to handle invitation" do
           handled_invitation = double("handled_invitation")                         
           allow(GroupInvitationHandler).to receive(:new).and_return(handled_invitation)
           expect(handled_invitation).not_to receive(:handle_invitation)
@@ -105,26 +105,54 @@ describe UsersController do
     end
   end
   
-  describe "GET new_with_invitation_token" do
-    context "with valid token" do
-      let(:group_invitation) { object_generator(:group_invitation) }
+  describe "GET new_with_invitation_identifier" do
+    
+    context "with valid identifier" do
       
-      before { get :new_invitation_with_identifier, identifier: group_invitation.identifier }
+      context "with a non existing user" do
+        
+        let(:group_invitation) { object_generator(:group_invitation) }
+        
+        before { get :new_invitation_with_identifier, identifier: group_invitation.identifier }
       
-      it "renders the :new view template" do
-        expect(response).to render_template :new
+        it "renders the :new view template" do
+          expect(response).to render_template :new
+        end
+      
+        it "assigns @user with friend email" do
+          expect(assigns(:user).email).to eq(group_invitation.friend_email)
+        end
+      
+        it "sets @group_invitation_identifier" do
+          expect(assigns(:group_invitation_identifier)).to eq(group_invitation.identifier)
+        end
+        
       end
       
-      it "assigns @user with friend email" do
-        expect(assigns(:user).email).to eq(group_invitation.friend_email)
+      context "with an existing user" do
+        
+        let!(:user) { object_generator(:user, email: 'knoxjeffrey@outlook.com') }
+        let(:group_invitation) { object_generator(:group_invitation, friend_email: user.email) }
+        
+        it "redirects to home_path" do
+          get :new_invitation_with_identifier, identifier: group_invitation.identifier
+          
+          expect(response).to redirect_to home_path
+        end
+        
+        it "delegates to GroupInvitationHandler to handle invitation" do
+          handled_group_invitation = double("handled_group_invitation")                         
+          allow(GroupInvitationHandler).to receive(:new).and_return(handled_group_invitation)
+          expect(handled_group_invitation).to receive(:handle_group_invitation)
+          
+          get :new_invitation_with_identifier, identifier: group_invitation.identifier
+        end 
+        
       end
       
-      it "sets @group_invitation_identifier" do
-        expect(assigns(:group_invitation_identifier)).to eq(group_invitation.identifier)
-      end
     end
     
-    context "with invalid token" do
+    context "with invalid identifier" do
       it "redirects to expired identifier path" do
         get :new_invitation_with_identifier, identifier: 'not valid'
         expect(response).to redirect_to expired_identifier_path

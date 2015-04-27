@@ -4,6 +4,7 @@ class GroupInvitationsController < ApplicationController
   
   def new
     @group_invitation = GroupInvitation.new
+    @group = Group.find(params[:id])
   end
 
   def create
@@ -13,6 +14,7 @@ class GroupInvitationsController < ApplicationController
       flash[:success] = "You have successfully sent an invitaton to #{@group_invitation.friend_email}"
       redirect_to group_path(params[:id])
     else
+      @group = Group.find(params[:id])
       render :new
     end
   end
