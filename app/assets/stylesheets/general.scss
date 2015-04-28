@@ -1,9 +1,24 @@
-body {
-  padding-left: 20px;
+html, body {
+  /*padding-left: 20px;
   padding-right: 20px;
-  padding-top: 20px;
+  padding-top: 20px;*/
+  
+  height: 100%;
 }
 
 .label-status {
   margin-left: 10px;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+/* Set the fixed height of the footer here */
+#push, #panel-footer {
+  height: 60px;
 }

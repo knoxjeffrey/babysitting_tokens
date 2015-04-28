@@ -8,11 +8,13 @@
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
   %body
-    %header
-      = render 'shared/header'
-    %section.content.clearfix
-      = render 'shared/messages'
-      = yield
-    %footer
-    %hr
-      &copy 2015 Freedom Tokens
+    #wrap
+      %header
+        = render 'shared/header'
+      %section.content.clearfix
+        = render 'shared/messages'
+        = yield
+      #push
+    #panel-footer.pull-right
+      #container
+        &copy 2015 Freedom Tokens
