@@ -22,4 +22,10 @@ module ApplicationHelper
     " #{display_friendly_date_and_time(request.start)} for #{request.user.full_name}"
   end
   
+  def avatar_url(email, size)
+    gravatar_id = Digest::MD5::hexdigest(email).downcase
+    default_url = "https://s3-eu-west-1.amazonaws.com/babysitting-tokens-development/UniversalImages/baby_avatar.png"
+    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
+  end
+  
 end

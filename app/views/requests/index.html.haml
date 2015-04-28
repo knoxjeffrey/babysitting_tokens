@@ -28,6 +28,8 @@
                 %tr
                   %th Date
                   %th Babysitter
+                  %th
+                  %th
               %tbody
                 - @user_requests.each do |user_request|
                   %tr{ class: row_color(user_request.status) }
@@ -36,8 +38,10 @@
                     - if user_request.status == 'waiting'
                       %td
                         =link_to 'Edit', edit_my_request_path(user_request), class: "btn btn-success btn-xs"
+                    - else
+                      %td
                     %td
-                      =link_to 'Delete', request_path(user_request), method: 'delete', class: "btn btn-success btn-xs"
+                      =link_to 'Delete', request_path(user_request), method: 'delete', class: "btn btn-danger btn-xs"
                 
     .col-lg-5
       .other_nights

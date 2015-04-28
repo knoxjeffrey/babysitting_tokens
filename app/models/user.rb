@@ -63,8 +63,18 @@ class User < ActiveRecord::Base
     self.update_column(:password_token, SecureRandom.urlsafe_base64)
   end
   
-  def remove_token!
+  def remove_password_token!
     self.update_column(:password_token, nil)
+  end
+  
+  # An invited user will automatically join the group from which the inviter made the invite request from
+  def join_inviters_group(group)
+    UserGroup.create(user: self, group: group) unless self.already_member_of_user_group(group)
+  end
+  
+  # A user cannot join a user group they are already a member of
+  def already_member_of_user_group(group)
+    self.user_groups.exists?(group: group)
   end
     
   private

@@ -17,9 +17,9 @@ describe PasswordResetsController do
     end 
     
     context "with invalid token" do
-      it "redirects to expired token page" do
+      it "redirects to expired password token page" do
         get :show, id: '123456789'
-        expect(response).to redirect_to expired_token_path
+        expect(response).to redirect_to expired_password_token_path
       end
     end 
   end
@@ -75,9 +75,9 @@ describe PasswordResetsController do
     end
     
     context "with invalid token" do
-      it "redirects to the expired token path" do
+      it "redirects to the expired password token path" do
         post :create, id: '123456789', password: 'new_password'
-        expect(response).to redirect_to expired_token_path
+        expect(response).to redirect_to expired_password_token_path
       end
       
     end

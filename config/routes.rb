@@ -13,13 +13,19 @@ Rails.application.routes.draw do
 
   get '/register', to: 'users#new'
   post '/register', to: 'users#create'
+  get '/register/:identifier', to: 'users#new_invitation_with_identifier', as: :register_with_identifier
 
   get '/sign_in', to: 'sessions#new'
   post '/sign_in', to: 'sessions#create'
   get '/sign_out', to: 'sessions#destroy'
 
   get '/new_group', to: 'groups#new'
-  resources :groups, only: [:create, :show]
+  resources :groups, only: [:create, :show] do
+    member do
+      get '/invite_friend', to: 'group_invitations#new'
+      post '/invite_friend', to: 'group_invitations#create'
+    end
+  end
 
   resources :request_groups, only: [:show, :update]
   
@@ -29,7 +35,8 @@ Rails.application.routes.draw do
   
   resources :password_resets, only: [:show, :create]
   
-  get '/expired_token', to: 'pages#expired_token'
+  get '/expired_password_token', to: 'pages#expired_password_token'
+  get '/expired_identifier', to: 'pages#expired_identifier'
   root to: 'pages#index'
   
   get 'ui(/:action)', controller: 'ui'
