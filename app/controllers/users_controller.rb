@@ -9,17 +9,45 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      MyMailer.delay.notify_on_user_signup(@user)
+      check_for_invitation
+      send_welcome_email
       redirect_to sign_in_path
     else
       render :new
     end
   end 
   
+  def new_invitation_with_identifier
+    group_invitation = GroupInvitation.find_by_identifier(params[:identifier])
+    if group_invitation
+      if !!User.find_by_email(group_invitation.friend_email)
+        user = User.find_by_email(group_invitation.friend_email)
+        GroupInvitationHandler.new(user: user, group_invitation_identifier: group_invitation.identifier).handle_group_invitation
+        redirect_to home_path
+      else
+        @user = User.new(email: group_invitation.friend_email)
+        @group_invitation_identifier = group_invitation.identifier
+        render :new
+      end
+    else
+      redirect_to expired_identifier_path
+    end
+  end
+  
   private
   
   def user_params
     params.require(:user).permit(:email, :password, :full_name)
+  end
+  
+  def check_for_invitation
+    if params[:group_invitation_identifier].present?
+      GroupInvitationHandler.new(user: @user, group_invitation_identifier: params[:group_invitation_identifier]).handle_group_invitation
+    end
+  end
+  
+  def send_welcome_email
+    MyMailer.delay.notify_on_user_signup(@user)
   end
   
 end

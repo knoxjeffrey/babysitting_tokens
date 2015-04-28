@@ -6,7 +6,7 @@ class PasswordResetsController < ApplicationController
     if user
       @password_token = user.password_token
     else
-      redirect_to expired_token_path
+      redirect_to expired_password_token_path
     end
   end
   
@@ -16,7 +16,7 @@ class PasswordResetsController < ApplicationController
       user.password = params[:password]
       
       if user.save
-        user.remove_token!
+        user.remove_password_token!
         flash[:success] = "Your password has been changed, please sign in"
         redirect_to sign_in_path
       else
@@ -25,7 +25,7 @@ class PasswordResetsController < ApplicationController
         render :show
       end
     else
-      redirect_to expired_token_path
+      redirect_to expired_password_token_path
     end
   end
   
