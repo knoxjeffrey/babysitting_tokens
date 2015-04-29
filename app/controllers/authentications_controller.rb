@@ -4,6 +4,7 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env['omniauth.auth']
     authentication = Authentication.find_by(provider: omniauth['provider'], uid: omniauth['uid'])
+    
     # If person already has omniauth authentication, this will be associated with the User table. Create a session cookie
     # to log the person in
     if authentication
@@ -24,6 +25,7 @@ class AuthenticationsController < ApplicationController
         password = SecureRandom.urlsafe_base64
         user = User.new(email: email, full_name: full_name, password: password, password_confirmation: password)
         
+        #follow the same flow as UsersController create action
         if user.save
           user.authentications.create(provider: omniauth['provider'], uid: omniauth['uid'])
           check_for_invitation(user, env["omniauth.params"]['invite']) #invite added into link_to arguments from registration page
