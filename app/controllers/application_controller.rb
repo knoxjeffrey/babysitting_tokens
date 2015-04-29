@@ -27,9 +27,14 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # Handles the case when a new user joined from an invite from another user
   def check_for_invitation(user, identifier)
     if identifier.present?
       GroupInvitationHandler.new(user: user, group_invitation_identifier: identifier).handle_group_invitation
     end
+  end
+  
+  def send_welcome_email(user)
+    MyMailer.delay.notify_on_user_signup(user)
   end
 end

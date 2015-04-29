@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     
     if @user.save
       check_for_invitation(@user, params[:group_invitation_identifier])
-      send_welcome_email
+      send_welcome_email(@user)
       redirect_to sign_in_path
     else
       render :new
@@ -38,10 +38,6 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:email, :password, :full_name)
-  end
-  
-  def send_welcome_email
-    MyMailer.delay.notify_on_user_signup(@user)
   end
   
 end

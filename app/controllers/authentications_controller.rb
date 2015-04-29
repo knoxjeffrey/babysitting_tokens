@@ -26,8 +26,8 @@ class AuthenticationsController < ApplicationController
         
         if user.save
           user.authentications.create(provider: omniauth['provider'], uid: omniauth['uid'])
-          binding.pry
           check_for_invitation(user, env["omniauth.params"]['invite']) #invite added into link_to arguments from registration page
+          send_welcome_email(user)
           redirect_to sign_in_path
         else
           flash[:danger] = "Sorry we could not create an account using #{omniauth['provider'].capitalize}. Please use another registration method."
