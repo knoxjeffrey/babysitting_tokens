@@ -17,6 +17,8 @@ gem 'puma'
 gem 'mandrill_mailer'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'omniauth-facebook'
+gem "font-awesome-rails"
 
 group :development do
   gem 'thin'

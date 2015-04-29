@@ -26,4 +26,10 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+  
+  def check_for_invitation(user, identifier)
+    if identifier.present?
+      GroupInvitationHandler.new(user: user, group_invitation_identifier: identifier).handle_group_invitation
+    end
+  end
 end

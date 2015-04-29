@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
-      check_for_invitation
+      check_for_invitation(@user, params[:group_invitation_identifier])
       send_welcome_email
       redirect_to sign_in_path
     else
@@ -38,12 +38,6 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:email, :password, :full_name)
-  end
-  
-  def check_for_invitation
-    if params[:group_invitation_identifier].present?
-      GroupInvitationHandler.new(user: @user, group_invitation_identifier: params[:group_invitation_identifier]).handle_group_invitation
-    end
   end
   
   def send_welcome_email
