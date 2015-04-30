@@ -24,3 +24,14 @@
   src: url(asset_path('glyphicons-halflings-regular.eot'));
   src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
 }
+
+@font-face {
+  font-family: "picto-foundry-shopping-finance";
+  src: url(asset_path("picto-foundry-shopping-finance.eot"));
+  src: url(asset_path("picto-foundry-shopping-finance.eot?#iefix")) format("embedded-opentype"),
+       url(asset_path("picto-foundry-shopping-finance.woff")) format("woff"),
+       url(asset_path("picto-foundry-shopping-finance.ttf")) format("truetype"),
+       url(asset_path("picto-foundry-shopping-finance.svg#picto-foundry-shopping-finance")) format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
