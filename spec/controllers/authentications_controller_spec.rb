@@ -47,6 +47,25 @@ describe AuthenticationsController do
         end
         
       end
+      
+      context "signing in but with no facebook authentication" do
+        
+        it "redirects to home_path" do
+          get :create, provider: :facebook
+          expect(response).to redirect_to home_path
+        end
+        
+        it "displays a success message" do
+          get :create, provider: :facebook
+          expect(flash[:success]).to be_present
+        end
+        
+        it "creates a new authentication record" do
+           get :create, provider: :facebook
+           expect(Authentication.count).to eq(1)
+        end
+        
+      end
     end
     
     context "with no existing user account" do
