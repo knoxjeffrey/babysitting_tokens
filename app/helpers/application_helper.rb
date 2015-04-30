@@ -24,7 +24,7 @@ module ApplicationHelper
   
   def avatar_url(email, size)
     user = User.find_by(email: email)
-    if !!user.authentications
+    if user.authentications.present?
       "http://graph.facebook.com/#{user.authentications.last.uid}/picture?type=normal"
     else
       gravatar_id = Digest::MD5::hexdigest(email).downcase
