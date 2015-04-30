@@ -4,17 +4,22 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env['omniauth.auth']
     authentication = Authentication.find_by(provider: omniauth['provider'], uid: omniauth['uid'])
- 
-    # If person already has omniauth authentication, this will be associated with the User table. Create a session cookie
-    # to log the person in
-    if authentication
-      session[:user_id] = authentication.user.id #this is backed by the browsers cookie to track if the user is authenticated
-      redirect_to home_path
+    
     # If the user is signed in an wants to associate a social account through omniauth this will create a new Authentication
     # record and associate it with the user
-    elsif current_user
-      current_user.authentications.create(provider: omniauth['provider'], uid: omniauth['uid'])
-      flash[:success] = "Authentication successful"
+    if current_user
+      if current_user.email == omniauth['info']['email']
+        current_user.authentications.create(provider: omniauth['provider'], uid: omniauth['uid'])
+        flash[:success] = "Authentication successful"
+        redirect_to home_path
+      else
+        flash[:danger] = "Your #{omniauth['provider'].capitalize} email does match.  Please check you social credentials"
+        redirect_to home_path
+      end
+    # If person already has omniauth authentication, this will be associated with the User table. Create a session cookie
+    # to log the person in
+    elsif authentication
+      session[:user_id] = authentication.user.id #this is backed by the browsers cookie to track if the user is authenticated
       redirect_to home_path
     # If the user is signed out but has a user account and no facebook authentication and is trying to sign in
     elsif !!User.find_by(email: omniauth['info']['email'])

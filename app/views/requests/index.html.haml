@@ -3,7 +3,8 @@
 .home-body       
   .row
     .col-lg-3
-      =link_to 'Request For Freedom', my_request_path, class: "freedom-button btn btn-success btn-md btn-block"
+      -if current_user.groups.present?
+        =link_to 'Request For Freedom', my_request_path, class: "freedom-button btn btn-success btn-md btn-block"
   
   .row
     %br
