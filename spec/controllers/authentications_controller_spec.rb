@@ -116,12 +116,8 @@ describe AuthenticationsController do
       context "registering with facebook from the registration page" do
         
         context "when facebook account can be verified" do
-          
-<<<<<<< HEAD
-          before do
-=======
+        
           before do 
->>>>>>> staging
             MandrillMailer.deliveries.clear 
             request.env['omniauth.params'] = { "from" => "registration" }
           end
