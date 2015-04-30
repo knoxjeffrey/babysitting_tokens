@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get '/sign_in', to: 'sessions#new'
   post '/sign_in', to: 'sessions#create'
   get '/sign_out', to: 'sessions#destroy'
+  
+  get '/auth/:provider/callback', to: 'authentications#create' #omniauth route
 
   get '/new_group', to: 'groups#new'
   resources :groups, only: [:create, :show] do

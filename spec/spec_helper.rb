@@ -6,6 +6,16 @@ require 'mandrill_mailer/offline'
 require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 
+OmniAuth.config.test_mode = true
+omniauth_hash = { 'uid' => '12345',
+                  'info' => {
+                      'name' => 'Jeff Knox',
+                      'email' => 'knoxjeffrey@outlook.com'
+                  }
+}
+ 
+OmniAuth.config.add_mock(:facebook, omniauth_hash)
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

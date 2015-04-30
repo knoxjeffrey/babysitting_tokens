@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :requests, -> { order start: :asc }
   has_many :user_groups
   has_many :groups, -> { order group_name: :asc }, through: :user_groups
+  has_many :authentications
   
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: {minimum: 5}
