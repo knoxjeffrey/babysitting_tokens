@@ -51,6 +51,7 @@ feature "user invites friend" do
     fill_in_password
     click_button "Sign In"
     expect(page).to have_content("Test Group")
+    expect(page).to have_content("Request For Freedom")
   end
   
   def fill_in_password
