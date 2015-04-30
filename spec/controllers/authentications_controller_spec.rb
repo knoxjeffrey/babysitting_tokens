@@ -29,21 +29,48 @@ describe AuthenticationsController do
       
       context "already signed in and linking their facebook account" do
         
-        before { session[:user_id] = user.id }
+        context "when social email matches user email in User table" do
+          
+          before { session[:user_id] = user.id }
         
-        it "redirects to home_path" do
-          get :create, provider: :facebook
-          expect(response).to redirect_to home_path
+          it "redirects to home_path" do
+            get :create, provider: :facebook
+            expect(response).to redirect_to home_path
+          end
+        
+          it "displays a success message" do
+            get :create, provider: :facebook
+            expect(flash[:success]).to be_present
+          end
+        
+          it "creates a new authentication record" do
+             get :create, provider: :facebook
+             expect(Authentication.count).to eq(1)
+          end
+          
         end
         
-        it "displays a success message" do
-          get :create, provider: :facebook
-          expect(flash[:success]).to be_present
-        end
+        context "when social email does not match user email in User table" do
+          
+          let!(:other_user) { object_generator(:user, email: 'random@outlook.com', full_name: 'Some User')}
+          
+          before { session[:user_id] = other_user.id }
+          
+          it "redirects to home_path" do
+            get :create, provider: :facebook
+            expect(response).to redirect_to home_path
+          end
         
-        it "creates a new authentication record" do
-           get :create, provider: :facebook
-           expect(Authentication.count).to eq(1)
+          it "displays a danger message" do
+            get :create, provider: :facebook
+            expect(flash[:danger]).to be_present
+          end
+        
+          it "creates a new authentication record" do
+             get :create, provider: :facebook
+             expect(Authentication.count).to eq(0)
+          end
+          
         end
         
       end
@@ -89,7 +116,7 @@ describe AuthenticationsController do
       context "registering with facebook from the registration page" do
         
         context "when facebook account can be verified" do
-          
+        
           before do 
             MandrillMailer.deliveries.clear 
             request.env['omniauth.params'] = { "from" => "registration" }
