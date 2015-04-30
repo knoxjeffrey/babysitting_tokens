@@ -19,7 +19,7 @@ class AuthenticationsController < ApplicationController
     else
       # If the user is registering from the registration page. I added from=registration on the registration page link_to because
       # the call back cannot distinguish what controller the original request came from
-      if env["omniauth.params"]['from'] == 'registration'
+      if request.env["omniauth.params"]['from'] == 'registration'
         email = omniauth['info']['email']
         full_name = omniauth['info']['name']
         password = SecureRandom.urlsafe_base64
@@ -28,7 +28,7 @@ class AuthenticationsController < ApplicationController
         #follow the same flow as UsersController create action
         if user.save
           user.authentications.create(provider: omniauth['provider'], uid: omniauth['uid'])
-          check_for_invitation(user, env["omniauth.params"]['invite']) #invite added into link_to arguments from registration page
+          check_for_invitation(user, request.env["omniauth.params"]['invite']) #invite added into link_to arguments from registration page
           send_welcome_email(user)
           redirect_to sign_in_path
         else
