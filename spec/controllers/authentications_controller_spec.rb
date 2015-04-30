@@ -117,7 +117,10 @@ describe AuthenticationsController do
         
         context "when facebook account can be verified" do
           
-          before { request.env['omniauth.params'] = { "from" => "registration" } }
+          before do
+            MandrillMailer.deliveries.clear 
+            request.env['omniauth.params'] = { "from" => "registration" }
+          end
         
           it "redirects to sign_in path" do
             get :create, provider: :facebook
