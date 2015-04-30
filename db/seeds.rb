@@ -6,15 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(email: 'knoxjeffrey@outlook.com', password: 'password', full_name: "Jeff Knox")
+User.create(email: 'knoxjohn@tester.com', password: 'password', full_name: "John Knox")
 User.create(email: 'knoxjeffrey@hotmail.com', password: 'password', full_name: "Hazel Knox")
 User.create(email: 'lisamckibben@hotmail.com', password: 'password', full_name: "Lisa McKibben")
 User.create(email: 'rachelmacauley@hotmail.com', password: 'password', full_name: "Rachel Macauley")
 User.create(email: 'peterlord@hotmail.com', password: 'password', full_name: "Peter Lord")
 
-Group.create(group_name: 'Woodfield', location: 'Edinburgh', user_id: 1)
-Group.create(group_name: 'Colinton', location: 'Edinburgh', user_id: 1)
-Group.create(group_name: 'Waringstown', location: 'Northern Ireland', user_id: 3)
+Group.create(group_name: 'Woodfield', location: 'Edinburgh', admin_id: 1)
+Group.create(group_name: 'Colinton', location: 'Edinburgh', admin_id: 1)
+Group.create(group_name: 'Waringstown', location: 'Northern Ireland', admin_id: 3)
 
 UserGroup.create(user_id: 1, group_id: 1)
 UserGroup.create(user_id: 1, group_id: 2)

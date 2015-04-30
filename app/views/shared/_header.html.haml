@@ -21,6 +21,8 @@
                 %span{ class: "caret" }
               %ul{ class: "dropdown-menu", role: "menu" }
                 %li
+                  - if current_user.authentications.empty?
+                    %a{ href: "/auth/facebook" }Facebook Authentication
                   %a{ href: "/sign_out" }Sign Out
 
 -#
