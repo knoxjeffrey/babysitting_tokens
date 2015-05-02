@@ -172,9 +172,9 @@ class RequestsController < ApplicationController
     groups_in_new_request = @request.groups
     
     same_groups_in_request = original_groups_in_request.map { |group| group if groups_in_new_request.include? group }
-    groups_no_longer_in_request = original_groups_in_request.map { |group| group if groups_in_new_request.exclude? group }
-    new_groups_in_request = groups_in_new_request.map { |group| group if original_groups_in_request.exclude? group }
-  
+    groups_no_longer_in_request = original_groups_in_request.reject { |group| group if groups_in_new_request.include? group }
+    new_groups_in_request = groups_in_new_request.reject { |group| group if original_groups_in_request.include? group }
+    
     same_groups_in_request.each { |group| current_user.reallocate_tokens(group, token_difference) } unless same_groups_in_request.first.nil?
     groups_no_longer_in_request.each { |group| current_user.reallocate_tokens(group, tokens_for_old_request) } unless groups_no_longer_in_request.first.nil?
     new_groups_in_request.each { |group| current_user.reallocate_tokens(group, -tokens_for_new_request) } unless new_groups_in_request.first.nil?

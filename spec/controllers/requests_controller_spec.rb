@@ -404,11 +404,11 @@ describe RequestsController do
               end
             end
             
-            # This check token allocation when the selected groups are totally different to the original request
+            # This checks token allocation when the selected groups are totally different to the original request
             # If I was looking at the case when the same group was selected then I'd have to check the cases when
             # the new request was longer, shorter or the same as the original request. I check the same group cases
             # in the next test
-            context "it changes the token allocation" do
+            context "it changes the token allocation when groups chosen are totally different to original request" do
               
               before do
                 put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
@@ -424,6 +424,23 @@ describe RequestsController do
                 expect(UserGroup.third.tokens).to eq(15)
               end
 
+            end
+            
+            context "it changes the token allocation when groups chosen are added to the groups of the original request" do
+              
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group.id, group2.id, group3.id] }
+                request.reload
+              end 
+              
+              it "makes a change to the tokens for the group that has stayed the same based on difference between old and new request" do
+                expect(UserGroup.first.tokens).to eq(18)
+              end
+              
+              it "deducts tokens based on new request from the current_user for all newly selected groups" do
+                expect(UserGroup.second.tokens).to eq(15)
+                expect(UserGroup.third.tokens).to eq(15)
+              end
             end
             
           end
