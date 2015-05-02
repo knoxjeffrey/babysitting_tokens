@@ -27,7 +27,7 @@ describe Group do
     let!(:group_member3) { object_generator(:user_group, user: friend_user2, group: group) }
     
     it "returns a list of friends in the current users group" do
-      expect(group.friends_in_group(current_user)).to match([friend_user1, friend_user2])
+      expect(group.friends_in_group(current_user)).to eq([friend_user1, friend_user2])
     end
 
   end
