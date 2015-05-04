@@ -36,29 +36,43 @@ class RequestsController < ApplicationController
   # Entry in Request table is updated and all associated entries in RequestGroup table are automatically updated - this includes adding and deleting entries. 
   def update
     @request = Request.find(params[:id])
-    
-    if @request.status == "waiting"
-      @request.assign_attributes(request_params)
-      if @request.valid?
-        if insufficient_tokens?
-          flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
-          render :update
+    original_request = Request.find(params[:id])
+    original_groups_in_request = original_request.groups.map { |group| group }
+
+    ActiveRecord::Base.transaction do
+      if @request.status == "waiting"
+
+        if @request.update(request_params)
+          if insufficient_tokens?
+            flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+            render :edit
+            raise ActiveRecord::Rollback
+          else
+            reallocate_updated_request_tokens(original_request, original_groups_in_request)
+            flash[:success] = "You successfully altered your request for freedom!"
+            redirect_to home_path
+          end
         else
-          @request.save
-          flash[:success] = "You successfully altered your request for freedom!"
-          redirect_to home_path
+          render :edit
+          raise ActiveRecord::Rollback
         end
       else
-        render :update
+        flash.now[:danger] = "Sorry, you cannot update a request after it has been accepted."
+        redirect_to home_path
       end
-    else
-      flash.now[:danger] = "Sorry, you cannot update a request after it has been accepted."
-      redirect_to home_path
     end
   end
   
   def destroy
     @request = Request.find(params[:id])
+    
+    if @request.status == 'waiting'
+      add_tokens_to_current_user_groups_request_was_made_to
+    elsif @request.status == 'accepted'
+      add_tokens_to_current_user_group_request_was_accepted_from
+      deduct_tokens_from_friend_user_group_request_was_accepted_from
+    end
+    
     Request.destroy(@request.id)
     redirect_to home_path
   end
@@ -123,6 +137,47 @@ class RequestsController < ApplicationController
   def deduct_tokens_from_original_request_groups_not_accepted(request)
     selected_group_ids = request.groups_original_request_not_accepted_from
     request.user.subtract_tokens(selected_group_ids, request)
+  end
+  
+  # Adds tokens back to the current user groups they made a request to.  Only use this if the request is still waiting to
+  # be accepted
+  def add_tokens_to_current_user_groups_request_was_made_to
+    if @request.status == 'waiting'
+      array_of_request_groups = @request.groups_request_was_made_to
+      array_of_request_groups.each { |request_group| current_user.add_tokens(request_group)}
+    end
+  end
+  
+  # Adds tokens back to current user for their group they had their request accepted from. Only use when request has been accepted
+  def add_tokens_to_current_user_group_request_was_accepted_from
+    if @request.status == 'accepted'
+      request_group = @request.group_request_was_accepted_by
+      current_user.add_tokens(request_group)
+    end
+  end
+  
+  # Deducts tokens from the friend that had accepted the current users request from their group. Only use when request has been accepted
+  def deduct_tokens_from_friend_user_group_request_was_accepted_from
+    if @request.status == 'accepted'
+      user = User.find(@request.babysitter_id)
+      user.subtract_tokens([@request.group_id], @request)
+    end
+  end
+  
+  def reallocate_updated_request_tokens(original_request, original_groups_in_request)
+    token_difference = @request.calculate_token_difference_between_original_and_old_request(original_request)
+    tokens_for_old_request = original_request.calculate_tokens_for_request
+    tokens_for_new_request = @request.calculate_tokens_for_request
+    
+    groups_in_new_request = @request.groups
+    
+    same_groups_in_request = original_groups_in_request.map { |group| group if groups_in_new_request.include? group }
+    groups_no_longer_in_request = original_groups_in_request.reject { |group| group if groups_in_new_request.include? group }
+    new_groups_in_request = groups_in_new_request.reject { |group| group if original_groups_in_request.include? group }
+    
+    same_groups_in_request.each { |group| current_user.reallocate_tokens(group, token_difference) } unless same_groups_in_request.first.nil?
+    groups_no_longer_in_request.each { |group| current_user.reallocate_tokens(group, tokens_for_old_request) } unless groups_no_longer_in_request.first.nil?
+    new_groups_in_request.each { |group| current_user.reallocate_tokens(group, -tokens_for_new_request) } unless new_groups_in_request.first.nil?
   end
 
 end

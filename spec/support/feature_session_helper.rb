@@ -17,4 +17,12 @@ module FeatureSessionHelper
     click_button "Create"
   end
   
+  def sign_out
+    visit sign_out_path
+  end
+  
+  def clear_emails
+    MandrillMailer.deliveries.clear 
+  end
+  
 end
