@@ -1,4 +1,6 @@
 class Request < ActiveRecord::Base
+  include TokensCalculated
+  
   belongs_to :user
   belongs_to :group
   
@@ -57,6 +59,24 @@ class Request < ActiveRecord::Base
   # Returns an array of group ids for the groups that a request was not accepted from
   def groups_original_request_not_accepted_from
     self.group_ids.reject { |group_id| group_id == self.group_id }
+  end
+  
+  # Returns an array of request groups that a request was made to
+  def groups_request_was_made_to
+    RequestGroup.where(request: self)
+  end
+  
+  def group_request_was_accepted_by
+    RequestGroup.find_by(request: self, group: self.group)
+  end
+  
+  # Returns a positve or negative number of tokens depending if new request is longer, shorter or same as original request
+  def calculate_token_difference_between_original_and_old_request(old_request)
+    tokens_for_request(old_request) - tokens_for_request(self)
+  end
+  
+  def calculate_tokens_for_request
+    tokens_for_request(self)
   end
 
 end

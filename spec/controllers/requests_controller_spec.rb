@@ -368,44 +368,132 @@ describe RequestsController do
         let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
         let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
         let!(:group_member3) { object_generator(:user_group, user: current_user, group: group3) }
-        let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id) }
+        let!(:request) { object_generator(:request, start: "2030-03-17 17:00:00", finish: "2030-03-17 20:00:00", user: current_user, group_ids: group.id) }
       
         context "with changes" do
-        
-          before do
-            put :update, id: request.id, request: { start: "2030-03-17 20:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
-            request.reload
-          end  
+          
+          context "with date and group changes" do
+          
+            context "it alters the dates and groups in the database" do
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
+                request.reload
+              end  
             
         
-          it "redirects back to the home page do" do
-            expect(response).to redirect_to home_path
-          end
+              it "redirects back to the home page do" do
+                expect(response).to redirect_to home_path
+              end
         
-          it "changes the start date of the request" do
-            expect(request.start).to eq("2030-03-17 20:00:00")
-          end
+              it "changes the start date of the request" do
+                expect(request.start).to eq("2030-03-17 18:00:00")
+              end
         
-          it "changes the finish date of the request" do
-            expect(request.finish).to eq("2030-03-17 23:00:00")
-          end
+              it "changes the finish date of the request" do
+                expect(request.finish).to eq("2030-03-17 23:00:00")
+              end
         
-          it "deletes any unchecked boxes from RequestGroup table" do
-            request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
-            expect(request_groups).not_to include(group.id)
-          end
+              it "deletes any unchecked boxes from RequestGroup table" do
+                request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
+                expect(request_groups).not_to include(group.id)
+              end
         
-          it "adds any checked boxes to UserGroup table" do
-            request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
-            expect(request_groups).to eq([group2.id, group3.id])
+              it "adds any checked boxes to UserGroup table" do
+                request_groups = RequestGroup.all.map { |request_group| request_group.group_id }
+                expect(request_groups).to eq([group2.id, group3.id])
+              end
+            end
+            
+            # This checks token allocation when the selected groups are totally different to the original request
+            # If I was looking at the case when the same group was selected then I'd have to check the cases when
+            # the new request was longer, shorter or the same as the original request. I check the same group cases
+            # in the next test
+            context "it changes the token allocation when groups chosen are totally different to original request" do
+              
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group2.id, group3.id] }
+                request.reload
+              end  
+              
+              it "adds tokens based on original request back to user if they deselect group" do
+                expect(UserGroup.first.tokens).to eq(23)
+              end
+              
+              it "deducts tokens based on new request from the current_user for all newly selected groups" do
+                expect(UserGroup.second.tokens).to eq(15)
+                expect(UserGroup.third.tokens).to eq(15)
+              end
+
+            end
+            
+            context "it changes the token allocation when groups chosen are added to the groups of the original request" do
+              
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group.id, group2.id, group3.id] }
+                request.reload
+              end 
+              
+              it "makes a change to the tokens for the group that has stayed the same based on difference between old and new request" do
+                expect(UserGroup.first.tokens).to eq(18)
+              end
+              
+              it "deducts tokens based on new request from the current_user for all newly selected groups" do
+                expect(UserGroup.second.tokens).to eq(15)
+                expect(UserGroup.third.tokens).to eq(15)
+              end
+            end
+            
           end
-        
+          
+          context "with date change but no group change" do
+            
+            context "with the altered request being for more hours than the original" do
+              
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 15:00:00", finish: "2030-03-17 23:00:00", user: current_user, group_ids: [group.id] }
+                request.reload
+              end 
+              
+              it "deducts more tokens from that current users group" do
+                expect(UserGroup.first.tokens).to eq(15)
+              end
+              
+            end
+            
+            context "with the altered request being for less hours than the original" do
+              
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "2030-03-17 19:00:00", user: current_user, group_ids: [group.id] }
+                request.reload
+              end 
+              
+              it "adds more tokens to that current users group" do
+                expect(UserGroup.first.tokens).to eq(22)
+              end
+              
+            end
+            
+            context "with the altered request being for the same duration as the original" do
+              
+              before do
+                put :update, id: request.id, request: { start: "2030-03-17 17:00:00", finish: "2030-03-17 20:00:00", user: current_user, group_ids: [group.id] }
+                request.reload
+              end 
+              
+              it "makes no token change to that current users group" do
+                expect(UserGroup.first.tokens).to eq(20)
+              end
+              
+            end
+              
+          end
+           
         end
 
         context "with no changes" do
         
           before do
-            put :update, id: request.id, request: { start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id] }
+            put :update, id: request.id, request: { start: "2030-03-17 17:00:00", finish: "2030-03-17 20:00:00", user: current_user, group_ids: [group.id] }
             request.reload
           end
         
@@ -414,11 +502,11 @@ describe RequestsController do
           end
         
           it "keeps the start date of the request" do
-            expect(request.start).to eq("2030-03-17 19:00:00")
+            expect(request.start).to eq("2030-03-17 17:00:00")
           end
         
           it "keeps the finish date of the request" do
-            expect(request.finish).to eq("2030-03-17 22:00:00")
+            expect(request.finish).to eq("2030-03-17 20:00:00")
           end
         
           it "keeps the same entry in RequestGroup table" do
@@ -431,20 +519,24 @@ describe RequestsController do
         context "with invalid user input" do
         
           before do
-            put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "", user: current_user, group_ids: [group.id] }
+            put :update, id: request.id, request: { start: "2030-03-17 18:00:00", finish: "", user: current_user, group_ids: [group2.id, group3.id] }
             request.reload
           end
         
           it "keeps the start date of the original request" do
-            expect(request.start).to eq("2030-03-17 19:00:00")
+            expect(request.start).to eq("2030-03-17 17:00:00")
           end
         
           it "keeps the finish date of the original request" do
-            expect(request.finish).to eq("2030-03-17 22:00:00")
+            expect(request.finish).to eq("2030-03-17 20:00:00")
           end
         
           it "renders the update template" do
-            expect(response).to render_template :update
+            expect(response).to render_template :edit
+          end
+          
+          it "keeps the groups of the original request" do
+            expect(RequestGroup.count).to eq(1)
           end
         
         end
@@ -457,15 +549,15 @@ describe RequestsController do
           end
         
           it "keeps the start date of the original request" do
-            expect(request.start).to eq("2030-03-17 19:00:00")
+            expect(request.start).to eq("2030-03-17 17:00:00")
           end
         
           it "keeps the finish date of the original request" do
-            expect(request.finish).to eq("2030-03-17 22:00:00")
+            expect(request.finish).to eq("2030-03-17 20:00:00")
           end
         
           it "renders the update template" do
-            expect(response).to render_template :update
+            expect(response).to render_template :edit
           end
         
           it "generates a warning flash.now message" do
@@ -521,26 +613,104 @@ describe RequestsController do
     let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
     let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
     let!(:group_member3) { object_generator(:user_group, user: friend_user, group: group) }
-    let!(:group_member3) { object_generator(:user_group, user: friend_user, group: group2) }
-    let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id], group_id: group.id, babysitter_id: friend_user.id) }
+    let!(:group_member4) { object_generator(:user_group, user: friend_user, group: group2) }
   
     context "with authenticated user" do
       
-      before do
-        get :destroy, id: request.id
+      context "when the request had not been accepted yet" do
+        
+        context "when the request was made to one group" do
+          
+          let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id) }
+        
+          before do
+            get :destroy, id: request.id
+          end
+        
+          it "deletes the request" do
+            expect(Request.count).to eq(0)
+          end
+      
+          it "deletes all associated records in RequestGroup table" do
+            expect(RequestGroup.count).to eq(0)
+          end
+        
+          it "adds the tokens back to the user group the current user made the request to" do
+            expect(UserGroup.first.tokens).to eq(23)
+          end
+          
+          it "does not alter the user group the current user did not make the request to" do
+            expect(UserGroup.second.tokens).to eq(20)
+          end
+          
+        end
+        
+        context "when the request was made to more than one group" do
+          
+          let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: [group.id, group2.id]) }
+        
+          before do
+            get :destroy, id: request.id
+          end
+        
+          it "deletes the request" do
+            expect(Request.count).to eq(0)
+          end
+      
+          it "deletes all associated records in RequestGroup table" do
+            expect(RequestGroup.count).to eq(0)
+          end
+        
+          it "adds the tokens back to all the user groups the current user made the request to" do
+            expect(UserGroup.first.tokens).to eq(23)
+            expect(UserGroup.second.tokens).to eq(23)
+          end
+          
+        end
+        
       end
       
-      it "deletes the request" do
-        expect(Request.count).to eq(0)
-      end
       
-      it "deletes all associated records in RequestGroup table" do
-        expect(RequestGroup.count).to eq(0)
+      context "when the request had been accepted" do
+        
+        let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, status: 'accepted', group_ids: [group.id, group2.id], group_id: group.id, babysitter_id: friend_user.id) }
+        
+        before do
+          get :destroy, id: request.id
+        end
+      
+        it "deletes the request" do
+          expect(Request.count).to eq(0)
+        end
+      
+        it "deletes all associated records in RequestGroup table" do
+          expect(RequestGroup.count).to eq(0)
+        end
+      
+        it "adds tokens back to current user for their group that the request had been accepted from" do
+          expect(UserGroup.first.tokens).to eq(23)
+        end
+      
+        it "does not alter the token amount for the current user group from which the request had not been accepted from" do
+          expect(UserGroup.second.tokens).to eq(20)
+        end
+      
+        it "deducts the tokens from the users group that accepted the request" do
+          expect(UserGroup.third.tokens).to eq(17)
+        end
+      
+        it "does not alter the token amount for the user group from which the user had not accepted the request from" do
+          expect(UserGroup.fourth.tokens).to eq(20)
+        end
+        
       end
       
     end
     
     context "with unauthenticated user" do
+      
+      let!(:request) { object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", user: current_user, group_ids: group.id) }
+      
       it_behaves_like "require_sign_in" do
         let(:action) { get :destroy, id: request.id }
       end

@@ -60,6 +60,12 @@ class User < ActiveRecord::Base
     user_group.update_tokens(updated_tokens)
   end
   
+  def reallocate_tokens(group, tokens)
+    user_group = UserGroup.find_by(user: self, group_id: group)
+    updated_tokens = user_group.tokens + tokens
+    user_group.update_tokens(updated_tokens)
+  end
+  
   def generate_token
     self.update_column(:password_token, SecureRandom.urlsafe_base64)
   end
