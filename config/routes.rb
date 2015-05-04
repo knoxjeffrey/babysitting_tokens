@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get '/register', to: 'users#new'
   post '/register', to: 'users#create'
   get '/register/:identifier', to: 'users#new_invitation_with_identifier', as: :register_with_identifier
+  resources :users, only: [:show] do
+    get :search, on: :collection
+  end
 
   get '/sign_in', to: 'sessions#new'
   post '/sign_in', to: 'sessions#create'

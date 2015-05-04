@@ -183,4 +183,35 @@ describe User do
     
   end
   
+  describe :search_by_friend_full_name do
+    let(:user1) { object_generator(:user, email: 'knoxjeffrey@outlook.com', full_name: "Jeff Knox") }
+    
+    it "should return an empty array if no title matches the search" do 
+      expect(User.search_by_friend_full_name("Jeff Kerr")).to eq([])
+    end
+    
+    it "should return an array of one title if there is a match" do
+      expect(User.search_by_friend_full_name("Jeff Knox")).to eq([user1])
+    end
+    
+    it "should return an array of one title that matches a partial search term" do
+      expect(User.search_by_friend_full_name("eff")).to eq([user1])
+    end
+    
+    it "should return an array of matches ordered by full_name" do
+      user2 = object_generator(:user, email: 'jean@outlook.com', full_name: "Jean Lord")
+      expect(User.search_by_friend_full_name("Je")).to eq([user2, user1])
+    end
+    
+    it "should return an array of matches independent of case" do 
+      user2 = object_generator(:user, email: 'jean@outlook.com', full_name: "Jean Lord")
+      expect(User.search_by_friend_full_name("je")).to eq([user2, user1])
+    end 
+    
+    it "should return an empty array for an empty string search term" do
+      expect(User.search_by_friend_full_name("")).to eq([])
+    end 
+    
+  end
+  
 end

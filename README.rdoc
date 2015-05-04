@@ -1,3 +1,5 @@
+{<img src="https://circleci.com/gh/knoxjeffrey/babysitting_tokens.svg?style=svg" alt="Circle CI" />}[https://circleci.com/gh/knoxjeffrey/babysitting_tokens]
+
 == README
 
 This is my TDD practise project for Tealeaf Academy.  It's a simple application for organising a babysitting circle amongst friends. The implementation is very basic here because it's my first solo effort at TDD and I want to just keep it simple.

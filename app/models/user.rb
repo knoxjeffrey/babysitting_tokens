@@ -83,6 +83,15 @@ class User < ActiveRecord::Base
   def already_member_of_user_group(group)
     self.user_groups.exists?(group: group)
   end
+  
+  # Called on the class to search for a specific user full name
+  # Can find partial matches and is case insensitive due to ILIKE. Returns an array of matches or empty array if no matches
+  # Order is by full name
+  # example User.search_by_title("je")
+  # => ["Jeff Knox", "Jenny Lord"]
+  def self.search_by_friend_full_name(friend_full_name)
+    friend_full_name.present? ? where("full_name ILIKE ?", "%#{friend_full_name}%").order(full_name: :asc) : []
+  end
     
   private
   

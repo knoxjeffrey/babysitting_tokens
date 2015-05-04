@@ -105,6 +105,28 @@ describe UsersController do
     end
   end
   
+  describe "GET show" do
+    
+    let(:user) { object_generator(:user) }
+    
+    context "with authenticated user" do
+      it "assigns @user" do
+        set_current_user_session
+        get :show, id: user
+        
+        expect(assigns(:user)).to eq(user)
+      end
+    end
+    
+    context "with unauthenticated user" do
+      it "redirects to expired identifier path" do
+        get :show, id: user
+        
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
+  
   describe "GET new_with_invitation_identifier" do
     
     context "with valid identifier" do
@@ -157,6 +179,21 @@ describe UsersController do
         get :new_invitation_with_identifier, identifier: 'not valid'
         expect(response).to redirect_to expired_identifier_path
       end
+    end
+  end
+  
+  describe "POST search" do
+    
+    let!(:user) { object_generator(:user, email: 'knoxjeffrey@outlook.com', full_name: "Jeff Knox") }
+    
+    it "assigns @search_results for authenticated users" do
+      set_current_user_session
+      post :search, full_name: user.full_name
+      expect(assigns(:search_results)).to eq([user])
+    end
+    
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :search, full_name: user.full_name }
     end
   end
 end
