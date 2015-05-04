@@ -105,6 +105,28 @@ describe UsersController do
     end
   end
   
+  describe "GET show" do
+    
+    let(:user) { object_generator(:user) }
+    
+    context "with authenticated user" do
+      it "assigns @user" do
+        set_current_user_session
+        get :show, id: user
+        
+        expect(assigns(:user)).to eq(user)
+      end
+    end
+    
+    context "with unauthenticated user" do
+      it "redirects to expired identifier path" do
+        get :show, id: user
+        
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
+  
   describe "GET new_with_invitation_identifier" do
     
     context "with valid identifier" do

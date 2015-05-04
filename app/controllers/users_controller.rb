@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_action :require_user, only: [:search]
+  before_action :require_user, only: [:show, :search]
   
   def new
     redirect_to home_path and return if logged_in?
@@ -18,6 +18,10 @@ class UsersController < ApplicationController
       render :new
     end
   end 
+  
+  def show
+    @user  = User.find(params[:id])
+  end
   
   def new_invitation_with_identifier
     group_invitation = GroupInvitation.find_by_identifier(params[:identifier])
