@@ -15,15 +15,7 @@ class RequestsController < ApplicationController
   def create
     @request = current_user.requests.build(request_params)
     if @request.valid?
-      if insufficient_tokens?
-        flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
-        render :new
-      else
-        @request.save
-        subtract_tokens_from_each_group_selected
-        flash[:success] = "You successfully created your request for freedom!"
-        redirect_to home_path
-      end
+      check_if_enough_tokens_for_request
     else
       render :new
     end
@@ -33,29 +25,18 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
   end
   
-  # Entry in Request table is updated and all associated entries in RequestGroup table are automatically updated - this includes adding and deleting entries. 
+  # Entry in Request table is updated and all associated entries in RequestGroup table are automatically updated. Only requests
+  # that have not been accepted can be updated
   def update
     @request = Request.find(params[:id])
+    # I need to hold onto the details of the original request in order to compare against the updated request.  This way I can check
+    # what groups are the same, removed, or added in the updated request. I need this to allow me to reallocate, credit or deduct tokens
     original_request = Request.find(params[:id])
     original_groups_in_request = original_request.groups.map { |group| group }
 
     ActiveRecord::Base.transaction do
       if @request.status == "waiting"
-
-        if @request.update(request_params)
-          if insufficient_tokens?
-            flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
-            render :edit
-            raise ActiveRecord::Rollback
-          else
-            reallocate_updated_request_tokens(original_request, original_groups_in_request)
-            flash[:success] = "You successfully altered your request for freedom!"
-            redirect_to home_path
-          end
-        else
-          render :edit
-          raise ActiveRecord::Rollback
-        end
+        update_request_if_valid(original_request, original_groups_in_request)
       else
         flash.now[:danger] = "Sorry, you cannot update a request after it has been accepted."
         redirect_to home_path
@@ -63,6 +44,7 @@ class RequestsController < ApplicationController
     end
   end
   
+  # Requests that are waiting to be accepted or have been accepted can be deleted
   def destroy
     @request = Request.find(params[:id])
     
@@ -106,6 +88,41 @@ class RequestsController < ApplicationController
       params.require(:request).permit(:start, :finish, group_ids: [])
     else
       params.require(:request).permit(:start, :finish).merge!(group_ids: ["#{current_user.user_groups.first.group_id}"])
+    end
+  end
+  
+  # If there are enough tokens to make the request then subtract those tokens from all the groups the request was made to
+  def check_if_enough_tokens_for_request
+    if insufficient_tokens?
+      flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+      render :new
+    else
+      @request.save
+      subtract_tokens_from_each_group_selected
+      flash[:success] = "You successfully created your request for freedom!"
+      redirect_to home_path
+    end
+  end
+  
+  # Only persit the update if all paramaters are valid
+  def update_request_if_valid(original_request, original_groups_in_request)
+    if @request.update(request_params)
+      check_if_enough_tokens_for_edited_request(original_request, original_groups_in_request)
+    else
+      render :edit
+      raise ActiveRecord::Rollback
+    end
+  end
+  
+  def check_if_enough_tokens_for_edited_request(original_request, original_groups_in_request)
+    if insufficient_tokens?
+      flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+      render :edit
+      raise ActiveRecord::Rollback
+    else
+      reallocate_updated_request_tokens(original_request, original_groups_in_request)
+      flash[:success] = "You successfully altered your request for freedom!"
+      redirect_to home_path
     end
   end
   
@@ -164,19 +181,33 @@ class RequestsController < ApplicationController
     end
   end
   
+  # If the same group is in request then calculated diff in tokens between old and updated request and then reallocate those tokens
+  # For groups taken out of the request, add the tokens, based on the original request, back to those groups
+  # For new groups added to the request, deduct the tokens, based on the new request, from those groups
   def reallocate_updated_request_tokens(original_request, original_groups_in_request)
+    reallocate_tokens_for_same_groups_in_request(original_request, original_groups_in_request)
+    credit_tokens_for_groups_no_longer_in_request(original_request, original_groups_in_request)
+    deduct_tokens_for_new_groups_in_request(original_request, original_groups_in_request)
+  end
+  
+  # Only if there are the same groups in the old and updated request should tokens be reallocated
+  def reallocate_tokens_for_same_groups_in_request(original_request, original_groups_in_request)
     token_difference = @request.calculate_token_difference_between_original_and_old_request(original_request)
-    tokens_for_old_request = original_request.calculate_tokens_for_request
-    tokens_for_new_request = @request.calculate_tokens_for_request
-    
-    groups_in_new_request = @request.groups
-    
-    same_groups_in_request = original_groups_in_request.map { |group| group if groups_in_new_request.include? group }
-    groups_no_longer_in_request = original_groups_in_request.reject { |group| group if groups_in_new_request.include? group }
-    new_groups_in_request = groups_in_new_request.reject { |group| group if original_groups_in_request.include? group }
-    
+    same_groups_in_request = original_groups_in_request.map { |group| group if @request.groups.include? group }
     same_groups_in_request.each { |group| current_user.reallocate_tokens(group, token_difference) } unless same_groups_in_request.first.nil?
+  end
+  
+  # Only if there are no longer groups in the updated request that were in the original should tokens be added back
+  def credit_tokens_for_groups_no_longer_in_request(original_request, original_groups_in_request)
+    tokens_for_old_request = original_request.calculate_tokens_for_request
+    groups_no_longer_in_request = original_groups_in_request.reject { |group| group if @request.groups.include? group }
     groups_no_longer_in_request.each { |group| current_user.reallocate_tokens(group, tokens_for_old_request) } unless groups_no_longer_in_request.first.nil?
+  end
+  
+  # Only if there are groups that are in the updated request that were not in the original request should tokne be deducted
+  def deduct_tokens_for_new_groups_in_request(original_request, original_groups_in_request)
+    tokens_for_new_request = @request.calculate_tokens_for_request
+    new_groups_in_request = @request.groups.reject { |group| group if original_groups_in_request.include? group }
     new_groups_in_request.each { |group| current_user.reallocate_tokens(group, -tokens_for_new_request) } unless new_groups_in_request.first.nil?
   end
 
