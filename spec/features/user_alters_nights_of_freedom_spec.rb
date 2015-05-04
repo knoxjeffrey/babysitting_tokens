@@ -8,7 +8,7 @@ feature "user alters nights of freedom" do
   let!(:group_member1) { object_generator(:user_group, user: user, group: group) }
   let!(:group_member2) { object_generator(:user_group, user: friend, group: group) }
   
-  scenario "user makes request that has not been accepted" do
+  scenario "user edits request that has not been accepted" do
     request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 21:00:00", user: user, group_ids: group.id)
     
     sign_in_user(user)
@@ -16,7 +16,7 @@ feature "user alters nights of freedom" do
     edit_request
   end
   
-  scenario "user makes request that has been accepted" do
+  scenario "user deletes request that has been accepted" do
     request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 21:00:00", status: 'accepted', user: user, group_ids: group.id, babysitter_id: friend.id, group_id: group.id)
     
     sign_in_user(user)
