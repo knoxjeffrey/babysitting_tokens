@@ -7,7 +7,7 @@ class ForgotPasswordsController < ApplicationController
     
     if user
       user.generate_token
-      MyMailer.delay.send_forgot_password(user)
+      email_reset_password_link(user)
       redirect_to forgot_password_confirmation_path
     else
       check_email_params
@@ -26,6 +26,10 @@ class ForgotPasswordsController < ApplicationController
       flash[:danger] = "If this is a valid email address you will receive instructions to reset your password in a few minutes.  
                         If you do not receive an email then please try again."
     end
+  end
+  
+  def email_reset_password_link(user)
+    MyMailer.delay.send_forgot_password(user)
   end
   
 end
