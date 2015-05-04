@@ -193,22 +193,22 @@ class RequestsController < ApplicationController
   # Only if there are the same groups in the old and updated request should tokens be reallocated
   def reallocate_tokens_for_same_groups_in_request(original_request, original_groups_in_request)
     token_difference = @request.calculate_token_difference_between_original_and_old_request(original_request)
-    same_groups_in_request = original_groups_in_request.map { |group| group if @request.groups.include? group }
-    same_groups_in_request.each { |group| current_user.reallocate_tokens(group, token_difference) } unless same_groups_in_request.first.nil?
+    same_groups_in_request = original_groups_in_request.select { |group| group if @request.groups.include? group }
+    same_groups_in_request.each { |group| current_user.reallocate_tokens(group, token_difference) } if same_groups_in_request.present?
   end
   
   # Only if there are no longer groups in the updated request that were in the original should tokens be added back
   def credit_tokens_for_groups_no_longer_in_request(original_request, original_groups_in_request)
     tokens_for_old_request = original_request.calculate_tokens_for_request
     groups_no_longer_in_request = original_groups_in_request.reject { |group| group if @request.groups.include? group }
-    groups_no_longer_in_request.each { |group| current_user.reallocate_tokens(group, tokens_for_old_request) } unless groups_no_longer_in_request.first.nil?
+    groups_no_longer_in_request.each { |group| current_user.reallocate_tokens(group, tokens_for_old_request) } if groups_no_longer_in_request.present?
   end
   
   # Only if there are groups that are in the updated request that were not in the original request should tokne be deducted
   def deduct_tokens_for_new_groups_in_request(original_request, original_groups_in_request)
     tokens_for_new_request = @request.calculate_tokens_for_request
     new_groups_in_request = @request.groups.reject { |group| group if original_groups_in_request.include? group }
-    new_groups_in_request.each { |group| current_user.reallocate_tokens(group, -tokens_for_new_request) } unless new_groups_in_request.first.nil?
+    new_groups_in_request.each { |group| current_user.reallocate_tokens(group, -tokens_for_new_request) } if new_groups_in_request.present?
   end
 
 end
