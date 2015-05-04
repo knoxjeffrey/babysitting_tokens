@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   
+  before_action :require_user, only: [:search]
+  
   def new
     redirect_to home_path and return if logged_in?
     @user = User.new
@@ -24,6 +26,10 @@ class UsersController < ApplicationController
     else
       redirect_to expired_identifier_path
     end
+  end
+  
+  def search
+    @search_results = User.search_by_friend_full_name(params[:full_name])
   end
   
   private

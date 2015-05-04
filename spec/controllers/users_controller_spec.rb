@@ -159,4 +159,19 @@ describe UsersController do
       end
     end
   end
+  
+  describe "POST search" do
+    
+    let!(:user) { object_generator(:user, email: 'knoxjeffrey@outlook.com', full_name: "Jeff Knox") }
+    
+    it "assigns @search_results for authenticated users" do
+      set_current_user_session
+      post :search, full_name: user.full_name
+      expect(assigns(:search_results)).to eq([user])
+    end
+    
+    it_behaves_like "require_sign_in" do
+      let(:action) { post :search, full_name: user.full_name }
+    end
+  end
 end

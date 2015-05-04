@@ -1,0 +1,40 @@
+= render 'shared/tokens'
+        
+= render 'shared/profile'
+    
+.home-body       
+  %section.register.container
+    .row
+      .col-lg-7.col-lg-offset-1
+        %header
+          %h1 Search Results
+    - if @search_results.any?
+      .row
+        .col-lg-6.col-lg-offset-1
+          .other_nights
+            .panel.panel-primary
+              .panel-heading
+                %h3{ class: 'panel-title' } Users
+              .panel-body
+                %table{ class: "table table-striped table-hover" }
+                  %thead
+                    %tr
+                      %th Name
+                      %th Email
+                  %tbody
+                    - @search_results.each do |user|
+                      %tr
+                        %td= user.full_name
+                        %td= user.email
+    - else
+      .row
+        .col-lg-6.col-lg-offset-1
+          .other_nights
+            .panel.panel-primary
+              .panel-heading
+                %h3{ class: 'panel-title' } Users
+              .panel-body
+                %table{ class: "table table-striped table-hover" }
+                  %thead
+                    %td
+                      %p.lead.text-muted No results found for #{params[:full_name]}
