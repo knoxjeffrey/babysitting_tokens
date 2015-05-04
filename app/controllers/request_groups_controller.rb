@@ -39,9 +39,10 @@ class RequestGroupsController < ApplicationController
     current_user.add_tokens(@request_group)
   end
   
-  # When a request for babysitting is made, it can be made to multiple groups.
-  # All groups selected in the request are deducted tokens.
-  # When a request is accepted then tokens are added back to the requester for the groups the request was not accepted from
+  # When a request for babysitting is made, it can be made to multiple groups and tokens are detucted from all those groups
+  # If a request was just made to 1 group, then no further action is needed when it is accepted
+  # If the request was to multiple groups, then tokens need to be added back to the requesters groups that the request was
+  # not accepted from.
   def credit_requester_for_unused_group_requests
     requester_request_groups = RequestGroup.where(["request_id = ?", @request_group.request_id])
     if requester_request_groups.count > 1
