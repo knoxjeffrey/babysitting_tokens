@@ -162,23 +162,23 @@ describe User do
     end
   end
   
-  describe :join_inviters_group do
-    let!(:inviter) { object_generator(:user) }
-    let!(:invited_user) { object_generator(:user) }
-    let!(:group) { object_generator(:group, admin: inviter) } 
-    let!(:group_member) { object_generator(:user_group, user: inviter, group: group) }
+  describe :join_group do
+    let!(:current_group_member) { object_generator(:user) }
+    let!(:user_to_join) { object_generator(:user) }
+    let!(:group) { object_generator(:group, admin: current_group_member) } 
+    let!(:group_member) { object_generator(:user_group, user: current_group_member, group: group) }
     
-    it "adds the user to the group an invitation was made from" do
-      invited_user.join_inviters_group(group)
+    it "adds the user to the group specified" do
+      user_to_join.join_group(group)
       
-      expect(invited_user.reload.user_groups.count).to eq(1)
+      expect(user_to_join.reload.user_groups.count).to eq(1)
     end
     
     it "does not add the user to a group if they are already a member of that group" do
-      group_member = object_generator(:user_group, user: invited_user, group: group)
-      invited_user.join_inviters_group(group)
+      group_member = object_generator(:user_group, user: user_to_join, group: group)
+      user_to_join.join_group(group)
       
-      expect(invited_user.reload.user_groups.count).to eq(1)
+      expect(user_to_join.reload.user_groups.count).to eq(1)
     end
     
   end
