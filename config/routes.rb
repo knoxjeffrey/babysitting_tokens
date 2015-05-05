@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   
   resources :password_resets, only: [:show, :create]
   
+  resources :join_group_requests, only: [:create]
+  get '/join_group/:identifier', to: 'join_group_requests#show', as: :join_user_group_with_identifier
+  
   get '/expired_password_token', to: 'pages#expired_password_token'
   get '/expired_identifier', to: 'pages#expired_identifier'
   root to: 'pages#index'
