@@ -13,4 +13,12 @@ describe JoinGroupRequest do
     end
   end
   
+  describe :clear_identifier_column do
+    it "sets identifier column to nil" do
+      join_group_request = object_generator(:join_group_request)
+      join_group_request.clear_identifier_column
+      expect(JoinGroupRequest.last.identifier).to eq(nil)
+    end
+  end
+  
 end

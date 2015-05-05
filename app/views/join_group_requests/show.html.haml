@@ -26,3 +26,4 @@
               %tr
                 %td #{ @request_to_join_group.requester.full_name }
                 %td #{ @request_to_join_group.requester.email }
+                %td= link_to "Accept Request", "/user_groups?request_id=#{@request_to_join_group.id}", method: :post , class: "btn btn-success btn-xs"

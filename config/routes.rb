@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   get '/expired_identifier', to: 'pages#expired_identifier'
   root to: 'pages#index'
   
+  resources :user_groups, only: [:create]
+  
   get 'ui(/:action)', controller: 'ui'
   
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|

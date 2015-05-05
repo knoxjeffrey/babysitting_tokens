@@ -1,14 +1,11 @@
 class JoinGroupRequest < ActiveRecord::Base
+  include ClearIdentifier
   
   before_create :generate_identifier
   
   belongs_to :requester, foreign_key: 'requester_id', class_name: 'User'
   belongs_to :group_member, foreign_key: 'group_member_id', class_name: 'User'
   belongs_to :group
-  
-  def clear_identifier_column
-    self.update_column(:identifier, nil)
-  end
   
   private
   

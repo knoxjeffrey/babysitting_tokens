@@ -92,7 +92,7 @@ describe JoinGroupRequestsController do
       let(:group) { object_generator(:group) }
       
       it_behaves_like "require_sign_in" do
-        let(:action) { get :create, identifier: '1234567' }
+        let(:action) { get :show, identifier: '1234567' }
       end
     end
   
