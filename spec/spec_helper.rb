@@ -16,6 +16,9 @@ omniauth_hash = { 'uid' => '12345',
  
 OmniAuth.config.add_mock(:facebook, omniauth_hash)
 
+# I needed this for testing my mailers as they were using rails url helpers.  This prevents http://example.com being default root
+Capybara.app_host = "http://localhost:52662"
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
