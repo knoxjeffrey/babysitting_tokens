@@ -71,10 +71,11 @@ class RequestsController < ApplicationController
   # request had originally been accepted from
   def cancel_babysitting_date
     request = Request.find(params[:id])
+    send_cancelation_notification_email(request)
     deduct_tokens_from_current_user(request)
     deduct_tokens_from_original_request_groups_not_accepted(request)
     request.cancel_babysitting_agreement
-    flash[:danger] = "You have cancelled your date to babysit.  We will let the other person know"
+    flash[:danger] = "You have cancelled your date to babysit.  Babysitting Tokens will let the other person know"
     redirect_to my_babysitting_dates_path
   end
   
@@ -209,6 +210,10 @@ class RequestsController < ApplicationController
     tokens_for_new_request = @request.calculate_tokens_for_request
     new_groups_in_request = @request.groups.reject { |group| group if original_groups_in_request.include? group }
     new_groups_in_request.each { |group| current_user.reallocate_tokens(group, -tokens_for_new_request) } if new_groups_in_request.present?
+  end
+  
+  def send_cancelation_notification_email(request)
+    MyMailer.delay.notify_user_that_babysitter_canceled(request)
   end
 
 end
