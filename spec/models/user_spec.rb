@@ -185,32 +185,37 @@ describe User do
   
   describe :search_by_friend_full_name do
     let(:user1) { object_generator(:user, email: 'knoxjeffrey@outlook.com', full_name: "Jeff Knox") }
+    let(:current_user) { object_generator(:user, full_name: "Jan Test") }
     
     it "should return an empty array if no title matches the search" do 
-      expect(User.search_by_friend_full_name("Jeff Kerr")).to eq([])
+      expect(User.search_by_friend_full_name("Jeff Kerr", current_user)).to eq([])
     end
     
     it "should return an array of one title if there is a match" do
-      expect(User.search_by_friend_full_name("Jeff Knox")).to eq([user1])
+      expect(User.search_by_friend_full_name("Jeff Knox", current_user)).to eq([user1])
     end
     
     it "should return an array of one title that matches a partial search term" do
-      expect(User.search_by_friend_full_name("eff")).to eq([user1])
+      expect(User.search_by_friend_full_name("eff", current_user)).to eq([user1])
     end
     
     it "should return an array of matches ordered by full_name" do
       user2 = object_generator(:user, email: 'jean@outlook.com', full_name: "Jean Lord")
-      expect(User.search_by_friend_full_name("Je")).to eq([user2, user1])
+      expect(User.search_by_friend_full_name("Je", current_user)).to eq([user2, user1])
     end
     
     it "should return an array of matches independent of case" do 
       user2 = object_generator(:user, email: 'jean@outlook.com', full_name: "Jean Lord")
-      expect(User.search_by_friend_full_name("je")).to eq([user2, user1])
+      expect(User.search_by_friend_full_name("je", current_user)).to eq([user2, user1])
     end 
     
     it "should return an empty array for an empty string search term" do
-      expect(User.search_by_friend_full_name("")).to eq([])
-    end 
+      expect(User.search_by_friend_full_name("", current_user)).to eq([])
+    end
+    
+    it "should not include the current user in the search results" do
+      expect(User.search_by_friend_full_name("J", current_user)).to eq([user1])
+    end
     
   end
   
