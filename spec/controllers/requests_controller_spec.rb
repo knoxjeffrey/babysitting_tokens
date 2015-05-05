@@ -751,7 +751,7 @@ describe RequestsController do
       
       before { set_current_user_session }
       
-      let!(:friend_user) { object_generator(:user) }
+      let!(:friend_user) { object_generator(:user, email: "knoxjeffrey@outlook.com") }
       let!(:group) { object_generator(:group, admin: current_user) }
       let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
       let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
@@ -775,6 +775,12 @@ describe RequestsController do
       it "removes the tokens from the babysitter that were originally allocated when the request was accepted" do
         put :cancel_babysitting_date, id: request.id
         expect(current_user.user_groups.first.tokens).to eq(17)
+      end
+      
+      it "sends an email to the user that requested the date for a babysitter" do
+        MandrillMailer.deliveries.clear 
+        put :cancel_babysitting_date, id: request.id
+        expect(MandrillMailer.deliveries.first.message["to"].first["email"]).to eq('knoxjeffrey@outlook.com')
       end
       
       context "if the original request was made to one group" do
