@@ -49,4 +49,22 @@ class MyMailer < MandrillMailer::TemplateMailer
       inline_css: true,
      )
   end
+  
+  def send_request_to_join_group(request_to_join_group)
+    
+    mandrill_mail(
+      template: 'babysitting-tokens-request-to-join-group',
+      subject: "Request by #{request_to_join_group.requester.full_name} to your group #{request_to_join_group.group.group_name}",
+      
+      from: request_to_join_group.requester.email,
+      to: request_to_join_group.group_member.email,
+      vars: {
+        'REQUESTER_NAME' => request_to_join_group.requester.full_name,
+        'GROUP_NAME' => request_to_join_group.group.group_name,
+        'REQUEST_TO_JOIN_GROUP_URL' => join_user_group_with_identifier_url(request_to_join_group.identifier)
+      },
+      important: true,
+      inline_css: true,
+     )
+  end
 end

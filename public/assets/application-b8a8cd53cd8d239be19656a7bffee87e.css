@@ -6338,141 +6338,141 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 /* line 4379, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default {
+. {
   background-color: #2c3e50;
   border-color: transparent;
 }
 
 /* line 4383, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-brand {
+. .navbar-brand {
   color: #ffffff;
 }
 
 /* line 4386, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
+. .navbar-brand:hover,
+. .navbar-brand:focus {
   color: #18bc9c;
   background-color: transparent;
 }
 
 /* line 4391, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-text {
+. .navbar-text {
   color: #777777;
 }
 
 /* line 4394, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > li > a {
+. .navbar-nav > li > a {
   color: #ffffff;
 }
 
 /* line 4397, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
+. .navbar-nav > li > a:hover,
+. .navbar-nav > li > a:focus {
   color: #18bc9c;
   background-color: transparent;
 }
 
 /* line 4402, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
+. .navbar-nav > .active > a,
+. .navbar-nav > .active > a:hover,
+. .navbar-nav > .active > a:focus {
   color: #ffffff;
   background-color: #1a242f;
 }
 
 /* line 4408, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > .disabled > a,
-.navbar-default .navbar-nav > .disabled > a:hover,
-.navbar-default .navbar-nav > .disabled > a:focus {
+. .navbar-nav > .disabled > a,
+. .navbar-nav > .disabled > a:hover,
+. .navbar-nav > .disabled > a:focus {
   color: #cccccc;
   background-color: transparent;
 }
 
 /* line 4414, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-toggle {
+. .navbar-toggle {
   border-color: #1a242f;
 }
 
 /* line 4417, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
+. .navbar-toggle:hover,
+. .navbar-toggle:focus {
   background-color: #1a242f;
 }
 
 /* line 4421, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-toggle .icon-bar {
+. .navbar-toggle .icon-bar {
   background-color: #ffffff;
 }
 
 /* line 4424, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
+. .navbar-collapse,
+. .navbar-form {
   border-color: transparent;
 }
 
 /* line 4428, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .open > a:focus {
+. .navbar-nav > .open > a,
+. .navbar-nav > .open > a:hover,
+. .navbar-nav > .open > a:focus {
   background-color: #1a242f;
   color: #ffffff;
 }
 
 @media (max-width: 767px) {
   /* line 4435, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  . .navbar-nav .open .dropdown-menu > li > a {
     color: #ffffff;
   }
 
   /* line 4438, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+  . .navbar-nav .open .dropdown-menu > li > a:hover,
+  . .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #18bc9c;
     background-color: transparent;
   }
 
   /* line 4443, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+  . .navbar-nav .open .dropdown-menu > .active > a,
+  . .navbar-nav .open .dropdown-menu > .active > a:hover,
+  . .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #ffffff;
     background-color: #1a242f;
   }
 
   /* line 4449, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+  . .navbar-nav .open .dropdown-menu > .disabled > a,
+  . .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  . .navbar-nav .open .dropdown-menu > .disabled > a:focus {
     color: #cccccc;
     background-color: transparent;
   }
 }
 /* line 4456, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-link {
+. .navbar-link {
   color: #ffffff;
 }
 
 /* line 4459, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-link:hover {
+. .navbar-link:hover {
   color: #18bc9c;
 }
 
 /* line 4462, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .btn-link {
+. .btn-link {
   color: #ffffff;
 }
 
 /* line 4465, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .btn-link:hover,
-.navbar-default .btn-link:focus {
+. .btn-link:hover,
+. .btn-link:focus {
   color: #18bc9c;
 }
 
 /* line 4469, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .btn-link[disabled]:hover,
-fieldset[disabled] .navbar-default .btn-link:hover,
-.navbar-default .btn-link[disabled]:focus,
-fieldset[disabled] .navbar-default .btn-link:focus {
+. .btn-link[disabled]:hover,
+fieldset[disabled] . .btn-link:hover,
+. .btn-link[disabled]:focus,
+fieldset[disabled] . .btn-link:focus {
   color: #cccccc;
 }
 
@@ -9328,7 +9328,7 @@ button.close {
 }
 
 /* line 6568, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .badge {
+. .badge {
   background-color: #fff;
   color: #2c3e50;
 }
@@ -16436,141 +16436,141 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 /* line 4379, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default {
+. {
   background-color: #2c3e50;
   border-color: transparent;
 }
 
 /* line 4383, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-brand {
+. .navbar-brand {
   color: #ffffff;
 }
 
 /* line 4386, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
+. .navbar-brand:hover,
+. .navbar-brand:focus {
   color: #18bc9c;
   background-color: transparent;
 }
 
 /* line 4391, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-text {
+. .navbar-text {
   color: #777777;
 }
 
 /* line 4394, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > li > a {
+. .navbar-nav > li > a {
   color: #ffffff;
 }
 
 /* line 4397, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
+. .navbar-nav > li > a:hover,
+. .navbar-nav > li > a:focus {
   color: #18bc9c;
   background-color: transparent;
 }
 
 /* line 4402, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
+. .navbar-nav > .active > a,
+. .navbar-nav > .active > a:hover,
+. .navbar-nav > .active > a:focus {
   color: #ffffff;
   background-color: #1a242f;
 }
 
 /* line 4408, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > .disabled > a,
-.navbar-default .navbar-nav > .disabled > a:hover,
-.navbar-default .navbar-nav > .disabled > a:focus {
+. .navbar-nav > .disabled > a,
+. .navbar-nav > .disabled > a:hover,
+. .navbar-nav > .disabled > a:focus {
   color: #cccccc;
   background-color: transparent;
 }
 
 /* line 4414, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-toggle {
+. .navbar-toggle {
   border-color: #1a242f;
 }
 
 /* line 4417, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
+. .navbar-toggle:hover,
+. .navbar-toggle:focus {
   background-color: #1a242f;
 }
 
 /* line 4421, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-toggle .icon-bar {
+. .navbar-toggle .icon-bar {
   background-color: #ffffff;
 }
 
 /* line 4424, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
+. .navbar-collapse,
+. .navbar-form {
   border-color: transparent;
 }
 
 /* line 4428, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .open > a:focus {
+. .navbar-nav > .open > a,
+. .navbar-nav > .open > a:hover,
+. .navbar-nav > .open > a:focus {
   background-color: #1a242f;
   color: #ffffff;
 }
 
 @media (max-width: 767px) {
   /* line 4435, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  . .navbar-nav .open .dropdown-menu > li > a {
     color: #ffffff;
   }
 
   /* line 4438, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+  . .navbar-nav .open .dropdown-menu > li > a:hover,
+  . .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #18bc9c;
     background-color: transparent;
   }
 
   /* line 4443, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+  . .navbar-nav .open .dropdown-menu > .active > a,
+  . .navbar-nav .open .dropdown-menu > .active > a:hover,
+  . .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #ffffff;
     background-color: #1a242f;
   }
 
   /* line 4449, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+  . .navbar-nav .open .dropdown-menu > .disabled > a,
+  . .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+  . .navbar-nav .open .dropdown-menu > .disabled > a:focus {
     color: #cccccc;
     background-color: transparent;
   }
 }
 /* line 4456, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-link {
+. .navbar-link {
   color: #ffffff;
 }
 
 /* line 4459, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .navbar-link:hover {
+. .navbar-link:hover {
   color: #18bc9c;
 }
 
 /* line 4462, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .btn-link {
+. .btn-link {
   color: #ffffff;
 }
 
 /* line 4465, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .btn-link:hover,
-.navbar-default .btn-link:focus {
+. .btn-link:hover,
+. .btn-link:focus {
   color: #18bc9c;
 }
 
 /* line 4469, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .btn-link[disabled]:hover,
-fieldset[disabled] .navbar-default .btn-link:hover,
-.navbar-default .btn-link[disabled]:focus,
-fieldset[disabled] .navbar-default .btn-link:focus {
+. .btn-link[disabled]:hover,
+fieldset[disabled] . .btn-link:hover,
+. .btn-link[disabled]:focus,
+fieldset[disabled] . .btn-link:focus {
   color: #cccccc;
 }
 
@@ -19426,7 +19426,7 @@ button.close {
 }
 
 /* line 6568, /Users/knoxjeffrey/Rails/Freedom_Tokens_Application/freedom_tokens/app/assets/stylesheets/bootstrap.scss */
-.navbar-default .badge {
+. .badge {
   background-color: #fff;
   color: #2c3e50;
 }

@@ -74,8 +74,8 @@ class User < ActiveRecord::Base
     self.update_column(:password_token, nil)
   end
   
-  # An invited user will automatically join the group from which the inviter made the invite request from
-  def join_inviters_group(group)
+  # An invited user or requesting user will be added as a member of the group specified
+  def join_group(group)
     UserGroup.create(user: self, group: group) unless self.already_member_of_user_group(group)
   end
   

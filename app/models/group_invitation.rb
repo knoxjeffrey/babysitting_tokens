@@ -1,4 +1,5 @@
 class GroupInvitation < ActiveRecord::Base
+  include ClearIdentifier
   
   before_create :generate_identifier
   
@@ -7,10 +8,6 @@ class GroupInvitation < ActiveRecord::Base
   
   validates :friend_email, presence: true, uniqueness: { scope: :group_id }
   validates_presence_of :friend_name, :message
-  
-  def clear_identifier_column
-    self.update_column(:identifier, nil)
-  end
   
   private
   
