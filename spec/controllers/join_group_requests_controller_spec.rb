@@ -6,43 +6,68 @@ describe JoinGroupRequestsController do
     
     context "with authenticated user" do
       
-      before do
-        MandrillMailer.deliveries.clear 
-        set_current_user_session
+      context "a request has not been sent already" do
+        
+        before do
+          MandrillMailer.deliveries.clear 
+          set_current_user_session
+        end
+      
+        let!(:user) { object_generator(:user) }
+        let!(:group) { object_generator(:group, admin: user) }
+        let!(:group_member) { object_generator(:user_group, user: user, group: group) }
+      
+        it "redirects to the invite friend page" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(response).to redirect_to user_path(user.id)
+        end
+      
+        it "creates a join group request" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(JoinGroupRequest.count).to eq(1)
+        end
+      
+        it "sends an email to the group member" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(MandrillMailer.deliveries.first.message["to"].first["email"]).to eq(user.email)
+        end
+      
+        it "sends an email that has the requesters name" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(MandrillMailer.deliveries.first.message["global_merge_vars"].first["content"]).to include(current_user.full_name)
+        end
+      
+        it "sends an email that contains the group name" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(MandrillMailer.deliveries.first.message["global_merge_vars"].second["content"]).to include(group.group_name)
+        end
+      
+        it "generates a successful flash message" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(flash[:success]).to be_present
+        end
+        
       end
       
-      let!(:user) { object_generator(:user) }
-      let!(:group) { object_generator(:group, admin: user) }
-      let!(:group_member) { object_generator(:user_group, user: user, group: group) }
-      
-      it "redirects to the invite friend page" do
-        post :create, user_id: user.id, group_id: group.id
-        expect(response).to redirect_to user_path(user.id)
-      end
-      
-      it "creates a join group request" do
-        post :create, user_id: user.id, group_id: group.id
-        expect(JoinGroupRequest.count).to eq(1)
-      end
-      
-      it "sends an email to the group member" do
-        post :create, user_id: user.id, group_id: group.id
-        expect(MandrillMailer.deliveries.first.message["to"].first["email"]).to eq(user.email)
-      end
-      
-      it "sends an email that has the requesters name" do
-        post :create, user_id: user.id, group_id: group.id
-        expect(MandrillMailer.deliveries.first.message["global_merge_vars"].first["content"]).to include(current_user.full_name)
-      end
-      
-      it "sends an email that contains the group name" do
-        post :create, user_id: user.id, group_id: group.id
-        expect(MandrillMailer.deliveries.first.message["global_merge_vars"].second["content"]).to include(group.group_name)
-      end
-      
-      it "generates a successful flash message" do
-        post :create, user_id: user.id, group_id: group.id
-        expect(flash[:success]).to be_present
+      context "a request has already been sent" do
+        
+        before { set_current_user_session }
+        
+        let!(:user) { object_generator(:user) }
+        let!(:group) { object_generator(:group, admin: user) }
+        let!(:group_member) { object_generator(:user_group, user: user, group: group) }
+        let!(:join_request_group) { object_generator(:join_group_request, requester: current_user, group_member: user, group: group)}
+        
+        it "redirects to the invite friend page" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(response).to redirect_to user_path(user.id)
+        end
+        
+        it "generates a warning flash message" do
+          post :create, user_id: user.id, group_id: group.id
+          expect(flash[:danger]).to be_present
+        end
+        
       end
 
     end
