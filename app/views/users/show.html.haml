@@ -27,4 +27,4 @@
                 %tr
                   %td #{ group.group_name }
                   %td #{ group.location }
-                  %td= link_to "Request To Join Group", "/join_group_requests?user_id=#{@user.id}&group_id=#{group.id}", method: :post , class: "btn btn-success btn-xs"
+                  %td= request_to_join_group_button(@user, group)

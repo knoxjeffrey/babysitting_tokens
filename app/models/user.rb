@@ -89,8 +89,9 @@ class User < ActiveRecord::Base
   # Order is by full name
   # example User.search_by_title("je")
   # => ["Jeff Knox", "Jenny Lord"]
-  def self.search_by_friend_full_name(friend_full_name)
-    friend_full_name.present? ? where("full_name ILIKE ?", "%#{friend_full_name}%").order(full_name: :asc) : []
+  # Will not include the current user in the results
+  def self.search_by_friend_full_name(friend_full_name, current_user)
+    friend_full_name.present? ? where("id != ? and full_name ILIKE ?", "#{current_user.id}", "%#{friend_full_name}%").order(full_name: :asc) : []
   end
     
   private

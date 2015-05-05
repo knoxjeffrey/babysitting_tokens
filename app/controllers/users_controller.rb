@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   end
   
   def search
-    @search_results = User.search_by_friend_full_name(params[:full_name])
+    @search_results = User.search_by_friend_full_name(params[:full_name], current_user)
   end
   
   private
