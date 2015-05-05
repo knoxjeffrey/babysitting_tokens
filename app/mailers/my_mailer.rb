@@ -67,4 +67,24 @@ class MyMailer < MandrillMailer::TemplateMailer
       inline_css: true,
      )
   end
+  
+  def notify_user_that_babysitter_canceled(request)
+    
+    babysitter = User.find(request.babysitter_id)
+    mandrill_mail(
+      template: 'babysitting-tokens-cancel-babysitting-agreement',
+      subject: "#{babysitter.full_name} has had to cancel their date to babysit for you",
+      
+      from: babysitter.email,
+      to: request.user.email,
+      vars: {
+        'BABYSITTER_NAME' => babysitter.full_name,
+        'GROUP_NAME' => request.group.group_name,
+        'BABYSITTING_DATE' => request.start.strftime("%b #{request.start.day.ordinalize}, %Y")
+      },
+      important: true,
+      inline_css: true,
+     )
+  end
+  
 end
