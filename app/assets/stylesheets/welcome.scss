@@ -27,3 +27,45 @@
                                       support rgba */
   background: rgba(231,236,238,0.8);
 }
+
+.jumbotron-altered {
+  padding: 30px 15px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+}
+.jumbotron-altered h1,
+.jumbotron-altered .h1 {
+  color: inherit;
+}
+.jumbotron-altered p {
+  margin-bottom: 15px;
+  font-size: 23px;
+  font-weight: 200;
+}
+.jumbotron-altered > hr {
+  border-top-color: #cfd9db;
+}
+.container .jumbotron-altered,
+.container-fluid .jumbotron-altered {
+  border-radius: 6px;
+}
+.jumbotron-altered .container {
+  max-width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .jumbotron-altered {
+    padding: 48px 20px;
+    
+  }
+  .container .jumbotron-altered,
+  .container-fluid .jumbotron-altered {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .jumbotron-altered h1,
+  .jumbotron-altered .h1 {
+    font-size: 67.5px;
+  }
+}

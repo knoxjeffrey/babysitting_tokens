@@ -2735,6 +2735,11 @@ table.text-center th {
 .register-logo a {
   color: #fff;
 }
+.login-logo a:hover,
+.register-logo a:hover {
+  color: #fff;
+  text-decoration: none;
+}
 .login-page,
 .register-page {
   background: #d2d6de;
