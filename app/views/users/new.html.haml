@@ -1,17 +1,29 @@
-%body.welcome
-  .jumbotron.opacity
-    .row
-      .col-sm-7.col-sm-offset-1
-        %header
-          %h2 Register
-        %br
-        = link_to "#{root_url}auth/facebook?from=registration&invite=#{@group_invitation_identifier}", class: "btn btn-block btn-social btn-facebook" do
-          %i.fa.fa-facebook 
-          Sign Up Through Facebook
-        %hr
-        = bootstrap_form_for @user, url: register_path do |f|
-          = f.email_field :email
-          = f.password_field :password
-          = f.text_field :full_name
-          = hidden_field_tag :group_invitation_identifier, @group_invitation_identifier
-          = f.submit "Sign Up", class: "btn btn-success"
+- body_class "sidebar-collapse"
+- content_wrapper_class "welcome"
+.register-box
+  .register-logo
+    %a{ href: "/" }
+      %b
+        %span Babysitting Tokens
+        %i.icon-coins
+  .register-box-body
+    %p.login-box-msg Register a new membership
+    = bootstrap_form_for @user, url: register_path do |f|
+      .form-group.has-feedback
+        = f.email_field :email,  icon: "glyphicon glyphicon-envelope form-control-feedback"
+      .form-group.has-feedback
+        = f.password_field :password, icon: "glyphicon glyphicon-lock form-control-feedback"
+      .form-group.has-feedback
+        = f.text_field :full_name, icon: "glyphicon glyphicon-user form-control-feedback"
+        = hidden_field_tag :group_invitation_identifier, @group_invitation_identifier
+      .row
+        / /.col
+        .col-xs-8
+        .col-xs-4
+          = f.submit "Register", class: "btn btn-primary btn-block btn-flat"
+    .social-auth-links.text-center
+      %p - OR -
+      %a.btn.btn-block.btn-social.btn-facebook.btn-flat{:href => "#{root_url}auth/facebook?from=registration&invite=#{@group_invitation_identifier}"}
+        %i.fa.fa-facebook
+        Register using Facebook
+/ /.register-box
