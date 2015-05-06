@@ -1,133 +1,38 @@
-.navbar.navbar-default
-  .container-fluid
-    .navbar-header
-      - if logged_in?
-        %button{type: "button", class: "navbar-toggle collapsed", 'data-toggle' => "collapse", 'data-target' => "#bs-example-navbar-collapse-2"}
-          %span{ class: "sr-only" } Toggle navigation
-          %span{ class: "icon-bar" }
-          %span{ class: "icon-bar" }
-          %span{ class: "icon-bar" }
-      %a{ class: "navbar-brand", href: "/" } 
-        %span Babysitting Tokens
-        %i.icon-coins
+.logo
+  %a{ class: "navbar-brand", href: "/" } 
+    %span Babysitting Tokens
+    %i.icon-coins
+.navbar.navbar-static-top
+  - if logged_in?
+    %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
+      %span.sr-only Toggle navigation
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    .navbar-custom-menu
+      %ul.nav.navbar-nav
+        - if logged_in?
+          %li.dropdown.user.user-menu
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %img.user-image{:alt => "User Image", :src => avatar_url(current_user.email, 40)}/
+              %span.hidden-xs #{current_user.full_name} 
+            %ul.dropdown-menu
+              / User image
+              %li.user-header
+                %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
+                %p
+                #{current_user.full_name}
+              / Menu Footer
+              %li.user-footer
+                - if current_user.authentications.empty?
+                  .pull-left
+                    %a.btn.btn-default.btn-flat{href: "/auth/facebook" }Allow Facebook Login
+                .pull-right
+                  %a.btn.btn-default.btn-flat{href: "/sign_out"} Sign out
+      
+      
         
-    - if logged_in?
-      .collapse.navbar-collapse#bs-example-navbar-collapse-2
-        %ul 
-          .col-sm-5.navbar-form
-            = form_tag search_users_path, method: 'get' do
-              .form-group
-                = text_field_tag :full_name, nil, class: "form-control", placeholder: "Search for friends here"
-                = submit_tag 'Search', name: nil, class: "btn btn-success"
-          .nav.navbar-nav.navbar-right
-            %li.dropdown
-              %a{ href: "#", class: "dropdown-toggle", 'data-toggle' => "dropdown", role: "button", 'aria-expanded' => "false" } 
-                Welcome, #{current_user.full_name} 
-                %span{ class: "caret" }
-              %ul{ class: "dropdown-menu", role: "menu" }
-                %li
-                  - if current_user.authentications.empty?
-                    %a{ href: "/auth/facebook" }Facebook Authentication
-                  %a{ href: "/sign_out" }Sign Out
-
--#
-                    
-                    
-  / Wrapper required for sidebar transitions
-  .st-container
-    / Fixed navbar
-    .navbar.navbar-main.navbar-primary.navbar-fixed-top{:role => "navigation"}
-      .container-fluid
-        .navbar-header
-          %a.toggle.pull-left.visible-xs{"data-effect" => "st-effect-1", "data-toggle" => "sidebar-menu", :href => "#sidebar-menu"}
-            %i.fa.fa-ellipsis-v
-          %button.navbar-toggle.collapsed{"data-target" => "#main-nav", "data-toggle" => "collapse", :type => "button"}
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.toggle.pull-right.visible-xs{"data-effect" => "st-effect-1", "data-toggle" => "sidebar-menu", :href => "#sidebar-chat"}
-            %i.fa.fa-comments
-          %a.navbar-brand{:href => "/"}
-            %span Freedom Tokens
-            %span= image_tag("glyphicons-38-coins@3x.png", class: 'tokens', alt: "tokens", width: "25", height: "25")
-        / Collect the nav links, forms, and other content for toggling
-        #main-nav.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-          %ul.nav.navbar-nav.navbar-right
-            / User
-            %li.dropdown
-              %a.dropdown-toggle.user{"data-toggle" => "dropdown", :href => "#"}
-                #{current_user.full_name} 
-                %span.caret
-              %ul.dropdown-menu{:role => "menu"}
-                %li
-                  %a{ href: "/sign_out" }Sign Out
-        / /.navbar-collapse
-    / Load Sidebar as Content
-    #sidebar-menu.sidebar.left.sidebar-size-2.sidebar-offset-0.sidebar-skin-dark.sidebar-visible-desktop
-      %div{"data-scrollable" => ""}
-        / User
-        .sidebar-block
-          .profile
-            %img.img-circle{:alt => "people", :src => "images/people/110/guy-6.jpg"}/
-            %h4.sidebar-heading Adrian D.
-        .category About
-        .sidebar-block
-          %ul.list-about
-            %li
-              %i.fa.fa-map-marker
-              Amsterdam, NL
-            %li
-              %i.fa.fa-link
-              %a{:href => "#"} Visit website
-            %li
-              %i.fa.fa-twitter
-              %a{:href => "#"} /mosaicprobiz
-        .category Photos
-        .category Activity
-        .sidebar-block
-          .sidebar-feed
-            %ul
-              %li.media.news-item
-                %span.news-item-success.pull-right
-                  %i.fa.fa-circle
-                %span.pull-left.media-object
-                  %i.fa.fa-fw.fa-bell
-                .media-body
-                  %a.text-white{:href => ""} Adrian
-                  just logged in
-                  %span.time 2 min ago
-              %li.media.news-item
-                %span.news-item-success.pull-right
-                  %i.fa.fa-circle
-                %span.pull-left.media-object
-                  %i.fa.fa-fw.fa-bell
-                .media-body
-                  %a.text-white{:href => ""} Adrian
-                  just added
-                  %a.text-white{:href => ""} mosaicpro
-                  as their office
-                  %span.time 2 min ago
-              %li.media.news-item
-                %span.pull-left.media-object
-                  %i.fa.fa-fw.fa-bell
-                .media-body
-                  %a.text-white{:href => ""} Adrian
-                  just logged in
-                  %span.time 2 min ago
-              %li.media.news-item
-                %span.pull-left.media-object
-                  %i.fa.fa-fw.fa-bell
-                .media-body
-                  %a.text-white{:href => ""} Adrian
-                  just logged in
-                  %span.time 2 min ago
-              %li.media.news-item
-                %span.pull-left.media-object
-                  %i.fa.fa-fw.fa-bell
-                .media-body
-                  %a.text-white{:href => ""} Adrian
-                  just logged in
-                  %span.time 2 min ago
-        / End user
+      
+      
+      
+      

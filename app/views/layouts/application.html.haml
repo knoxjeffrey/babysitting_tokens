@@ -7,9 +7,9 @@
     = csrf_meta_tag
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
-  %body
+  %body.skin-blue
     #wrap
-      %header
+      %header.main-header
         = render 'shared/header'
       %section.content.clearfix
         = render 'shared/messages'
