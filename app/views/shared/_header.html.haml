@@ -20,19 +20,11 @@
               / User image
               %li.user-header
                 %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
-                %p
-                #{current_user.full_name}
+                %p #{current_user.full_name}
               / Menu Footer
               %li.user-footer
                 - if current_user.authentications.empty?
                   .pull-left
                     %a.btn.btn-default.btn-flat{href: "/auth/facebook" }Allow Facebook Login
                 .pull-right
-                  %a.btn.btn-default.btn-flat{href: "/sign_out"} Sign out
-      
-      
-        
-      
-      
-      
-      
+                  %a.btn.btn-default.btn-flat{href: "/sign_out"} Sign out    
