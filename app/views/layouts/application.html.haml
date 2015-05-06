@@ -7,17 +7,17 @@
     = csrf_meta_tag
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
-  %body.skin-blue
+  %body{:class => "skin-blue #{ yield :body_class }"}
     .wrapper
       %header.main-header
         = render 'shared/header'
       %aside.main-sidebar
         = render 'shared/sidebar'
-      %section.content-wrapper
+      %section.content-wrapper{:class => "#{ yield :content_wrapper_class }"}
         %section.content
           = render 'shared/messages'
           = yield
       %footer.main-footer
         .pull-right.hidden-xs
           Links
-        &copy 2015 Freedom Tokens
+        &copy 2015 Babysitting Tokens

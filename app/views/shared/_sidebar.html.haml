@@ -1,21 +1,22 @@
-.main-sidebar
-  / Inner sidebar
-  .sidebar
-    / user panel (Optional)
-    .user-panel
-      .pull-left.image
-        %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
-      .pull-left.info
-        %p #{current_user.full_name} 
-        %a{:href => "#"}
-          %i.fa.fa-circle.text-success
-          Logged In
-    / /.user-panel
-    / Search Form
-    = form_tag search_users_path, method: 'get', class: "sidebar-form" do
-      .input-group
-        = text_field_tag :full_name, nil, class: "form-control", placeholder: "Search for friends..."
-        %span.input-group-btn
-          = button_tag type: 'submit', class: "btn btn-flat", id: "search-btn" do
-            %i.fa.fa-search
-    / /.sidebar-form
+- if logged_in?
+  .main-sidebar
+    / Inner sidebar
+    .sidebar
+      / user panel (Optional)
+      .user-panel
+        .pull-left.image
+          %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
+        .pull-left.info
+          %p #{current_user.full_name} 
+          %a{:href => "#"}
+            %i.fa.fa-circle.text-success
+            Logged In
+      / /.user-panel
+      / Search Form
+      = form_tag search_users_path, method: 'get', class: "sidebar-form" do
+        .input-group
+          = text_field_tag :full_name, nil, class: "form-control", placeholder: "Search for friends..."
+          %span.input-group-btn
+            = button_tag type: 'submit', class: "btn btn-flat", id: "search-btn" do
+              %i.fa.fa-search
+      / /.sidebar-form

@@ -2726,14 +2726,14 @@ table.text-center th {
  */
 .login-logo,
 .register-logo {
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
   margin-bottom: 25px;
   font-weight: 300;
 }
 .login-logo a,
 .register-logo a {
-  color: #444;
+  color: #fff;
 }
 .login-page,
 .register-page {
