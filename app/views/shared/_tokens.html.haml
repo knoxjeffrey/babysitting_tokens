@@ -1,7 +1,8 @@
-.home-body   
-  %ul{ class: "nav nav-pills pull-right" }
+/ Token Info
+.row
+  .col-md-12.pull-right
     - current_user.user_groups.each do |user_group|
-      %li{ class: "active" }
-        %a{ href: group_path(user_group.group) }  
-          %span #{ user_group.group.group_name }
-          %span{ class: "badge" } #{ user_group.tokens }
+      %a.btn.btn-app.tokens.pull-right{ href: group_path(user_group.group) }
+        %span.badge.bg-green #{ user_group.tokens }
+        %i.fa.icon-coins 
+        #{ user_group.group.group_name }

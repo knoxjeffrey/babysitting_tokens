@@ -1,7 +1,7 @@
-body.welcome {
+.welcome {
   height: 100%;
 	/* Location of the image */
-	  background-image: image-url('cover_image.jpg');
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), image-url('cover_image.jpg');
   
 	  /* Background image is centered vertically and horizontally at all times */
 	  background-position: center center;
@@ -26,4 +26,46 @@ body.welcome {
   background: rgb(231,236,238); /* Fall-back for browsers that don't
                                       support rgba */
   background: rgba(231,236,238,0.8);
+}
+
+.jumbotron-altered {
+  padding: 30px 15px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.jumbotron-altered h1,
+.jumbotron-altered .h1 {
+  color: inherit;
+}
+.jumbotron-altered p {
+  margin-bottom: 15px;
+  font-size: 23px;
+  font-weight: 200;
+}
+.jumbotron-altered > hr {
+  border-top-color: #cfd9db;
+}
+.container .jumbotron-altered,
+.container-fluid .jumbotron-altered {
+  border-radius: 6px;
+}
+.jumbotron-altered .container {
+  max-width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .jumbotron-altered {
+    padding: 48px 20px;
+    
+  }
+  .container .jumbotron-altered,
+  .container-fluid .jumbotron-altered {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .jumbotron-altered h1,
+  .jumbotron-altered .h1 {
+    font-size: 67.5px;
+  }
 }

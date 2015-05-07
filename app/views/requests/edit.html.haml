@@ -1,5 +1,30 @@
 = render 'shared/tokens'
-        
-= render 'shared/profile'
- 
-= render 'edit_update_form'
+
+%br
+%br       
+.home-body       
+  %section.register.container
+    .row
+      .col-sm-6.col-sm-offset-1
+        = bootstrap_form_for @request, url: update_my_request_path(@request), method: :put do |f|
+          %header
+            %span
+              %h1 
+                %i.fa.fa-gift
+                Organise Time Off!
+          %br
+          = f.alert_message "Please fix the errors below."
+          = f.text_field :start, { data: { date_format: 'YYYY/MM/DD HH:mm' }, id: 'datetimepicker1' }
+          = f.text_field :finish, { data: { date_format: 'YYYY/MM/DD HH:mm' }, id: 'datetimepicker2' }
+          - if current_user.groups.count > 1
+            = f.collection_check_boxes :group_ids, current_user.groups, :id, :group_name, label: 'Request To Group'
+          = f.submit @request.new_record? ? "Send" : "Update Request", class: "btn bg-olive btn-flat btn-lg"
+      :javascript
+        $(function () {
+          $('#datetimepicker1').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+          });
+          $('#datetimepicker2').datetimepicker({
+            format: 'YYYY/MM/DD HH:mm'
+          });
+        });

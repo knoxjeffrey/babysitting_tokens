@@ -1,8 +1,8 @@
-.home-body
-  .row
-    .col-lg-12
-      %h1 Groups for #{ @user.full_name }
-      %br
+= render 'shared/tokens'
+
+%br
+%br  
+%br
 .row
   .col-lg-4
     .media
@@ -10,14 +10,19 @@
         = image_tag(avatar_url(@user.email, 100), class: "media-object dp img-circle", width: "100", height: "100")
       .media-body
         %h4{ class: "media-name" } #{ @user.full_name }
-        
-  .col-lg-5.col-lg-offset-1
-    .request-detail
-      .panel.panel-primary
-        .panel-heading
-          %h3{ class: 'panel-title' } Group Information
-        .panel-body
-          %table{ class: "table table-striped table-hover" }
+
+  .col-lg-5
+    / TABLE: Babysitting Groups
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Group Information
+        .box-tools.pull-right
+          %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
+            %i.fa.fa-minus
+      / /.box-header
+      .box-body
+        .table-responsive
+          %table.table.no-margin
             %thead
               %tr
                 %th Group Name
@@ -28,3 +33,5 @@
                   %td #{ group.group_name }
                   %td #{ group.location }
                   %td= request_to_join_group_button(@user, group)
+        / /.table-responsive
+      / /.box-body    

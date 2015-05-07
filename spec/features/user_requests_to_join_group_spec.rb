@@ -24,7 +24,7 @@ feature "user requests to join group" do
   
   def search_for_friend
     fill_in "full_name", with: "Jeff Knox"
-    click_button "Search"
+    click_button "search-btn"
     expect(page).to have_content("Jeff Knox")
   end
   

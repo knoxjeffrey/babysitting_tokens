@@ -1,13 +1,14 @@
-= render 'shared/profile'
+= render 'shared/tokens'
     
-.home-body       
-  %section.register.container
-    .row
-      .col-sm-6.col-sm-offset-1
-        = bootstrap_form_for @group do |f|
-          %header
-            %h1 Create Babysitting Group
-          %br
-          = f.text_field :group_name
-          = f.text_field :location
-          = f.submit "Create", class: "btn btn-success"
+%br
+%br  
+%br
+.row
+  .col-md-6.col-md-offset-1
+    = bootstrap_form_for @group do |f|
+      %header
+        %h1 Create Babysitting Group
+      %br
+      = f.text_field :group_name
+      = f.text_field :location
+      = f.submit "Create Group", class: "btn bg-olive btn-flat btn-lg"

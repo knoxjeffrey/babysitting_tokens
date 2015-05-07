@@ -1,28 +1,25 @@
 = render 'shared/tokens'
-        
-= render 'shared/profile'
-    
-.home-body       
-  %section.register.container
-    .row
-      .col-lg-7.col-lg-offset-1
-        %header
-          %h1 Friends In Your #{@group.group_name} Group
-    .row
-      .col-lg-6.col-lg-offset-1
-        .other_nights
-          .panel.panel-primary
-            .panel-heading
-              %h3{ class: 'panel-title' } #{@group.group_name} Group
-            .panel-body
-              %table{ class: "table table-striped table-hover" }
-                %thead
-                  %tr
-                    %th Name
-                    %th Email
-                %tbody
-                  - @group.friends_in_group(current_user).each do |friend|
-                    %tr
-                      %td= friend.full_name
-                      %td= friend.email
-              =link_to 'Invite A Friend To This Group', invite_friend_group_path, class: "btn btn-success btn-xs"
+
+%br
+%br   
+  .row
+    .col-lg-7.col-lg-offset-1
+      %header
+        %h1 Friends In Your #{@group.group_name} Group
+        %br
+  .row
+    .col-md-6.col-md-offset-1
+      / USERS LIST
+      .box.box-primary
+        .box-header.with-border
+          %h3.box-title #{@group.group_name} Group
+        / /.box-header
+        .box-body.no-padding
+          %ul.users-list.clearfix
+            - @group.friends_in_group(current_user).each do |friend|
+              %li
+                %img{:alt => "User Image", :src => avatar_url(friend.email, 120)}/
+                %a.users-list-name{:href => "#"} #{ friend.full_name }
+          / /.users-list
+        / /.box-body
+      =link_to 'Invite A Friend To This Group', invite_friend_group_path, class: "btn bg-olive btn-flat btn-lg"

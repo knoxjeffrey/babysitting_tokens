@@ -25,27 +25,27 @@ feature "user alters nights of freedom" do
   end
   
   def expect_to_see_edit_and_delete_buttons
-    expect(page).to have_content("Edit")
-    expect(page).to have_content("Delete")
+    expect(page).to have_css('i.fa.fa-pencil')
+    expect(page).to have_css('i.fa.fa-times')
   end
   
   def expect_to_see_only_delete_button
-    expect(page).not_to have_content("Edit")
-    expect(page).to have_content("Delete")
+    expect(page).not_to have_css('i.fa.fa-pencil')
+    expect(page).to have_css('i.fa.fa-times')
     expect(page).to have_content("#{friend.full_name}")
   end
   
   def edit_request
-    click_link "Edit"
+    click_link 'edit_icon'
     fill_in 'datetimepicker1', with: "2030-03-17 19:00:00"
     fill_in 'datetimepicker2', with: "2030-03-17 23:00:00"
-    click_button "Update Freedom Request"
+    click_button "Update Request"
     expect(page).to have_content("Mar 17th, 2030")
     expect(page).to have_content('18') # to represent the change in tokens needed for the longer request
   end
   
   def delete_request
-    click_link "Delete"
+    click_link 'delete_icon'
     expect(page).not_to have_content("Mar 17th, 2030")
     expect(page).to have_content('22') # to represent the tokens being reallocated to the current user due to cancelation
   end
