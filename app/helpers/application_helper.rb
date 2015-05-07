@@ -46,6 +46,7 @@ module ApplicationHelper
     content_for :body_class, class_name
   end
   
+  # Used to inject styles into application.html.haml so I can add a class to content_wrapper
   def content_wrapper_class(class_name="")
     content_for :content_wrapper_class, class_name
   end

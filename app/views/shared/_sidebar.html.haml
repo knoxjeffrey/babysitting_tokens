@@ -20,3 +20,11 @@
             = button_tag type: 'submit', class: "btn btn-flat", id: "search-btn" do
               %i.fa.fa-search
       / /.sidebar-form
+      / Sidebar menu
+      %ul.sidebar-menu
+        %li.header
+        %li
+          -if current_user.groups.present?
+            =link_to my_request_path, class: "freedom-button btn bg-olive btn-flat" do
+              %i.fa.fa-plus-circle
+              I Need A Sitter!

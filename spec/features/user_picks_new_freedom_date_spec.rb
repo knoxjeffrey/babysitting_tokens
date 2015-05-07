@@ -26,7 +26,7 @@ feature "user picks new date of freedom" do
   end
   
   def press_pick_freedom_date_button
-    click_link "Request For Freedom"
+    click_link "I Need A Sitter"
   end
   
   def enter_start_date(date)
