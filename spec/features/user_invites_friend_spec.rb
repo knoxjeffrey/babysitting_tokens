@@ -42,16 +42,15 @@ feature "user invites friend" do
   def friend_signs_up
     fill_in_password
     fill_in 'user_full_name', with: friend_name
-    click_button "Sign Up"
+    click_button "Register"
   end
   
   def friend_signs_in
-    expect(page).to have_content("Sign In")
     fill_in "Email", with: friend_email
     fill_in_password
     click_button "Sign In"
     expect(page).to have_content("Test Group")
-    expect(page).to have_content("Request For Freedom")
+    expect(page).to have_content("I Need A Sitter")
   end
   
   def fill_in_password

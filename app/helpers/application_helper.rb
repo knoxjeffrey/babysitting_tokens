@@ -35,10 +35,20 @@ module ApplicationHelper
   
   def request_to_join_group_button(user, group)
     if current_user.groups.include? group
-      link_to "Already A Member", "",  class: "btn btn-danger active btn-xs"
+      content_tag :div, "Already A Member",  class: "btn bg-red btn-flat btn-xs"
     else
-      link_to "Request To Join Group", "/join_group_requests?user_id=#{user.id}&group_id=#{group.id}", method: :post , class: "btn btn-success btn-xs"
+      link_to "Request To Join Group", "/join_group_requests?user_id=#{user.id}&group_id=#{group.id}", method: :post , class: "btn bg-olive btn-flat btn-xs"
     end
+  end
+  
+  # Used to inject styles into application.html.haml so I can add a class to body
+  def body_class(class_name="")
+    content_for :body_class, class_name
+  end
+  
+  # Used to inject styles into application.html.haml so I can add a class to content_wrapper
+  def content_wrapper_class(class_name="")
+    content_for :content_wrapper_class, class_name
   end
   
 end

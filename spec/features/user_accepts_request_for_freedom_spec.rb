@@ -13,19 +13,19 @@ feature "user accepts date for freedom" do
   end
   
   scenario "user presses accept button" do
-    expect_page_to_have_open_button
-    press_open_button
+    expect_page_to_have_see_details_button
+    press_see_details_button
     press_accept_button
     expect_current_path_to_be_home_path
     expect_page_not_to_have_open_button
   end
   
-  def expect_page_to_have_open_button
-    expect(page).to have_content("Open")
+  def expect_page_to_have_see_details_button
+    expect(page).to have_content("See Details")
   end
   
-  def press_open_button
-    click_link "Open"
+  def press_see_details_button
+    click_link "See Details"
   end
   
   def press_accept_button
