@@ -6,11 +6,11 @@
   .col-lg-12
     / TABLE: Friends Babysitting
     .box-header.with-border
-      %h3.box-title
-        .user-panel
-          .pull-left.image
-            %img.img-circle{:alt => "User Image", :src => avatar_url(@request_group.request.user.email, 40)}/
-            %span #{@request_group.request.user.full_name}
+      .media
+        %a{class: "pull-left", href: ""}
+          = image_tag(avatar_url(@request_group.request.user.email, 100), class: "media-object dp img-circle", width: "100", height: "100")
+        .media-body
+          %h4{ class: "media-name" } #{ @request_group.request.user.full_name }
     / /.box-header
     .box-body
       .col-lg-7

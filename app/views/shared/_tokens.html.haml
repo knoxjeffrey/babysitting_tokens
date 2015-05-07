@@ -1,6 +1,6 @@
 / Token Info
 .row
-  .col-md-5.pull-right
+  .col-md-12.pull-right
     - current_user.user_groups.each do |user_group|
       %a.btn.btn-app.tokens.pull-right{ href: group_path(user_group.group) }
         %span.badge.bg-green #{ user_group.tokens }
