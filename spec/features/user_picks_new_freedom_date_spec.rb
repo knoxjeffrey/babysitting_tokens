@@ -38,7 +38,7 @@ feature "user picks new date of freedom" do
   end
   
   def press_freedom_button
-    click_button "Freedom"
+    click_button "Send"
   end
   
   

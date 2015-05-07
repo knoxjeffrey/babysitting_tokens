@@ -39,7 +39,7 @@ feature "user alters nights of freedom" do
     click_link 'edit_icon'
     fill_in 'datetimepicker1', with: "2030-03-17 19:00:00"
     fill_in 'datetimepicker2', with: "2030-03-17 23:00:00"
-    click_button "Update Freedom Request"
+    click_button "Update Request"
     expect(page).to have_content("Mar 17th, 2030")
     expect(page).to have_content('18') # to represent the change in tokens needed for the longer request
   end
