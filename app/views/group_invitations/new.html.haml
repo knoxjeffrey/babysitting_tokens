@@ -2,12 +2,13 @@
     
 %br
 %br  
-%br
 .row
   .col-md-6.col-md-offset-1
     = bootstrap_form_for @group_invitation, url: invite_friend_group_path do |f|
       %header
-        %h1 Invite a friend to join #{@group.group_name}
+        %h1 
+          %i.fa.fa-envelope-o
+          Invite a friend to join #{@group.group_name}
       %br
       = f.text_field :friend_name
       = f.text_field :friend_email
