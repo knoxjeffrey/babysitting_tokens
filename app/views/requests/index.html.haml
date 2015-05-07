@@ -48,7 +48,7 @@
       .box-header.with-border
         %h3.box-title Friends Babysitting For You
         .box-tools.pull-right
-          %button.btn.btn-box-tool{"data-widget" => "collapse"}
+          %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
             %i.fa.fa-minus
       / /.box-header
       .box-body
@@ -90,7 +90,7 @@
       .box-header.with-border
         %h3.box-title Babysitting Groups
         .box-tools.pull-right
-          %button.btn.btn-box-tool{"data-widget" => "collapse"}
+          %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
             %i.fa.fa-minus
       / /.box-header
       .box-body
@@ -106,7 +106,7 @@
                   %td= user_group.group.group_name
                   %td= user_group.tokens
                   %td
-                    =link_to 'Details', group_path(user_group.group), class: "btn btn-success btn-xs"
+                    =link_to 'Details', group_path(user_group.group), class: "btn bg-olive btn-flat btn-xs"
         / /.table-responsive
       / /.box-body                    
       .box-footer.clearfix
