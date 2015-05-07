@@ -1,5 +1,7 @@
-= render 'shared/profile'
+= render 'shared/tokens'
     
+%br
+%br       
 .home-body       
   %section.register.container
     .row
@@ -10,4 +12,4 @@
           %br
           = f.text_field :group_name
           = f.text_field :location
-          = f.submit "Create", class: "btn btn-success"
+          = f.submit "Create Group", class: "btn bg-olive btn-flat btn-lg"

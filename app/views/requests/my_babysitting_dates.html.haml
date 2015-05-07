@@ -34,6 +34,6 @@
                   %td= display_time(request.start)
                   %td= display_time(request.finish)
                   %td
-                    =link_to 'Cancel', cancel_babysitting_date_path(request), method: :put, class: "btn bg-red btn-flat btn-xs"
+                    =link_to 'Cancel', cancel_babysitting_date_path(request), method: :put, class: "btn bg-red btn-flat btn-xs", :data => {:confirm => 'Are you sure?'}
         / /.table-responsive
       / /.box-body

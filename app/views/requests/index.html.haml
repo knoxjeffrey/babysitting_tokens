@@ -77,7 +77,7 @@
                       %span.label.label-success Accepted
                     %td
                   %td
-                    =link_to request_path(user_request), method: 'delete', id: 'delete_icon' do
+                    =link_to request_path(user_request), method: 'delete', id: 'delete_icon', :data => {:confirm => 'Are you sure?'} do
                       %i.fa.fa-times
         / /.table-responsive
       / /.box-body
