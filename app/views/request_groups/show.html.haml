@@ -36,6 +36,8 @@
                     %td #{ display_time(@request_group.request.finish) }
                     %td #{ @request_group.group.group_name }
                     %td #{ @request_group.tokens_for_babysitter }
-
-      .col-lg-2              
-        = button_to "Accept", {controller: :request_groups, action: :update}, {:method => :put, class: "accept btn bg-olive btn-flat btn-lg" }
+          
+              %br
+              .col-lg-2             
+                = button_to "Accept", {controller: :request_groups, action: :update}, {:method => :put, class: "btn bg-olive btn-flat btn-lg" }
+              %br
