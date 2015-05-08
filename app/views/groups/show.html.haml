@@ -20,7 +20,7 @@
           %ul.users-list.clearfix
             - @group.friends_in_group(current_user).each do |friend|
               %li
-                %img{:alt => "User Image", :src => avatar_url(friend.email, 120)}/
+                %img{:alt => "User Image", :src => avatar_url(friend.email, 154)}/
                 %a.users-list-name{:href => "#"} #{ friend.full_name }
           / /.users-list
         / /.box-body
