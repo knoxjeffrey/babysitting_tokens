@@ -25,6 +25,6 @@
               %li.user-footer
                 - if current_user.authentications.empty?
                   .pull-left
-                    %a.btn.btn-primary.btn-flat{href: "/auth/facebook" }Allow Facebook Login
+                    %a.btn.profile.btn-primary.btn-flat{href: "/auth/facebook" }Allow Facebook Login
                 .pull-right
-                  %a.btn.btn-danger.btn-flat{href: "/sign_out"} Sign out    
+                  %a.btn.profile.btn-danger.btn-flat{href: "/sign_out"} Sign out    
