@@ -223,8 +223,7 @@ a:focus {
 @media (max-width: 991px) {
   .main-header .navbar-custom-menu a,
   .main-header .navbar-right a {
-    color: inherit;
-    background: transparent;
+
   }
 }
 @media (max-width: 767px) {

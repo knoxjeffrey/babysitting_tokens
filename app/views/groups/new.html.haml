@@ -2,12 +2,13 @@
     
 %br
 %br  
-%br
 .row
   .col-md-6.col-md-offset-1
     = bootstrap_form_for @group do |f|
       %header
-        %h1 Create Babysitting Group
+        %h1 
+          %i.fa.fa-plus-circle
+          Create Babysitting Group
       %br
       = f.text_field :group_name
       = f.text_field :location

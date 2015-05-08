@@ -21,7 +21,7 @@
       %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
         %i.fa.fa-minus
     / /. tools
-    %i.fa.fa-question-circle
+    %i.fa.fa-comment-o
     %h3.box-title
       Babysitting Requests
   .box-body
@@ -70,14 +70,14 @@
                     %td
                       %span.label.label-warning Waiting
                     %td
-                      =link_to edit_my_request_path(user_request), id: 'edit_icon' do
+                      =link_to edit_my_request_path(user_request), id: 'edit_icon', "data-toggle" => "tooltip", :title => "Edit Your Request" do
                         %i.fa.fa-pencil
                   - else
                     %td
                       %span.label.label-success Accepted
                     %td
                   %td
-                    =link_to request_path(user_request), method: 'delete', id: 'delete_icon', :data => {:confirm => 'Are you sure?'} do
+                    =link_to request_path(user_request), method: 'delete', id: 'delete_icon', "data-toggle" => "tooltip", :title => "Delete Your Request", :data => {:confirm => 'Are you sure?'} do
                       %i.fa.fa-times
         / /.table-responsive
       / /.box-body
