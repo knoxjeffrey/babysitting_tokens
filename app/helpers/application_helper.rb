@@ -28,7 +28,7 @@ module ApplicationHelper
       "http://graph.facebook.com/#{user.authentications.last.uid}/picture?type=normal"
     else
       gravatar_id = Digest::MD5::hexdigest(email).downcase
-      default_url = "https://s3-eu-west-1.amazonaws.com/babysitting-tokens-development/UniversalImages/baby_avatar.png"
+      default_url = "https://s3-eu-west-1.amazonaws.com/babysitting-tokens-development/UniversalImages/baby_blue_avatar.png"
       "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
     end
   end
