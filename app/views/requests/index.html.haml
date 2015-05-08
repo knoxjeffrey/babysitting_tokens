@@ -42,7 +42,7 @@
               %i.fa.fa-arrow-circle-right
                 
 .row                 
-  .col-md-7
+  .col-md-12
     / TABLE: Friends Babysitting
     .box.box-primary
       .box-header.with-border
@@ -56,7 +56,8 @@
           %table.table.no-margin
             %thead
               %tr
-                %th Date
+                %th Start
+                %th Finish
                 %th Babysitter
                 %th Status
                 %th 
@@ -64,7 +65,8 @@
             %tbody
               - @user_requests.each do |user_request|
                 %tr
-                  %td= display_friendly_date(user_request.start)
+                  %td= display_friendly_date_and_time(user_request.start)
+                  %td= display_friendly_date_and_time(user_request.finish)
                   %td= user_request.babysitter_name
                   - if user_request.status == 'waiting'
                     %td
@@ -82,34 +84,3 @@
         / /.table-responsive
       / /.box-body
   / /.col
-
-  
-  .col-md-5
-    / TABLE: Babysitting Groups
-    .box.box-primary
-      .box-header.with-border
-        %h3.box-title Babysitting Groups
-        .box-tools.pull-right
-          %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
-            %i.fa.fa-minus
-      / /.box-header
-      .box-body
-        .table-responsive
-          %table.table.no-margin
-            %thead
-              %tr
-                %th Name
-                %th Your Tokens
-            %tbody
-              - @user_groups.each do |user_group|
-                %tr
-                  %td= user_group.group.group_name
-                  %td= user_group.tokens
-                  %td
-                    =link_to 'Details', group_path(user_group.group), class: "btn bg-olive btn-flat btn-xs"
-        / /.table-responsive
-      / /.box-body                    
-      .box-footer.clearfix
-        =link_to 'Create New Group', new_group_path, class: "btn btn-sm btn-primary btn-flat pull-left"
-      / /.box-footer
-    / /.box

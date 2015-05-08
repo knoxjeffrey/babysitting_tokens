@@ -7,7 +7,7 @@ feature "user requests to join group" do
     
     requester = object_generator(:user, full_name: "Requesting User")
     group_member = object_generator(:user, full_name: "Jeff Knox")
-    group = object_generator(:group)
+    group = object_generator(:group, group_name: 'Test Group')
     user_group = object_generator(:user_group, user: group_member, group: group)
     
     sign_in_user(requester)
@@ -40,7 +40,7 @@ feature "user requests to join group" do
   end
   
   def check_new_user_is_in_group
-    click_link "Details"
+    click_link "Test Group"
     expect(page).to have_content("Requesting User")
   end
   
