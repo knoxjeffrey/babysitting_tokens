@@ -28,3 +28,17 @@
             =link_to my_request_path, class: "freedom-button btn bg-olive btn-flat" do
               %i.fa.fa-plus-circle
               I Need A Sitter!
+        / Groups
+        %br
+        %li.header GROUPS
+        - current_user.user_groups.each do |user_group|
+          %li
+            =link_to group_path(user_group.group) do
+              %i.fa.icon-coins.text-warning
+              #{user_group.group.group_name}
+              %small.label.pull-right.bg-yellow{"data-toggle" => "tooltip", :title => "You have #{user_group.tokens} tokens"}
+                = user_group.tokens
+        %li
+          =link_to new_group_path, class: "btn bg-olive btn-flat" do
+            %i.fa.fa-plus-circle
+            Create New Group

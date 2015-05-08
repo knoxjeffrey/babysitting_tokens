@@ -73,29 +73,6 @@ describe RequestsController do
         
       end
       
-      context "for babysitting groups" do
-        
-        let!(:friend_user) { object_generator(:user) }
-        let!(:group1) { object_generator(:group, admin: current_user) }
-        let!(:group2) { object_generator(:group, admin: friend_user) }
-        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group1) }
-        let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
-        
-        it "assigns @user_groups" do
-          get :index
-          expect(assigns(:user_groups)).to match_array([group_member1, group_member2])
-        end
-        
-        it "only shows user_groups that the user is a member of" do
-          group3 = object_generator(:group, admin: friend_user)
-          group_member3 = object_generator(:user_group, user: friend_user, group: group3)
-          
-          get :index
-          expect(assigns(:user_groups)).to match_array([group_member1, group_member2])
-        end
-        
-      end
-      
       context "for next date current user is babysitting" do
         
         let!(:friend_user) { object_generator(:user) }
