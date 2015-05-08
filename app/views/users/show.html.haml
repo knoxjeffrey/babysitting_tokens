@@ -1,17 +1,14 @@
-= render 'shared/tokens'
-
-%br
 %br  
 %br
 .row
-  .col-lg-4
+  .col-md-4.col-md-offset-1
     .media
       %a{class: "pull-left", href: ""}
         = image_tag(avatar_url(@user.email, 100), class: "media-object dp img-circle", width: "100", height: "100")
       .media-body
         %h4{ class: "media-name" } #{ @user.full_name }
 
-  .col-lg-5
+  .col-md-5
     / TABLE: Babysitting Groups
     .box.box-primary
       .box-header.with-border

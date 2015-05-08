@@ -1,40 +1,38 @@
-= render 'shared/tokens'
-
+%br  
 %br
-%br      
-.col-md-7.col-md-offset-1
-  .row
+.row
+  .col-md-8.col-md-offset-1
     %header
       %h1 
         %i.fa.fa-search
         Search Results
       %br
       %br
-  / TABLE: Babysitting Groups
-  .box.box-primary
-    .box-header.with-border
-      %h3.box-title Users
-    / /.box-header
-    .box-body
-      .table-responsive
-        %table.table.no-margin
-          - if @search_results.any?
-            %thead
-              %tr
-                %th 
-                %th Name
+    / TABLE: Babysitting Groups
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Users
+      / /.box-header
+      .box-body
+        .table-responsive
+          %table.table.no-margin
+            - if @search_results.any?
+              %thead
+                %tr
+                  %th 
+                  %th Name
+                %tbody
+                  - @search_results.each do |user|
+                    %tr
+                      %td
+                        = image_tag(avatar_url(user.email, 45), class: "media-object dp img-circle", width: "45", height: "45")
+                      %td= user.full_name
+                      %td
+                        =link_to 'Groups', user_path(user), class: "btn bg-olive btn-flat btn-sm"
+            - else
               %tbody
-                - @search_results.each do |user|
-                  %tr
-                    %td
-                      = image_tag(avatar_url(user.email, 45), class: "media-object dp img-circle", width: "45", height: "45")
-                    %td= user.full_name
-                    %td
-                      =link_to 'Groups', user_path(user), class: "btn bg-olive btn-flat btn-sm"
-          - else
-            %tbody
-              %td
-                %p.lead.text-muted No results found for #{params[:full_name]}
+                %td
+                  %p.lead.text-muted No results found for #{params[:full_name]}
               
-      / /.table-responsive
-    / /.box-body    
+        / /.table-responsive
+      / /.box-body    

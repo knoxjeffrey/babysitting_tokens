@@ -17,7 +17,7 @@ feature "user invites friend" do
   end
   
   def user_invites_friend
-    click_link "Details"
+    click_link "Test Group"
     click_link "Invite A Friend To This Group"
     
     fill_in "group_invitation_friend_name", with: friend_name
