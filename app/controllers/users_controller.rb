@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_action :require_user, only: [:show, :search]
+  before_action :require_user, only: [:show, :edit, :update, :search]
   
   def new
     redirect_to home_path and return if logged_in?
@@ -20,7 +20,28 @@ class UsersController < ApplicationController
   end 
   
   def show
-    @user  = User.find(params[:id])
+    @user = User.find(params[:id])
+  end
+  
+  def edit
+    @user = User.find(params[:id])
+    
+    if @user != current_user
+      redirect_to home_path
+      flash[:danger] = "You do not have permission to do that"
+    end
+  end
+  
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update(user_params)
+      flash[:success] = "You have successfully updated your details"
+      redirect_to edit_user_path(@user)
+    else
+      flash[:danger] = "There was a problem uploading your details"
+      render :edit
+    end
   end
   
   def new_invitation_with_identifier
@@ -32,14 +53,14 @@ class UsersController < ApplicationController
     end
   end
   
-  def search
+  def search 
     @search_results = User.search_by_friend_full_name(params[:full_name], current_user)
   end
   
   private
   
   def user_params
-    params.require(:user).permit(:email, :password, :full_name)
+    params.require(:user).permit(:email, :password, :full_name,:avatar)
   end
   
   # If the invited group member is already a user then simply add them as a member to the group they were invited to

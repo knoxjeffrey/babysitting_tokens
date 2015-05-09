@@ -24,12 +24,13 @@ module ApplicationHelper
   
   def avatar_url(email, size)
     user = User.find_by(email: email)
-    if user.authentications.present?
-      "http://graph.facebook.com/#{user.authentications.last.uid}/picture?type=normal"
+    
+    if user.avatar.present?
+      "http://res.cloudinary.com/da6v0vrqx/image/upload/w_#{size},h_#{size},c_fill,g_face,r_max/#{user.avatar.filename}"
+    elsif user.authentications.present?
+      "http://graph.facebook.com/#{user.authentications.last.uid}/picture?width=#{size}&height=#{size}"
     else
-      gravatar_id = Digest::MD5::hexdigest(email).downcase
-      default_url = "https://s3-eu-west-1.amazonaws.com/babysitting-tokens-development/UniversalImages/baby_blue_avatar.png"
-      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
+      "http://res.cloudinary.com/da6v0vrqx/image/upload/w_#{size},h_#{size},c_fill,g_face,r_max/v1431133723/default_avatar_zdyioa.png"
     end
   end
   
