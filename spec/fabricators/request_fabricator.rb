@@ -1,4 +1,4 @@
 Fabricator(:request) do
-  start { Faker::Time.forward(20, :afternoon) }
-  finish { Faker::Time.forward(20, :evening) }
+  start { 2.days.from_now }
+  finish { 3.days.from_now }
 end
