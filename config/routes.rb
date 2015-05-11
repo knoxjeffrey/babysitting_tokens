@@ -45,6 +45,9 @@ Rails.application.routes.draw do
   
   get '/expired_password_token', to: 'pages#expired_password_token'
   get '/expired_identifier', to: 'pages#expired_identifier'
+  get '/instructions', to: 'pages#instructions'
+  get '/about', to: 'pages#about'
+  get '/privacy', to: 'pages#privacy'
   root to: 'pages#index'
   
   resources :user_groups, only: [:create]
