@@ -16,6 +16,16 @@ describe Request do
     expect(request.status).to eq('waiting')
   end
   
+  it "cannot have a start date after the finish date" do
+    current_user = object_generator(:user)
+    group = object_generator(:group)
+    group_member = object_generator(:user_group, user: current_user, group: group) 
+    request = object_generator(:request, user: current_user, start: 2.days.from_now, finish: 3.days.from_now, group_ids: group.id)
+    request.start = 4.days.from_now
+    request.save
+    expect(request).not_to be_valid
+  end
+  
   describe :babysitting_info do
     it "returns an array of only future dates where the current user is the babysitter" do
       current_user = object_generator(:user)

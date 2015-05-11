@@ -9,6 +9,8 @@ class Request < ActiveRecord::Base
   
   validates :start, presence: true
   validates :finish, presence: true
+  validate :finish_is_after_start
+  
   validates :request_groups, presence: true
   
   delegate :full_name, to: :user
@@ -85,6 +87,12 @@ class Request < ActiveRecord::Base
       user_group_email_and_name_array_of_hashes = user_group_records.map { |user_group| { email: user_group.user.email, name: user_group.user.full_name } }
       MyMailer.delay.notify_users_of_request(user_group_email_and_name_array_of_hashes, self)
     end
+  end
+  
+  private
+  
+  def finish_is_after_start
+    errors.add(:finish, "cannot be before the start date") if !start.blank? && !finish.blank? && finish < start
   end
 
 end
