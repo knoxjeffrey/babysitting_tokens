@@ -87,4 +87,22 @@ class MyMailer < MandrillMailer::TemplateMailer
      )
   end
   
+  def notify_users_of_request(user_group_email_and_name_array_of_hashes, request)
+
+    mandrill_mail(
+      template: 'babysitting-tokens-request-a-sitter',
+      subject: "#{request.user.full_name} needs a babysitter!",
+      
+      from: request.user.email,
+      to: user_group_email_and_name_array_of_hashes,
+      vars: {
+        'REQUESTER_NAME' => request.user.full_name,
+        'REQUEST_DATE' => request.start.strftime("%b #{request.start.day.ordinalize}, %Y"),
+        'HOME_URL' => home_url
+      },
+      important: true,
+      inline_css: true,
+     )
+  end
+  
 end

@@ -78,5 +78,13 @@ class Request < ActiveRecord::Base
   def calculate_tokens_for_request
     tokens_for_request(self)
   end
+  
+  def email_request_to_group_members(array_of_group_ids)
+    array_of_group_ids.each do |group_id|
+      user_group_records = UserGroup.where(group_id: group_id)
+      user_group_email_and_name_array_of_hashes = user_group_records.map { |user_group| { email: user_group.user.email, name: user_group.user.full_name } }
+      MyMailer.delay.notify_users_of_request(user_group_email_and_name_array_of_hashes, self)
+    end
+  end
 
 end
