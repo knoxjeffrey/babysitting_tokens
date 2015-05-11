@@ -142,10 +142,13 @@ describe RequestsController do
       
       context "with valid user input" do
         
+        let!(:friend) { object_generator(:user) }
         let!(:group) { object_generator(:group, admin: current_user) }
-        let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member2) { object_generator(:user_group, user: friend, group: group) }
   
-        before do   
+        before do  
+          MandrillMailer.deliveries.clear  
           post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id])
         end
     
@@ -169,15 +172,25 @@ describe RequestsController do
           expect(current_user.user_groups.first.tokens).to eq(17)
         end
         
+        it "sends an email to all users in the group" do
+          expect(MandrillMailer.deliveries.first.message["to"].count).to eq(2)
+        end
+        
       end
       
       context "with user being a member of more than one group" do
+        let!(:friend1) { object_generator(:user) }
+        let!(:friend2) { object_generator(:user) }
         let!(:group) { object_generator(:group, admin: current_user) }
-        let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member2) { object_generator(:user_group, user: friend1, group: group) }
         let!(:group2) { object_generator(:group, admin: current_user) }
-        let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
+        let!(:group_member3) { object_generator(:user_group, user: current_user, group: group2) }
+        let!(:group_member4) { object_generator(:user_group, user: friend1, group: group2) }
+        let!(:group_member5) { object_generator(:user_group, user: friend2, group: group2) }
         
         before do
+          MandrillMailer.deliveries.clear  
           post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id, group2.id])
         end
         
@@ -206,6 +219,11 @@ describe RequestsController do
           expect(tokens_array.sum).to eq(34)
         end
         
+        it "sends an email to all users of each of the groups selected" do
+          all_emails = MandrillMailer.deliveries.map { |mail| mail.message["to"] }
+          expect(all_emails.flatten.count).to eq(5)
+        end
+        
       end
       
       
@@ -217,6 +235,7 @@ describe RequestsController do
         context "when the user is only a member of one group" do
           
           before do
+            MandrillMailer.deliveries.clear 
             post :create, request: generate_attributes_for(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 22:00:00", group_ids: [group.id])
           end
           
@@ -235,6 +254,11 @@ describe RequestsController do
           it "sets @request" do
             expect(assigns(:request)).to be_new_record
           end
+          
+          it "does not send out any emails" do
+            expect(MandrillMailer.deliveries).to eq([])
+          end
+          
         end
         
         context "when the user is a member of more than one group and has insufficient tokens for at least one group request" do
