@@ -26,4 +26,11 @@ BabysittingTokens::Application.configure do
   end
 
   config.mandrill_mailer.default_url_options = { host: 'localhost:3000' }
+  
+  CarrierWave.configure do |config|
+    config.ignore_integrity_errors = false
+    config.ignore_processing_errors = false
+    config.ignore_download_errors = false
+  end
+  
 end

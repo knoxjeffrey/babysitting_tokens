@@ -21,6 +21,10 @@
               %li.user-header
                 %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
                 %p #{current_user.full_name}
+              / Menu Body
+              %li.user-body
+                .col-xs-6.text-center
+                  =link_to "Edit Details", edit_user_path(current_user)
               / Menu Footer
               %li.user-footer
                 - if current_user.authentications.empty?

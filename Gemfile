@@ -19,6 +19,8 @@ gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'omniauth-facebook'
 gem "font-awesome-rails"
+gem 'carrierwave'
+gem 'cloudinary'
 
 group :development do
   gem 'thin'

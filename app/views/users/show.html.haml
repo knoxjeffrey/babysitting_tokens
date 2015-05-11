@@ -29,6 +29,9 @@
                 %tr
                   %td #{ group.group_name }
                   %td #{ group.location }
-                  %td= request_to_join_group_button(@user, group)
+                  - if current_user != @user
+                    %td= request_to_join_group_button(@user, group)
         / /.table-responsive
-      / /.box-body    
+      / /.box-body   
+    - if current_user == @user
+      =link_to "Edit Your Details", edit_user_path(@user), class: "btn bg-olive btn-flat btn-lg"

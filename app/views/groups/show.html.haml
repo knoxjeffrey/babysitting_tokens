@@ -8,7 +8,7 @@
           Friends In Your #{@group.group_name} Group
         %br
   .row
-    .col-md-8.col-md-offset-1
+    .col-lg-6.col-lg-offset-1.col-md-8.col-md-offset-1
       / USERS LIST
       .box.box-primary
         .box-header.with-border
@@ -18,8 +18,8 @@
           %ul.users-list.clearfix
             - @group.friends_in_group(current_user).each do |friend|
               %li
-                %img{:alt => "User Image", :src => avatar_url(friend.email, 154)}/
-                %a.users-list-name{:href => "#"} #{ friend.full_name }
+                %img{:alt => "User Image", :src => avatar_url(friend.email, 150), "data-toggle" => "tooltip", :title => "#{friend.full_name}"}/
+                .users-list-name #{ friend.full_name }
           / /.users-list
         / /.box-body
       =link_to 'Invite A Friend To This Group', invite_friend_group_path, class: "btn bg-olive btn-flat btn-lg"
