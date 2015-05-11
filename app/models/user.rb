@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   
   validates :email, presence: true, uniqueness: true
   validates :password, on: :create, presence: true, length: {minimum: 5}
+  validates :password, on: :update, presence: true, length: {minimum: 5}, :unless => lambda{ |user| user.password.to_s.empty? }
   validates :full_name, presence: true
   
   mount_uploader :avatar, AvatarUploader

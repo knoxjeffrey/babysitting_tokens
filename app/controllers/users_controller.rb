@@ -34,12 +34,17 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-
-    if @user.update(user_params)
-      flash[:success] = "You have successfully updated your details"
-      redirect_to edit_user_path(@user)
-    else
-      flash[:danger] = "There was a problem uploading your details"
+    
+    begin
+      if @user.update(user_params)
+        flash[:success] = "You have successfully updated your details"
+        redirect_to edit_user_path(@user)
+      else
+        flash[:danger] = "There was a problem uploading your details"
+        render :edit
+      end
+    rescue CarrierWave::IntegrityError => e
+      flash[:danger] = "#{e}"
       render :edit
     end
   end

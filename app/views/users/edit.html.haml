@@ -12,6 +12,7 @@
           = f.email_field :email
           = f.password_field :password
           = f.text_field :full_name
-          = f.hidden_field(:avatar_cache)
-          = f.file_field(:avatar)
+          = f.hidden_field :avatar_cache
+          = f.file_field :avatar, label: "Choose Your Profile Image"
+          %br
           = f.submit "Update", class: "btn bg-olive btn-flat btn-lg"
