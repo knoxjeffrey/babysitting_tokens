@@ -127,6 +127,116 @@ describe UsersController do
     end
   end
   
+  describe "GET edit" do
+    let(:other_user) { object_generator(:user) }
+    
+    context "with unauthenticated user" do
+      
+      before { set_current_user_session }
+      
+      context "current user editing their own profile" do
+        
+        it "assigns @user" do
+          get :edit, id: current_user
+        
+          expect(assigns(:user)).to eq(current_user)
+        end
+        
+      end
+      
+      context "current user trying to edit another profile" do
+        
+        before { get :edit, id: other_user }
+        
+        it "redirects to home path" do
+          expect(response).to redirect_to home_path
+        end
+        
+        it "generates a danger flash message" do
+          expect(flash[:danger]).to be_present
+        end
+        
+      end
+      
+    end
+    
+    context "with unauthenticated user" do
+      it "redirects to expired identifier path" do
+        get :edit, id: other_user
+        
+        expect(response).to redirect_to root_path
+      end
+    end
+    
+  end
+  
+  describe "PATCH update" do
+    
+    context "with authenticated user" do
+      
+      before { set_current_user_session }
+      
+      context "with valid inputs" do
+        before { patch :update, id: current_user, user: {email: "changed_email@outlook.com", full_name: "changed"} }
+        
+        it "redirects to the edit_user_path" do
+          expect(response).to redirect_to edit_user_path(current_user)
+        end
+        
+        it "generates a successful flash message" do
+          expect(flash[:success]).to be_present
+        end
+        
+        it "changes the user details" do
+          expect(current_user.email).to eq("changed_email@outlook.com")
+          expect(current_user.full_name).to eq("changed")
+        end
+        
+      end
+      
+      context "with invalid name and email inputs" do
+        before { patch :update, id: current_user, user: {email: "", full_name: ""} }
+        
+        it "renders the edit template" do
+          expect(response).to render_template :edit
+        end
+        
+        it "generates a danger flash message" do
+          expect(flash[:danger]).to be_present
+        end
+        
+        it "does not change the user details" do
+          expect(current_user.email).not_to eq("")
+          expect(current_user.full_name).not_to eq("")
+        end
+      end
+      
+      context "with invalid password input" do
+        before { patch :update, id: current_user, user: {password: "tiny"} }
+        
+        it "renders the edit template" do
+          expect(response).to render_template :edit
+        end
+        
+        it "generates a danger flash message" do
+          expect(flash[:danger]).to be_present
+        end
+
+      end
+      
+    end
+    
+    context "with unauthenticated user" do
+      it "redirects to expired identifier path" do
+        user = object_generator(:user)
+        patch :update, id: user
+        
+        expect(response).to redirect_to root_path
+      end
+    end
+    
+  end
+  
   describe "GET new_with_invitation_identifier" do
     
     context "with valid identifier" do

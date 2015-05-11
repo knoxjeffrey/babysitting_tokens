@@ -1,6 +1,6 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   
-  include Cloudinary::CarrierWave
+  include Cloudinary::CarrierWave 
   
   process :convert => 'jpg'
   process :tags => ['user_avatar']
@@ -8,8 +8,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
   cloudinary_transformation :quality => 70
   
   def extension_white_list
-      %w(jpg jpeg gif png)
-    end
+    %w(jpg jpeg gif png)
+  end
   
   if Rails.env.production?
     def public_id

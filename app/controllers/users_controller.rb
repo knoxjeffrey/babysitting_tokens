@@ -43,7 +43,7 @@ class UsersController < ApplicationController
         flash[:danger] = "There was a problem uploading your details"
         render :edit
       end
-    rescue CarrierWave::IntegrityError => e
+    rescue CarrierWave::IntegrityError => e # catches wrong file types
       flash[:danger] = "#{e}"
       render :edit
     end
