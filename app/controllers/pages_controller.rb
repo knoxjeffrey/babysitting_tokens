@@ -6,4 +6,10 @@ class PagesController < ApplicationController
   
   def expired_identifier; end
   
+  def instructions; end
+  
+  def about; end
+  
+  def privacy; end
+  
 end
