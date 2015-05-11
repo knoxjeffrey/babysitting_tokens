@@ -1,6 +1,25 @@
 require 'spec_helper'
 
-feature 'user adds avatar image' do
+feature 'user avatar image' do
+  
+  scenario "user has added not avatar" do
+    
+    user = object_generator(:user)
+    
+    sign_in_user(user)
+    validate_default_avatar
+    
+  end
+  
+  scenario "user has facebook authentication" do
+    
+    user = object_generator(:user, email: "knoxjeffrey@outlook.com")
+    
+    sign_in_user(user)
+    authenticate_facebook
+    
+    validate_facebook_avatar
+  end
   
   scenario "user successfully adds a new image" do
     
@@ -26,6 +45,10 @@ feature 'user adds avatar image' do
     
   end
   
+  def authenticate_facebook
+    click_link "Allow Facebook Login"
+  end
+  
   def visit_edit_details
     click_link "Edit Details"
   end
@@ -38,6 +61,14 @@ feature 'user adds avatar image' do
   def upload_file
     attach_file "Choose Your Profile Image", "spec/support/uploads/text_file.txt"
     click_button "Update"
+  end
+  
+  def validate_default_avatar
+    expect(page).to have_selector("img[src='http://res.cloudinary.com/da6v0vrqx/image/upload/w_100,h_100,c_fill,g_face,r_max/v1431133723/default_avatar_zdyioa.png']")
+  end
+  
+  def validate_facebook_avatar
+    expect(page).to have_selector("img[src='http://graph.facebook.com/12345/picture?width=100&height=100']")
   end
   
   def validate_uploaded_image(user)
