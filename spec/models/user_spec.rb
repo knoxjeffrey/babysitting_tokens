@@ -14,6 +14,20 @@ describe User do
   
   it { should validate_length_of(:password).is_at_least(5) } 
   
+  it "is invalid on update if password is less than 5 characters" do
+    user = object_generator(:user)
+    user.password = "tiny"
+    user.save
+    expect(user).not_to be_valid
+  end
+  
+  it  "is valid on update if no password is passed" do
+    user = object_generator(:user)
+    user.email = "knoxy@outlook.com"
+    user.save
+    expect(user).to be_valid
+  end
+  
   describe :waiting_and_accepted_requests do
     it "returns all current user requests with a status of waiting or accepted" do
       user = object_generator(:user)

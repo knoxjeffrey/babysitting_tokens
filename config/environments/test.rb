@@ -20,4 +20,10 @@ BabysittingTokens::Application.configure do
   config.mandrill_mailer.default_url_options = { host: 'localhost:52662' }
   
   config.active_support.deprecation = :stderr
+  
+  CarrierWave.configure do |config|
+    config.storage = :file
+    config.enable_processing = false
+  end
+  
 end
