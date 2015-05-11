@@ -98,6 +98,7 @@ class RequestsController < ApplicationController
       render :new
     else
       @request.save
+      email_users_of_each_group_selected
       subtract_tokens_from_each_group_selected
       flash[:success] = "You successfully created your request for freedom!"
       redirect_to home_path
@@ -142,6 +143,10 @@ class RequestsController < ApplicationController
   # then tokens will immediately be removed from each group they are a member of
   def subtract_tokens_from_each_group_selected
     current_user.subtract_tokens(array_of_group_ids_selected, @request)
+  end
+  
+  def email_users_of_each_group_selected
+    @request.email_request_to_group_members(array_of_group_ids_selected)
   end
   
   # Deducts the tokens from the current user they were given for agreeing to babysit
