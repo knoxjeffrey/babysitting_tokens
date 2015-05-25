@@ -28,7 +28,7 @@
                         = image_tag(avatar_url(user.email, 45), class: "media-object dp img-circle", width: "45", height: "45")
                       %td= user.full_name
                       %td
-                        =link_to 'Groups', user_path(user), class: "btn bg-olive btn-flat btn-sm"
+                        =link_to 'Circles', user_path(user), class: "btn bg-olive btn-flat btn-sm"
             - else
               %tbody
                 %td

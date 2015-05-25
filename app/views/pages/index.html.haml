@@ -1,8 +1,52 @@
 - body_class "sidebar-collapse"
 - content_wrapper_class "welcome"
-.jumbotron-altered
-  %h1 Your Baby Sitting Solution!
-  %p You babysit for friends and they repay the favour.  Babysitting Tokens keeps track of everything for you. Simple!
-  %p 
-    =link_to 'Register', register_path, class: "btn bg-olive btn-flat btn-lg"
-    =link_to 'Login', sign_in_path, class: "btn bg-olive btn-flat btn-lg"
+- content_class "full-page"
+.scroll-section
+  %section#intro.intro-section
+    .container
+      .row
+        .col-lg-12
+          .jumbotron-altered
+            %h1 Your Babysitting solution!
+            %p You babysit for friends and they repay the favour.  #{ENV['site_name']} keeps track of everything for you. Simple!
+            %p 
+              =link_to 'Register Now', register_path, class: "btn bg-olive btn-flat btn-lg"
+              =link_to 'Login', sign_in_path, class: "btn bg-olive btn-flat btn-lg"
+  / About Section
+  %section#benefits.benefits-section
+    .container
+      .row
+        .col-lg-12
+          %a.page-scroll{:href => "#benefits"} 
+            %i.fa.fa-arrow-circle-o-down.animated.bounceInDown
+      .row
+        .signup-steps
+          .col-lg-12
+            .row
+              .landing-columns.col-sm-4
+                .signup-icons
+                  %i.fa.fa-sign-in
+                .row
+                  %h2 Free Account!
+                  %h5 It only takes a few seconds to create your new account
+              .landing-columns.col-sm-4
+                .signup-icons
+                  %i.fa.fa.fa-users
+                .row
+                  %h2 Babysitting Circle
+                  %h5 Create or join a babysitting circle. Invite more friends to join
+              .landing-columns.col-sm-4
+                .signup-icons
+                  %i.fa.fa-comments
+                .row
+                  %h2 Time Off!
+                  %h5 Make requests to friends for babysitting and enjoy some well deserved time off
+                  %br
+                  %br
+                  %br
+            .row
+              =link_to 'Create your account now', register_path, class: "btn bg-olive btn-flat btn-lg"
+              %br
+              %br
+              %br
+              

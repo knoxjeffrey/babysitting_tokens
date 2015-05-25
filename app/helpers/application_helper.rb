@@ -38,7 +38,7 @@ module ApplicationHelper
     if current_user.groups.include? group
       content_tag :div, "Already A Member",  class: "btn bg-red btn-flat btn-xs"
     else
-      link_to "Request To Join Group", "/join_group_requests?user_id=#{user.id}&group_id=#{group.id}", method: :post , class: "btn bg-olive btn-flat btn-xs"
+      link_to "Request To Join Circle", "/join_group_requests?user_id=#{user.id}&group_id=#{group.id}", method: :post , class: "btn bg-olive btn-flat btn-xs"
     end
   end
   
@@ -50,6 +50,11 @@ module ApplicationHelper
   # Used to inject styles into application.html.haml so I can add a class to content_wrapper
   def content_wrapper_class(class_name="")
     content_for :content_wrapper_class, class_name
+  end
+  
+  # Used to inject styles into application.html.haml so I can add a class to content
+  def content_class(class_name="")
+    content_for :content_class, class_name
   end
   
 end

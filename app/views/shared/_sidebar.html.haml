@@ -28,9 +28,9 @@
             =link_to my_request_path, class: "freedom-button btn bg-olive btn-flat" do
               %i.fa.fa-plus-circle
               I Need A Sitter!
-        / Groups
+        / Circles
         %br
-        %li.header GROUPS
+        %li.header CIRCLES
         - current_user.user_groups.each do |user_group|
           %li
             =link_to group_path(user_group.group) do
@@ -41,4 +41,4 @@
         %li
           =link_to new_group_path, class: "btn bg-olive btn-flat" do
             %i.fa.fa-plus-circle
-            Create New Group
+            Create New Circle
