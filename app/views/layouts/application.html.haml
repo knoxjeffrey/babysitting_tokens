@@ -1,25 +1,27 @@
 !!! 5
 %html(lang="en-US")
   %head
-    %title Babysitting Tokens
+    %title #{ENV['site_name']}
     %meta(charset="UTF-8")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     = csrf_meta_tag
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
-  %body{:class => "skin-blue #{ yield :body_class }"}
+  %body{:class => "skin-blue #{ yield :body_class }", "data-spy" => "scroll", "data-target" => ".scroll-section"}
     .wrapper
       %header.main-header
         = render 'shared/header'
       %aside.main-sidebar
         = render 'shared/sidebar'
       %section.content-wrapper{:class => "#{ yield :content_wrapper_class }"}
-        %section.content
+        %section.content{:class => "#{ yield :content_class }"}
           = render 'shared/messages'
           = yield
       %footer.main-footer
         .pull-right.hidden-xs
-          &copy 2015 Babysitting Tokens
+          &copy 2015 #{ENV['site_name']}
+        =link_to "Home", home_path
+        \/
         =link_to "Instructions", instructions_path
         \/
         =link_to "About", about_path

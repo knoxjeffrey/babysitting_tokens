@@ -1,9 +1,10 @@
-.logo
-  %a{ class: "navbar-brand", href: "/" } 
-    %span Babysitting Tokens
-    %i.icon-coins
-.navbar.navbar-static-top
-  - if logged_in?
+- if logged_in?
+  .logo
+    %a{ class: "navbar-brand", href: "/" } 
+      %span #{ENV['site_name']}
+      %i.icon-coins
+      
+  .navbar.navbar-static-top
     %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
       %span.sr-only Toggle navigation
       %span.icon-bar
@@ -11,24 +12,24 @@
       %span.icon-bar
     .navbar-custom-menu
       %ul.nav.navbar-nav
-        - if logged_in?
-          %li.dropdown.user.user-menu
-            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              %img.user-image{:alt => "User Image", :src => avatar_url(current_user.email, 40)}/
-              %span.hidden-xs #{current_user.full_name} 
-            %ul.dropdown-menu
-              / User image
-              %li.user-header
-                %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
-                %p #{current_user.full_name}
-              / Menu Body
-              %li.user-body
-                .col-xs-6.text-center
-                  =link_to "Edit Details", edit_user_path(current_user)
-              / Menu Footer
-              %li.user-footer
-                - if current_user.authentications.empty?
-                  .pull-left
-                    %a.btn.profile.btn-primary.btn-flat{href: "/auth/facebook" }Allow Facebook Login
-                .pull-right
-                  %a.btn.profile.btn-danger.btn-flat{href: "/sign_out"} Sign out    
+
+        %li.dropdown.user.user-menu
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %img.user-image{:alt => "User Image", :src => avatar_url(current_user.email, 40)}/
+            %span.hidden-xs #{current_user.full_name} 
+          %ul.dropdown-menu
+            / User image
+            %li.user-header
+              %img.img-circle{:alt => "User Image", :src => avatar_url(current_user.email, 100)}/
+              %p #{current_user.full_name}
+            / Menu Body
+            %li.user-body
+              .col-xs-6.text-center
+                =link_to "Edit Details", edit_user_path(current_user)
+            / Menu Footer
+            %li.user-footer
+              - if current_user.authentications.empty?
+                .pull-left
+                  %a.btn.profile.btn-primary.btn-flat{href: "/auth/facebook" }Allow Facebook Login
+              .pull-right
+                %a.btn.profile.btn-danger.btn-flat{href: "/sign_out"} Sign out    

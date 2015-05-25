@@ -29,8 +29,8 @@ feature "user requests to join group" do
   end
   
   def request_to_join_group
-    click_link "Groups"
-    click_link "Request To Join Group"
+    click_link "Circles"
+    click_link "Request To Join Circle"
   end
   
   def accept_invitation
