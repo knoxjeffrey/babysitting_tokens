@@ -11,7 +11,7 @@ module FeatureSessionHelper
   end
   
   def create_new_group
-    click_link "Create New Group"
+    click_link "Create New Circle"
     fill_in "group_group_name", with: "Test Group"
     fill_in "group_location", with: "Scotland"
     click_button "Create"

@@ -4,11 +4,11 @@
   .login-logo
     %a{ href: "/" }
       %b
-        %span Babysitting Tokens
+        %span #{ENV['site_name']}
         %i.icon-coins
   / /.login-logo
   .login-box-body
-    %p.login-box-msg Sign in to Babysitting Tokens
+    %p.login-box-msg Sign in to #{ENV['site_name']}
     = bootstrap_form_tag url: '/sign_in' do |f|
       .form-group.has-feedback
         = f.email_field :email, icon: "glyphicon glyphicon-envelope form-control-feedback"

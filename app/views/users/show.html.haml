@@ -12,7 +12,7 @@
     / TABLE: Babysitting Groups
     .box.box-primary
       .box-header.with-border
-        %h3.box-title Group Information
+        %h3.box-title Circle Information
         .box-tools.pull-right
           %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
             %i.fa.fa-minus
@@ -22,8 +22,8 @@
           %table.table.no-margin
             %thead
               %tr
-                %th Group Name
-                %th Group Location
+                %th Circle Name
+                %th Circle Location
             %tbody
               - @user.groups.each do |group|
                 %tr
