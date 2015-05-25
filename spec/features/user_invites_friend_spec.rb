@@ -18,11 +18,11 @@ feature "user invites friend" do
   
   def user_invites_friend
     click_link "Test Group"
-    click_link "Invite A Friend To This Group"
+    click_link "Invite A Friend To This Circle"
     
     fill_in "group_invitation_friend_name", with: friend_name
     fill_in "group_invitation_friend_email", with: friend_email
-    fill_in "group_invitation_message", with: "Come join my babysitting group"
+    fill_in "group_invitation_message", with: "Come join my babysitting circle"
     click_button "Send Invitation"
     sign_out
   end
