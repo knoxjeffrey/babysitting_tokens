@@ -8,6 +8,7 @@
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
   %body{:class => "skin-blue #{ yield :body_class }", "data-spy" => "scroll", "data-target" => ".scroll-section"}
+    = render 'shared/facebook_sdk'
     .wrapper
       %header.main-header
         = render 'shared/header'
@@ -27,4 +28,6 @@
         =link_to "About", about_path
         \/
         =link_to "Privacy", privacy_path
+    = render 'shared/cookie_choices'
+    = render 'shared/google_analytics'
         

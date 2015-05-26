@@ -21,11 +21,11 @@ feature "user accepts date for freedom" do
   end
   
   def expect_page_to_have_see_details_button
-    expect(page).to have_content("See Details")
+    expect(page).to have_content("Click For Details")
   end
   
   def press_see_details_button
-    click_link "See Details"
+    click_link "Click For Details"
   end
   
   def press_accept_button
