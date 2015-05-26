@@ -1,0 +1,15 @@
+- if Rails.env == "production"
+  :javascript
+    $(document).ready(function() {
+        $.cookiesDirective({
+          explicitConsent: false, // false allows implied consent
+          position: 'top', // top or bottom of viewport
+          duration: 10, // display time in seconds
+          privacyPolicyUri: 'privacy',   // uri of your privacy policy
+          fontColor: '#FFFFFF', // font color for disclosure panel
+          fontSize: '13px', // font size for disclosure panel
+          backgroundColor: '#3C8DBC', // background color of disclosure panel
+          backgroundOpacity: '80', // opacity of disclosure panel
+          linkColor: '#000' // link color in disclosure panel  
+        });
+    });

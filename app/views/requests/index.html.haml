@@ -1,3 +1,15 @@
+- if !current_user.groups.present?
+  .row     
+    .col-md-12.col-sm-12.col-xs-12
+      .info-box.bg-red
+        %span.info-box-icon
+          %i.fa.fa-exclamation
+        .info-box-content
+          %span.info-box-number Create a babysitting circle to request time off or search for friends and join their groups
+        / /.info-box-content
+      / /.info-box
+    / /.col
+    
 - if @next_babysitting_info.present?
   .row     
     .col-md-12.col-sm-12.col-xs-12
@@ -38,7 +50,7 @@
             .icon
               %i.fa.fa-user
             =link_to request_group_path(request_group), class: "small-box-footer" do
-              See Details 
+              Click For Details 
               %i.fa.fa-arrow-circle-right
                 
 .row                 

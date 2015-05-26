@@ -39,6 +39,17 @@
               %small.label.pull-right.bg-yellow{"data-toggle" => "tooltip", :title => "You have #{user_group.tokens} tokens"}
                 = user_group.tokens
         %li
-          =link_to new_group_path, class: "btn bg-olive btn-flat" do
-            %i.fa.fa-plus-circle
-            Create New Circle
+          -if current_user.groups.present?
+            =link_to new_group_path, class: "btn bg-olive btn-flat" do
+              %i.fa.fa-plus-circle
+              Create New Circle
+          -elsif current_page?(home_path)
+            =link_to new_group_path, { class: "btn bg-olive btn-flat animated tada", "data-toggle" => "tooltip", :title => "Create a circle before making requests" } do
+              %i.fa.fa-plus-circle
+              Create New Circle
+          -else
+            =link_to new_group_path, { class: "btn bg-olive btn-flat", "data-toggle" => "tooltip", :title => "Create a circle before making requests" } do
+              %i.fa.fa-plus-circle
+              Create New Circle
+          
+            
