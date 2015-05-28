@@ -205,7 +205,7 @@
 			// Implied consent disclosure
 			html += scriptsDisclosure + ' To find out more read our <a style="color:'+ settings.linkColor + ';';
 			html += 'font-weight:bold;font-family:' + settings.fontFamily + ';font-size:' + settings.fontSize + ';" href="'+ settings.privacyPolicyUri + '">privacy policy</a>.';
-			html += '<div style="margin-top:5px;"><input type="submit" name="impliedsubmit" id="impliedsubmit" style="color:#3D9970;" value="Do not show this message again"/></div></div>';	
+			html += '<div style="margin-top:5px;"><input type="submit" name="impliedsubmit" id="impliedsubmit" style="color:#3D9970;" value="Dismiss"/></div></div>';	
 		}		
 		html += '</div></div>';
 		$('body').append(html);
