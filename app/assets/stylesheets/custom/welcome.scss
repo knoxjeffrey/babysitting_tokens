@@ -1,7 +1,7 @@
 .welcome {
   height: 100%;
 	  /* Location of the image */
-    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), image-url('http://res.cloudinary.com/da6v0vrqx/image/upload/q_50/v1432718397/cover_image_bocsg6.jpg');
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), image-url('http://res.cloudinary.com/da6v0vrqx/image/upload/cover_image_bocsg6.jpg');
   
 	  /* Background image is centered vertically and horizontally at all times */
 	  background-position: center center;
@@ -31,18 +31,20 @@
 .jumbotron-altered {
   padding: 30px 15px;
   margin-bottom: 30px;
-  color: inherit;
+  color: #2091C5;
   background-color: #fff;
   border-radius: 5px;
 }
 .jumbotron-altered h1,
 .jumbotron-altered .h1 {
   color: inherit;
+  font-size: 35px;
 }
 .jumbotron-altered p {
   margin-bottom: 15px;
   font-size: 23px;
   font-weight: 200;
+  color: #2091C5;
 }
 .jumbotron-altered > hr {
   border-top-color: #cfd9db;
@@ -53,6 +55,10 @@
 }
 .jumbotron-altered .container {
   max-width: 100%;
+}
+
+.landing-logo {
+  width: 100%;
 }
 @media screen and (min-width: 768px) {
   .jumbotron-altered {
@@ -66,6 +72,6 @@
   }
   .jumbotron-altered h1,
   .jumbotron-altered .h1 {
-    font-size: 67.5px;
+    font-size: 50px;
   }
 }

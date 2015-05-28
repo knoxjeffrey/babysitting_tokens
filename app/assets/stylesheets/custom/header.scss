@@ -1,3 +1,31 @@
-.tokens {
-  margin-left: 10px;
+/* navbar brand */
+.navbar-default .navbar-brand {
+  display: inline-block;
+}
+.navbar-default .navbar-brand {
+  margin-left: 15px;
+}
+.navbar-default .navbar-brand {
+  padding-right: 0;
+  padding-left: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff; /* IE8 proofing */
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand :focus {
+  background-color: transparent;
+  border-bottom-color: #a9a9a9;
+  border-bottom-color: rgba(255,255,255,.25);
+	color: white;
+}
+.navbar-default .navbar-brand {
+  float: left;
+}
+.navbar-brand > img {
+	height: 40px;
+}
+
+.navbar-brand {
+  padding: 5px 15px;
 }

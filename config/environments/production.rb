@@ -19,6 +19,10 @@ BabysittingTokens::Application.configure do
 
   config.active_support.deprecation = :notify
   
+  config.log_level = :info
+  
+  config.static_cache_control = "public, max-age=#{1.week.to_i}"
+  
   MandrillMailer.configure do |config|
     config.api_key = ENV['MANDRILL_APIKEY']
   end
