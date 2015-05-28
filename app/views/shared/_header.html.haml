@@ -1,8 +1,7 @@
 - if logged_in?
   .logo
-    %a{ class: "navbar-brand", href: "/" } 
-      %span #{ENV['site_name']}
-      %i.icon-coins
+    %a{ class: "navbar-brand", href: "/",  } 
+      %img{:alt => "Time Off Tokens", :src => "http://res.cloudinary.com/da6v0vrqx/image/upload/header_logo_white.png"}/
       
   .navbar.navbar-static-top
     %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
