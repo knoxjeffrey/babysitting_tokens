@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
   
     if @group.save
       UserGroup.create(user: current_user, group: @group)
-      flash[:success] = "You successfully created your request for freedom!"
+      flash[:success] = "You successfully created your babysitting circle"
       redirect_to home_path
     else
       render :new

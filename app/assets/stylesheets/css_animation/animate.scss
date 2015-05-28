@@ -401,6 +401,8 @@ Copyright (c) 2015 Daniel Eden
 .tada {
   -webkit-animation-name: tada;
   animation-name: tada;
+  -webkit-animation-delay: 1.5s; /* Chrome, Safari, Opera */
+  animation-delay: 1.5s;
 }
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
@@ -731,6 +733,8 @@ Copyright (c) 2015 Daniel Eden
 .bounceInDown {
   -webkit-animation-name: bounceInDown;
   animation-name: bounceInDown;
+  -webkit-animation-delay: 1.5s; /* Chrome, Safari, Opera */
+  animation-delay: 1.5s;
 }
 
 @-webkit-keyframes bounceInLeft {

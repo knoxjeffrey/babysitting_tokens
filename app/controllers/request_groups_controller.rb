@@ -13,7 +13,7 @@ class RequestGroupsController < ApplicationController
     set_babysitter_group
     add_tokens_to_babysitter_user_group
     credit_requester_for_unused_group_requests
-    flash[:success] = "Well done, you've given a friend freedom!"
+    flash[:success] = "Well done, you've given a friend some well deserved time off!"
     redirect_to home_path
   end
   

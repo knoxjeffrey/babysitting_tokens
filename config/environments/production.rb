@@ -7,8 +7,9 @@ BabysittingTokens::Application.configure do
 
   config.serve_static_files = true
 
-  config.assets.compress = true
   config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
+  config.assets.debug = false
 
   config.assets.compile = true
 

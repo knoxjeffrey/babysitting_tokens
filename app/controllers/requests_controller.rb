@@ -74,7 +74,7 @@ class RequestsController < ApplicationController
     deduct_tokens_from_current_user(request)
     deduct_tokens_from_original_request_groups_not_accepted(request)
     request.cancel_babysitting_agreement
-    flash[:danger] = "You have cancelled your date to babysit.  Babysitting Tokens will let the other person know"
+    flash[:danger] = "You have cancelled your date to babysit.  #{ENV['site_name']} will let the other person know"
     redirect_to my_babysitting_dates_path
   end
   
@@ -94,13 +94,13 @@ class RequestsController < ApplicationController
   # If there are enough tokens to make the request then subtract those tokens from all the groups the request was made to
   def check_if_enough_tokens_for_request
     if insufficient_tokens?
-      flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+      flash.now[:danger] = "Sorry, you don't have enough tokens in one or more groups. Please alter your selection"
       render :new
     else
       @request.save
       email_users_of_each_group_selected
       subtract_tokens_from_each_group_selected
-      flash[:success] = "You successfully created your request for freedom!"
+      flash[:success] = "You've organised some well deserved timne off!"
       redirect_to home_path
     end
   end
@@ -117,12 +117,12 @@ class RequestsController < ApplicationController
   
   def check_if_enough_tokens_for_edited_request(original_request, original_groups_in_request)
     if insufficient_tokens?
-      flash.now[:danger] = "Sorry, you don't have enough freedom tokens in one or more groups. Please alter your selection"
+      flash.now[:danger] = "Sorry, you don't have enough tokens in one or more groups. Please alter your selection"
       render :edit
       raise ActiveRecord::Rollback
     else
       reallocate_updated_request_tokens(original_request, original_groups_in_request)
-      flash[:success] = "You successfully altered your request for freedom!"
+      flash[:success] = "You successfully altered your request for time off!"
       redirect_to home_path
     end
   end
