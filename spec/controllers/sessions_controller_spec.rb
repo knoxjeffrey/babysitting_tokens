@@ -57,9 +57,6 @@ describe SessionsController do
       expect(session[:user_id]).to eq(nil)
     end
     
-    it "generates a danger flash message" do
-      expect(flash[:danger]).to be_present
-    end
     
     it "redirects to root path" do 
       expect(response).to redirect_to root_path
