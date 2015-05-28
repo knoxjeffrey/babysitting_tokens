@@ -1,11 +1,11 @@
 class MyMailer < MandrillMailer::TemplateMailer
-  default from: 'knoxjeffrey@outlook.com'
+  default from: 'info@timeofftokens.com'
 
   def notify_on_user_signup(user)
     
     mandrill_mail(
       template: 'babysitting-tokens-new-user',
-      subject: 'Welcome from Babysitting Tokens',
+      subject: 'Welcome from Time Off Tokens',
 
       to: user.email,
       vars: {
@@ -20,7 +20,7 @@ class MyMailer < MandrillMailer::TemplateMailer
     
     mandrill_mail(
       template: 'babysitting-tokens-reset-password',
-      subject: 'Reset Password For Babysitting Tokens',
+      subject: 'Reset Password For Time Off Tokens',
 
       to: user.email,
       vars: {
@@ -36,7 +36,7 @@ class MyMailer < MandrillMailer::TemplateMailer
     
     mandrill_mail(
       template: 'babysitting-tokens-friend-invite',
-      subject: "Invitation from #{group_invitation.inviter.full_name} to join a Babysitting Tokens group",
+      subject: "Invitation from #{group_invitation.inviter.full_name} to join a Time Off Tokens babysitting circle",
       
       from: group_invitation.inviter.email,
       to: group_invitation.friend_email,

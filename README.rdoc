@@ -2,5 +2,19 @@
 
 == README
 
-This is my TDD practise project for Tealeaf Academy.  It's a simple application for organising a babysitting circle amongst friends. The implementation is very basic here because it's my first solo effort at TDD and I want to just keep it simple.
+Production site: http://www.timeofftokens.com
 
+I built this site as my final coursework for the Tealeaf Academy Course - Build Robust And Production Quality Applications.
+
+The idea behind the site was to create an easy way for parents to join a babysitting circle without the hassle of handling the administration such as handling everyones details, keeping track of tokens, etc.  But the main goal was to make it easy for parents to get some time to themselves!
+
+I built several features into the application such as:
+
+* Facebook authentication
+* Avatar image upload with Cloudinary
+* Background jobs with Sidekiq
+* Sending emails using Mandrill
+* Handling forgotten passwords
+* Friend Search
+* Friend Invites
+* All the administration for adding and deducting tokens.

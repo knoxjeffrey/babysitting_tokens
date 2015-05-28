@@ -29,7 +29,6 @@
               %i.fa.fa-plus-circle
               I Need A Sitter!
         / Circles
-        %br
         %li.header CIRCLES
         - current_user.user_groups.each do |user_group|
           %li
@@ -51,5 +50,9 @@
             =link_to new_group_path, { class: "btn bg-olive btn-flat", "data-toggle" => "tooltip", :title => "Create a circle before making requests" } do
               %i.fa.fa-plus-circle
               Create New Circle
-          
-            
+        / Facebook
+        %li.header SHARE
+        %li
+          %a.btn.btn-block.btn-social.btn-facebook.btn-flat.bg-blue{:target => "_blank", :href => "https://www.facebook.com/dialog/feed?app_id=1426080944375097&link=http://www.timeofftokens.com&picture=http://woobox.com/img/v2/logo.png&name=Time%20Off%20Tokens&caption=Are%20you%20a%20parent%20and%20need%20some%20time%20off%3F&description=Time%20Off%20Tokens%20is%20an%20easy%20way%20to%20to%20setup%20a%20babysitting%20circle%2ESign%20up%20for%20free%20today%21&redirect_uri=http://www.timeofftokens.com/app/1426080944375097" }
+            %i.fa.fa-facebook
+            Tell Your Friends!
