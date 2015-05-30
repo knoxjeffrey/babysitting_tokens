@@ -100,7 +100,7 @@ class RequestsController < ApplicationController
       @request.save
       email_users_of_each_group_selected
       subtract_tokens_from_each_group_selected
-      flash[:success] = "You've organised some well deserved timne off!"
+      flash[:success] = "You've organised some well deserved time off!"
       redirect_to home_path
     end
   end
