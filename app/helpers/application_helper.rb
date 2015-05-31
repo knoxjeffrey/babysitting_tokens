@@ -26,11 +26,11 @@ module ApplicationHelper
     user = User.find_by(email: email)
     
     if user.avatar.present?
-      "http://res.cloudinary.com/da6v0vrqx/image/upload/w_#{size},h_#{size},c_fill,g_face,r_max/#{user.avatar.filename}"
+      "https://res.cloudinary.com/da6v0vrqx/image/upload/w_#{size},h_#{size},c_fill,g_face,r_max/#{user.avatar.filename}"
     elsif user.authentications.present?
-      "http://graph.facebook.com/#{user.authentications.last.uid}/picture?width=#{size}&height=#{size}"
+      "https://graph.facebook.com/#{user.authentications.last.uid}/picture?width=#{size}&height=#{size}"
     else
-      "http://res.cloudinary.com/da6v0vrqx/image/upload/w_#{size},h_#{size},c_fill,g_face,r_max/v1431133723/default_avatar_zdyioa.png"
+      "https://res.cloudinary.com/da6v0vrqx/image/upload/w_#{size},h_#{size},c_fill,g_face,r_max/v1431133723/default_avatar_zdyioa.png"
     end
   end
   
