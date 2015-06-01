@@ -2,5 +2,5 @@
 
 require ::File.expand_path('../config/environment', __FILE__)
 
-use Rack::CanonicalHost, 'timeofftokens.com' if Rails.env == "production" 
+# use Rack::CanonicalHost, 'timeofftokens.com' if Rails.env == "production" 
 run BabysittingTokens::Application
