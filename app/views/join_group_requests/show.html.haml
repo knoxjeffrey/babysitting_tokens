@@ -2,15 +2,15 @@
 %br
 .row
   .col-md-8.col-md-offset-1
-    %h1 Request To Join #{@request_to_join_group.group.group_name.capitalize}
+    %h1 Request To Join #{@join_group_request.group.group_name.capitalize}
     %br
 .row
   .col-md-4.col-md-offset-1
     .media
       %a{class: "pull-left", href: ""}
-        = image_tag(avatar_url(@request_to_join_group.requester.email, 100), class: "media-object dp img-circle", width: "100", height: "100")
+        = image_tag(avatar_url(@join_group_request.requester.email, 100), class: "media-object dp img-circle", width: "100", height: "100")
       .media-body
-        %h4{ class: "media-name" } #{ @request_to_join_group.requester.full_name }
+        %h4{ class: "media-name" } #{ @join_group_request.requester.full_name }
 
   .col-md-5
     / TABLE: Babysitting Groups
@@ -27,8 +27,8 @@
                 %th Email
             %tbody
               %tr
-                %td #{ @request_to_join_group.requester.full_name }
-                %td #{ @request_to_join_group.requester.email }
-                %td= link_to "Accept Request", "/user_groups?request_id=#{@request_to_join_group.id}", method: :post , class: "btn bg-olive btn-flat btn-xs"
+                %td #{ @join_group_request.requester.full_name }
+                %td #{ @join_group_request.requester.email }
+                %td= link_to "Accept Request", "/user_groups?request_id=#{@join_group_request.id}", method: :post , class: "btn bg-olive btn-flat btn-xs"
         / /.table-responsive
       / /.box-body    

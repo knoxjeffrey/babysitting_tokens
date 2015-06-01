@@ -15,14 +15,22 @@ class JoinGroupRequestsController < ApplicationController
   end
     
   def show
-    @request_to_join_group = JoinGroupRequest.find_by_identifier(params[:identifier])
-    redirect_to expired_identifier_path unless @request_to_join_group
+    @join_group_request = JoinGroupRequest.find_by_identifier(params[:identifier])
+    if @join_group_request
+      email_confirmation_joined_group
+    else
+      redirect_to expired_identifier_path
+    end
   end
   
   private
   
   def email_request_to_join_group
     MyMailer.delay.send_request_to_join_group(@request_to_join_group)
+  end
+  
+  def email_confirmation_joined_group
+    MyMailer.delay.send_confirmation_joined_group(@join_group_request)
   end
   
 end
