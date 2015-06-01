@@ -27,6 +27,6 @@ BabysittingTokens::Application.configure do
     config.api_key = ENV['MANDRILL_APIKEY']
   end
   
-  config.mandrill_mailer.default_url_options = { host: "babysitting-tokens.herokuapp.com" }
+  config.mandrill_mailer.default_url_options = { host: "timeofftokens.com" }
   
 end
