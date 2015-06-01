@@ -68,6 +68,22 @@ class MyMailer < MandrillMailer::TemplateMailer
      )
   end
   
+  def send_confirmation_joined_group(join_group_request)
+    
+    mandrill_mail(
+      template: 'babysitting-tokens-confirmation-joined-group',
+      subject: "You have been accepted to #{join_group_request.group.group_name}",
+
+      to: join_group_request.requester.email,
+      vars: {
+        'REQUESTER_NAME' => join_group_request.requester.full_name,
+        'GROUP_NAME' => join_group_request.group.group_name
+      },
+      important: true,
+      inline_css: true,
+     )
+  end
+  
   def notify_user_that_babysitter_canceled(request)
     
     babysitter = User.find(request.babysitter_id)

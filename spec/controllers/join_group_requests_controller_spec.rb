@@ -97,7 +97,7 @@ describe JoinGroupRequestsController do
         it "sets @request_to_join_group to the correct identifier record" do
           request = object_generator(:join_group_request, requester_id: requester.id, group_member_id: current_user.id, group_id: group.id)
           get :show, identifier: request.identifier
-          expect(assigns(:request_to_join_group).identifier).to eq(request.identifier)
+          expect(assigns(:join_group_request).identifier).to eq(request.identifier)
         end
       end
       
