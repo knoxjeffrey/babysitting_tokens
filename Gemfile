@@ -21,6 +21,7 @@ gem 'omniauth-facebook'
 gem "font-awesome-rails"
 gem 'carrierwave'
 gem 'cloudinary'
+gem 'rack-canonical-host'
 
 group :development do
   gem 'thin'
