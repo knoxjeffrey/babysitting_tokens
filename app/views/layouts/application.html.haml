@@ -8,6 +8,7 @@
     = csrf_meta_tag
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
+    = render 'shared/heatmap'
   %body{:class => "skin-blue #{ yield :body_class }", "data-spy" => "scroll", "data-target" => ".scroll-section"}
     #fb-root
     = render 'shared/facebook_sdk'
