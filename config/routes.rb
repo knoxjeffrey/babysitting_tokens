@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'authentications#create' #omniauth route
 
   get '/new_group', to: 'groups#new'
-  resources :groups, only: [:create, :show] do
+  resources :groups, only: [:index, :create, :show] do
     member do
       get '/invite_friend', to: 'group_invitations#new'
       post '/invite_friend', to: 'group_invitations#create'

@@ -1,6 +1,10 @@
 class GroupsController < ApplicationController
   before_action :require_user
   
+  def index
+    @groups = current_user.groups
+  end
+  
   def new
     @group = Group.new
   end

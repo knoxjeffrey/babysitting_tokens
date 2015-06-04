@@ -32,13 +32,18 @@
         %li.header CIRCLES
         - current_user.user_groups.each do |user_group|
           %li
-            =link_to group_path(user_group.group) do
+            =link_to group_path(user_group.group), class: "btn bg-olive btn-flat" do
               %i.fa.icon-coins.text-warning
               #{user_group.group.group_name}
               %small.label.pull-right.bg-yellow{"data-toggle" => "tooltip", :title => "You have #{user_group.tokens} tokens"}
                 = user_group.tokens
+        %br
         %li
           -if current_user.groups.present?
+            =link_to groups_path, class: "btn bg-olive btn-flat" do
+              %i.fa.fa-users
+              Invite Friends
+            %br
             =link_to new_group_path, class: "btn bg-olive btn-flat" do
               %i.fa.fa-plus-circle
               Create New Circle
