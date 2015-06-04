@@ -1,0 +1,30 @@
+%br  
+%br
+.row
+  .col-md-8.col-md-offset-1
+    %header
+      %h1 Your Babysitting Circles
+    %br
+.row              
+  .col-md-8.col-md-offset-1
+    / TABLE: Babysitting Groups
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Choose A Circle To Invite A Friend To
+      / /.box-header
+      .box-body
+        .table-responsive
+          %table.table.no-margin
+            %thead
+              %tr
+                %th Circle Name
+                %th Circle Location
+                %th
+            %tbody
+              - @groups.each do |group|
+                %tr
+                  %td #{ group.group_name }
+                  %td #{ group.location }
+                  %td=link_to 'Invite A Friend To This Circle', invite_friend_group_path(group.id), class: "btn bg-olive btn-flat btn-sm"
+        / /.table-responsive
+      / /.box-body
