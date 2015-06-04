@@ -2,6 +2,32 @@ require 'spec_helper'
 
 describe GroupsController do
   
+  describe "GET index" do
+    
+    before { set_current_user_session }
+    
+    context "with authenticated user" do
+      let!(:group1) { object_generator(:group, admin: current_user) }
+      let!(:group_member1) { object_generator(:user_group, user: current_user, group: group1) }
+      let!(:group2) { object_generator(:group, admin: current_user) }
+      let!(:group_member2) { object_generator(:user_group, user: current_user, group: group2) }
+      
+      it "assigns @groups" do
+        get :index
+        expect(assigns(:groups)).to match_array([group1, group2])
+      end
+      
+    end
+    
+    context "with unauthenticated user" do
+      it_behaves_like "require_sign_in" do
+        let(:action) { get :index }
+      end
+    end
+    
+  end
+    
+    
   describe "GET new" do
     context "with authenticated user" do
       it "assigns @group" do
