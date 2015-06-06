@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about'
   get '/privacy', to: 'pages#privacy'
   
-  get '/night_out', to: 'pages#night_out'
+  get '/have_fun', to: 'pages#have_fun'
   get '/dinner_without_kids', to: 'pages#dinner_without_kids'
   
   root to: 'pages#dinner_without_kids'
