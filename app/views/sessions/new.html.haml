@@ -1,14 +1,10 @@
 - body_class "sidebar-collapse"
 - content_wrapper_class "welcome"
 .login-box
-  .login-logo
-    %a{ href: "/" }
-      %b
-        %span #{ENV['site_name']}
-        %i.icon-coins
-  / /.login-logo
   .login-box-body
-    %p.login-box-msg Sign in to #{ENV['site_name']}
+    %p.login-box-msg
+      %a{ href: "/",  } 
+        %img.login-register-logo{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
     = bootstrap_form_tag url: '/sign_in' do |f|
       .form-group.has-feedback
         = f.email_field :email, icon: "glyphicon glyphicon-envelope form-control-feedback"
@@ -22,7 +18,8 @@
       %p - OR -
       %a.btn.btn-block.btn-social.btn-facebook.btn-flat{:href => "auth/facebook"}
         %i.fa.fa-facebook
-        Sign in using Facebook
+        .text-center
+          Sign in using Facebook
     = link_to "I forgot my password", forgot_password_path
   / /.login-box-body
 / /.login-box

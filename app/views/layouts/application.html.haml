@@ -10,6 +10,7 @@
     = javascript_include_tag "application"
     / %script{:src => "//cdn.optimizely.com/js/2982480358.js"}
   %body{:class => "skin-blue #{ yield :body_class }", "data-spy" => "scroll", "data-target" => ".scroll-section"}
+    = render 'shared/tag_manager'
     #fb-root
     = render 'shared/facebook_sdk'
     .wrapper
