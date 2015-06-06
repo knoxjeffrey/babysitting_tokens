@@ -1,0 +1,29 @@
+!!! 5
+%html(lang="en-US")
+  %head
+    %title #{ENV['site_name']}
+    %meta(charset="UTF-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    = favicon_link_tag 'favicon.png'
+    = csrf_meta_tag
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+  %body
+    .container-fixed
+      = render 'shared/messages'
+    .night_out
+    .list-of-benefits
+    %footer
+      .pull-right.hidden-xs
+        &copy 2015 #{ENV['site_name']}
+      =link_to "Home", home_path
+      \/
+      =link_to "Instructions", instructions_path
+      \/
+      =link_to "About", about_path
+      \/
+      =link_to "Privacy", privacy_path
+    = render 'shared/cookie_choices'
+    = render 'shared/google_analytics'
+    :javascript
+      riveted.init();

@@ -1,0 +1,82 @@
+!!! 5
+%html(lang="en-US")
+  %head
+    %title #{ENV['site_name']}
+    %meta(charset="UTF-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    = favicon_link_tag 'favicon.png'
+    = csrf_meta_tag
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application"
+  %body
+    .dinner_without_kids
+      .col-lg-12
+        .logo
+          %a{ class: "navbar-brand", href: "/",  } 
+            %img{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
+        .pull-right.navbar-login
+          =link_to 'Login', sign_in_path, class: "btn bg-blue btn-flat btn-md"
+        .row
+          .jumbotron-landing
+            .row
+              %h1 Want a meal without the kids? Arrange for friends to babysit while you have some fun!
+            %br
+              %br
+              %br
+              .row  
+                %p 
+                  =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg"
+      .row.landing-bottom
+        .col-lg-12
+          .text-center
+            %a.landing-scroll{:href => "#benefits"} 
+              %i.fa.fa-arrow-circle-o-down.animated.bounceInDown
+              
+    .list-of-benefits#benefits
+      .row
+        .signup-steps
+          .col-lg-12
+            .row
+              .landing-columns.col-sm-4
+                .signup-icons
+                  %i.fa.fa-sign-in
+                .row
+                  %h2 Create a FREE account
+                  %h5 It only takes a few seconds to create your free account.
+              .landing-columns.col-sm-4
+                .signup-icons
+                  %i.fa.fa.fa-users
+                .row
+                  %h2 Find your friend circles
+                  %h5 Simply search for friends and request to join their circle. Or, create your own circle and invite friends. Don't worry, circles are private to you and your friends.
+              .landing-columns.col-sm-4
+                .signup-icons
+                  %i.fa.fa-comments
+                .row
+                  %h2 Arrange time off
+                  %h5 Make requests to friends for babysitting and enjoy some well deserved time off.
+              %br
+              %br
+    .easy-life
+      .row
+        .col-lg-12
+          %h1 Time Off Tokens keeps track of all the babystitting dates for you and your friends. Using tokens ensures that everyone does their fair share. Less admin, more time off for you!
+          %br
+          .row
+            =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
+            =link_to 'More Info', instructions_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"  
+    
+    %footer.landing-footer
+      .pull-right.hidden-xs
+        &copy 2015 #{ENV['site_name']}
+      =link_to "Home", home_path
+      \/
+      =link_to "Instructions", instructions_path
+      \/
+      =link_to "About", about_path
+      \/
+      =link_to "Privacy", privacy_path
+    = render 'shared/cookie_choices'
+    = render 'shared/google_analytics'
+    :javascript
+      riveted.init();
