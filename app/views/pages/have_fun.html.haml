@@ -9,7 +9,7 @@
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
   %body
-    .dinner_without_kids
+    .night_out
       .col-lg-12
         .logo
           %a{ class: "navbar-brand", href: "/",  } 
@@ -19,8 +19,13 @@
         .row
           .jumbotron-landing
             %br
-              %h1 Fancy a meal without the kids? 
-              %h1 Arrange for friends to babysit while you have some fun!
+            %br
+            %br
+              %h1 
+                Let your 
+                %u friends 
+                watch the kids, while you have 
+                %u fun
             %br
               %br
               .row  
@@ -29,42 +34,44 @@
       .row.landing-bottom
         .col-lg-12
           .text-center
-            %a.landing-scroll{:href => "#benefits"} 
+            %a.landing-scroll{:href => "#easy"} 
               %i.fa.fa-arrow-circle-o-down.animated.bounceInDown
-              
-    .list-of-benefits#benefits
+    
+    .easy-life#easy
+      .row
+        .col-lg-12
+          %h1 Time Off Tokens is a free and private space for you to share babysitting duties with friends.
+          %h1 You babysit for friends and they repay the favour. Time Off Tokens keeps track of everything for you.
+          %h1 Simple!
+                      
+    .list-of-benefits
       .row
         .signup-steps
           .col-lg-12
+            %h1 Finding a friend to babysit is as easy as 1, 2, 3
+            %br
+            %br
             .row
               .landing-columns.col-sm-4
+                .row
+                  %h2 (1) Create a FREE account
                 .signup-icons
                   %i.fa.fa-sign-in
-                .row
-                  %h2 Create a FREE account
-                  %h5 It only takes a few seconds to create your free account.
               .landing-columns.col-sm-4
+                .row
+                  %h2 (2) Find your friend circles
                 .signup-icons
                   %i.fa.fa.fa-users
-                .row
-                  %h2 Find your friend circles
-                  %h5 Simply search for friends and request to join their circle. Or, create your own circle and invite friends. Don't worry, circles are private to you and your friends.
               .landing-columns.col-sm-4
+                .row
+                  %h2 (3) Arrange time off
                 .signup-icons
                   %i.fa.fa-comments
-                .row
-                  %h2 Arrange time off
-                  %h5 Make requests to friends for babysitting and enjoy some well deserved time off.
               %br
+            .row
               %br
-    .easy-life
-      .row
-        .col-lg-12
-          %h1 Time Off Tokens keeps track of all the babystitting dates for you and your friends. Using tokens ensures that everyone does their fair share. Less admin, more time off for you!
-          %br
-          .row
-            =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
-            =link_to 'More Info', instructions_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"  
+              =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
+              =link_to 'More Info', instructions_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
     
     %footer.landing-footer
       .pull-right.hidden-xs

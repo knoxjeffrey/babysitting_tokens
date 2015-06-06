@@ -12,7 +12,7 @@ class PagesController < ApplicationController
   
   def privacy; end
   
-  def night_out
+  def have_fun
     if logged_in?
       redirect_to home_path 
     else

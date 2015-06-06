@@ -30,7 +30,7 @@
   height: 100%;
   width: 100%;
 	  /* Location of the image */
-    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out_small.jpg');
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out_fun.jpg');
   
 	  /* Background image is centered vertically and horizontally at all times */
 	  background-position: center center;
@@ -107,17 +107,19 @@
 }
 
 .jumbotron-landing {
+  margin-left: 5%;
+  width: 90%;
   padding: 30px 15px;
   margin-bottom: 30px;
   color: #fff;
   background-color: none;
   text-align: center;
   position: relative;
-  transform: translateY(15%);
-  -ms-transform: translateY(15%);
-  -webkit-transform: translateY(15%);
-  -o-transform: translateY(15%);
-  -moz-transform: translateY(15%);
+  transform: translateY(3%);
+  -ms-transform: translateY(3%);
+  -webkit-transform: translateY(3%);
+  -o-transform: translateY(3%);
+  -moz-transform: translateY(3%);
 }
 
 .jumbotron-landing h1,
@@ -165,8 +167,8 @@
   max-width: 100%;
 }
 
-.landing-logo {
-  width: 100%;
+img.landing-logo {
+  height: 40px;
 }
 
 a.landing-scroll {
@@ -175,14 +177,18 @@ a.landing-scroll {
 
 @media screen and (min-width: 600px) {
   
+  img.landing-logo {
+    height: 80px;
+  }
+  
   .jumbotron-landing {
     margin-left: 10%;
     width: 80%;
-    transform: translateY(30%);
-    -ms-transform: translateY(30%);
-    -webkit-transform: translateY(30%);
-    -o-transform: translateY(30%);
-    -moz-transform: translateY(30%);
+    transform: translateY(25%);
+    -ms-transform: translateY(25%);
+    -webkit-transform: translateY(25%);
+    -o-transform: translateY(25%);
+    -moz-transform: translateY(25%);
   }
   .container .jumbotron-landing,
   .container-fluid .jumbotron-landing {
@@ -239,7 +245,7 @@ a.landing-scroll {
     height: 100%;
     width: 100%;
   	  /* Location of the image */
-      background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out.jpg');
+      background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out_fun.jpg');
   
   	  /* Background image is centered vertically and horizontally at all times */
   	  background-position: center center;
@@ -265,7 +271,7 @@ a.landing-scroll {
     height: 100%;
     width: 100%;
   	  /* Location of the image */
-      background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/baby_dropping_food.jpg');
+      background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/baby_dropping_food.jpg');
   
   	  /* Background image is centered vertically and horizontally at all times */
   	  background-position: center center;
@@ -288,11 +294,11 @@ a.landing-scroll {
     .jumbotron-landing {
       margin-left: 10%;
       width: 80%;
-      transform: translateY(50%);
-      -ms-transform: translateY(50%);
-      -webkit-transform: translateY(50%);
-      -o-transform: translateY(50%);
-      -moz-transform: translateY(50%);
+      transform: translateY(35%);
+      -ms-transform: translateY(35%);
+      -webkit-transform: translateY(35%);
+      -o-transform: translateY(35%);
+      -moz-transform: translateY(35%);
     }
     .container .jumbotron-landing,
     .container-fluid .jumbotron-landing {
