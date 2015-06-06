@@ -41,8 +41,7 @@
       .row
         .col-lg-12
           %h1 Time Off Tokens is a free and private space for you to share babysitting duties with friends.
-          %h1 You babysit for friends and they repay the favour. Time Off Tokens keeps track of everything for you.
-          %h1 Simple!
+          %h3 You babysit for friends and they repay the favour. Time Off Tokens keeps track of everything for you. Simple!
                       
     .list-of-benefits
       .row
@@ -54,24 +53,39 @@
             .row
               .landing-columns.col-sm-4
                 .row
-                  %h2 (1) Create a FREE account
+                  %h2
+                    .number-circle
+                      1
+                  %br
+                  %h2
+                    Create a FREE account
                 .signup-icons
                   %i.fa.fa-sign-in
               .landing-columns.col-sm-4
                 .row
-                  %h2 (2) Find your friend circles
+                  %h2 
+                    .number-circle
+                      2
+                  %br
+                  %h2
+                    Find your friend circles
                 .signup-icons
                   %i.fa.fa.fa-users
               .landing-columns.col-sm-4
                 .row
-                  %h2 (3) Arrange time off
+                  %h2 
+                    .number-circle
+                      3
+                  %br
+                  %h2
+                    Arrange time off
                 .signup-icons
                   %i.fa.fa-comments
               %br
             .row
               %br
               =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
-              =link_to 'More Info', instructions_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
+              =link_to 'Find out more', instructions_path, class: "btn btn-default btn-flat btn-lg landing-btn-margin"
     
     %footer.landing-footer
       .pull-right.hidden-xs

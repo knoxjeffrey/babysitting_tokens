@@ -76,6 +76,26 @@
   
 }
 
+.only-friends {
+  background: #3C8DBC;
+  padding-top: 75px;
+  padding-bottom: 75px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.all-free {
+  background: #EB6E96;
+  padding-top: 75px;
+  padding-bottom: 75px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  color: #fff;
+}
+
 .list-of-benefits {
   width: 100%;
   background: #3C8DBC;
@@ -175,6 +195,16 @@ a.landing-scroll {
   font-size: 0px;
 }
 
+.number-circle {
+  margin-left: 45%;
+  width:50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 45px;
+  text-align: center;
+  border-style: solid;
+}
+
 @media screen and (min-width: 600px) {
   
   img.landing-logo {
@@ -207,7 +237,7 @@ a.landing-scroll {
   }
 
   a.landing-scroll {
-    font-size: 50px;
+    font-size: 70px;
     color: #fff;
   }
   

@@ -29,9 +29,41 @@
       .row.landing-bottom
         .col-lg-12
           .text-center
-            %a.landing-scroll{:href => "#benefits"} 
+            %a.landing-scroll{:href => "#friends"} 
               %i.fa.fa-arrow-circle-o-down.animated.bounceInDown
-              
+    
+    .only-friends#friends  
+      .row
+        .col-lg-12
+          .landing-columns.col-sm-3
+            .signup-icons
+              %i.fa.fa-lock
+          %br
+          .col-md-9
+            %h1 Private babysitting circles
+            %br
+            %h4 
+              %u Your circles 
+              are for 
+              %u your friends. 
+              No one else. Only people you invite or accept can be part of your circle so you know exactly who is looking after your kids.
+        %br
+        %br
+    
+    .all-free
+      .row
+        .col-lg-12
+          .col-md-9
+            %h1 More money in the piggy bank
+            %br
+            %br
+            %h4 Why pay for a babysitter? Money is always tight when you have children.  Friends babysitting for each other is not only free but your kids also know who is looking after them which gives you peace of mind.
+          %br
+          .landing-columns.col-sm-3
+            .signup-icons
+              %i.glyphicon.glyphicon-piggy-bank
+        %br
+          
     .list-of-benefits#benefits
       .row
         .signup-steps
@@ -60,11 +92,11 @@
     .easy-life
       .row
         .col-lg-12
-          %h1 Time Off Tokens keeps track of all the babystitting dates for you and your friends. Using tokens ensures that everyone does their fair share. Less admin, more time off for you!
+          %h2 Time Off Tokens keeps track of all the babystitting dates for you and your friends. Using tokens ensures that everyone does their fair share. Less admin, more time off for you!
           %br
           .row
             =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
-            =link_to 'More Info', instructions_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"  
+            =link_to 'Find out more', instructions_path, class: "btn btn-default btn-flat btn-lg landing-btn-margin"  
     
     %footer.landing-footer
       .pull-right.hidden-xs
