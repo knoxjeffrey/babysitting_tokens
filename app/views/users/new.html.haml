@@ -1,13 +1,10 @@
 - body_class "sidebar-collapse"
 - content_wrapper_class "welcome"
 .register-box
-  .register-logo
-    %a{ href: "/" }
-      %b
-        %span #{ENV['site_name']}
-        %i.icon-coins
   .register-box-body
-    %p.login-box-msg Register a new membership
+    %p.login-box-msg
+      %a{ href: "/",  } 
+        %img.login-register-logo{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
     = bootstrap_form_for @user, url: register_path do |f|
       .form-group.has-feedback
         = f.email_field :email,  icon: "glyphicon glyphicon-envelope form-control-feedback"
@@ -24,5 +21,6 @@
       %p - OR -
       %a.btn.btn-block.btn-social.btn-facebook.btn-flat{:href => "#{root_url}auth/facebook?from=registration&invite=#{@group_invitation_identifier}"}
         %i.fa.fa-facebook
-        Register using Facebook
+        .text-center
+          Register using Facebook
 / /.register-box
