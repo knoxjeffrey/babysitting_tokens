@@ -1,5 +1,10 @@
+.navbar-login {
+  padding: 10px 5px;
+}
+
 .welcome {
   height: 100%;
+  width: 100%;
 	  /* Location of the image */
     background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/cover_image_bocsg6.jpg');
   
@@ -9,17 +14,120 @@
 	  /* Background image doesn't tile */
 	  background-repeat: no-repeat;
   
-	  /* Background image is fixed in the viewport so that it doesn't move when 
-	     the content's height is greater than the image's height */
-	  background-attachment: fixed;
-  
 	  /* This is what makes the background image rescale based
 	     on the container's size */
-	  background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   
 	  /* Set a background color that will be displayed
 	     while the background image is loading */
 	  background-color: #fff;
+}
+
+.night_out {
+  height: 100%;
+  width: 100%;
+	  /* Location of the image */
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out_small.jpg');
+  
+	  /* Background image is centered vertically and horizontally at all times */
+	  background-position: center center;
+  
+	  /* Background image doesn't tile */
+	  background-repeat: no-repeat;
+  
+	  /* This is what makes the background image rescale based
+	     on the container's size */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  
+	  /* Set a background color that will be displayed
+	     while the background image is loading */
+	  background-color: #fff;
+  
+}
+
+.dinner_without_kids {
+  height: 100%;
+  width: 100%;
+	  /* Location of the image */
+    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/baby_dropping_food_small.jpg');
+  
+	  /* Background image is centered vertically and horizontally at all times */
+	  background-position: center center;
+  
+	  /* Background image doesn't tile */
+	  background-repeat: no-repeat;
+  
+	  /* This is what makes the background image rescale based
+	     on the container's size */
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+  
+	  /* Set a background color that will be displayed
+	     while the background image is loading */
+	  background-color: #fff;
+  
+}
+
+.list-of-benefits {
+  width: 100%;
+  background: #3C8DBC;
+  text-align: center;
+  padding-top: 75px;
+  padding-bottom: 75px;
+}
+
+.easy-life {
+  background: #EB6E96;
+  padding-top: 75px;
+  padding-bottom: 75px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.easy-life h1 {
+  font-size: 25px;
+}
+
+.landing-btn-margin {
+  margin-top: 20px;
+}
+
+.landing-footer {
+  margin: 20px;
+}
+
+.jumbotron-landing {
+  padding: 30px 15px;
+  margin-bottom: 30px;
+  color: #fff;
+  background-color: none;
+  text-align: center;
+  position: relative;
+  transform: translateY(15%);
+  -ms-transform: translateY(15%);
+  -webkit-transform: translateY(15%);
+  -o-transform: translateY(15%);
+  -moz-transform: translateY(15%);
+}
+
+.jumbotron-landing h1,
+.jumbotron-landing .h1 {
+  color: inherit;
+  font-size: 30px;
+}
+
+.jumbotron-landing > hr {
+  border-top-color: #cfd9db;
 }
 
 .opacity {
@@ -60,11 +168,61 @@
 .landing-logo {
   width: 100%;
 }
-@media screen and (min-width: 768px) {
-  .jumbotron-altered {
-    padding: 48px 20px;
-    
+
+a.landing-scroll {
+  font-size: 0px;
+}
+
+@media screen and (min-width: 600px) {
+  
+  .jumbotron-landing {
+    margin-left: 10%;
+    width: 80%;
+    transform: translateY(30%);
+    -ms-transform: translateY(30%);
+    -webkit-transform: translateY(30%);
+    -o-transform: translateY(30%);
+    -moz-transform: translateY(30%);
   }
+  .container .jumbotron-landing,
+  .container-fluid .jumbotron-landing {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .jumbotron-landing h1,
+  .jumbotron-landing .h1 {
+    font-size: 50px;
+  }
+  
+  .landing-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 48%;
+  }
+
+  a.landing-scroll {
+    font-size: 50px;
+    color: #fff;
+  }
+  
+  .easy-life {
+    background: #EB6E96;
+    padding-top: 75px;
+    padding-bottom: 75px;
+    padding-left: 75px;
+    padding-right: 75px;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .easy-life h1 {
+    font-size: 36px;
+  }
+  
+}
+
+@media screen and (min-width: 768px) {
+  
   .container .jumbotron-altered,
   .container-fluid .jumbotron-altered {
     padding-left: 60px;
@@ -74,4 +232,75 @@
   .jumbotron-altered .h1 {
     font-size: 50px;
   }
+}
+
+@media screen and (min-width: 991px) {
+  .night_out {
+    height: 100%;
+    width: 100%;
+  	  /* Location of the image */
+      background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out.jpg');
+  
+  	  /* Background image is centered vertically and horizontally at all times */
+  	  background-position: center center;
+  
+  	  /* Background image doesn't tile */
+  	  background-repeat: no-repeat;
+  
+  	  /* This is what makes the background image rescale based
+  	     on the container's size */
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+  
+  	  /* Set a background color that will be displayed
+  	     while the background image is loading */
+  	  background-color: #fff;
+  
+  }
+  
+  
+  .dinner_without_kids {
+    height: 100%;
+    width: 100%;
+  	  /* Location of the image */
+      background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/baby_dropping_food.jpg');
+  
+  	  /* Background image is centered vertically and horizontally at all times */
+  	  background-position: center center;
+  
+  	  /* Background image doesn't tile */
+  	  background-repeat: no-repeat;
+  
+  	  /* This is what makes the background image rescale based
+  	     on the container's size */
+      background-size: cover;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+  
+  	  /* Set a background color that will be displayed
+  	     while the background image is loading */
+  	  background-color: #fff;
+    }
+    
+    .jumbotron-landing {
+      margin-left: 10%;
+      width: 80%;
+      transform: translateY(50%);
+      -ms-transform: translateY(50%);
+      -webkit-transform: translateY(50%);
+      -o-transform: translateY(50%);
+      -moz-transform: translateY(50%);
+    }
+    .container .jumbotron-landing,
+    .container-fluid .jumbotron-landing {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+    .jumbotron-landing h1,
+    .jumbotron-landing .h1 {
+      font-size: 50px;
+    }
 }
