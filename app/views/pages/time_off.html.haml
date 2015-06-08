@@ -24,10 +24,13 @@
             %br
               %br
               .row  
-                %p
-                  .animated.bounce
-                    %a.btn.bg-olive.btn-flat.landing-btn-lg.read-more-scroll{:href => "#friends"} 
-                      Click to read more
+                %p 
+                  =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat landing-btn-lg"
+      .row.landing-bottom
+        .col-lg-12
+          .text-center
+            %a.landing-scroll{:href => "#friends"} 
+              %i.fa.fa-arrow-circle-o-down.animated.bounceInDown
 
     .only-friends#friends  
       .row
