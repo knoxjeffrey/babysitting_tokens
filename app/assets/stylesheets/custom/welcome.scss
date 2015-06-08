@@ -5,8 +5,14 @@
 .welcome {
   height: 100%;
   width: 100%;
+	background-color: #3C8DBC;
+}
+
+.time_off {
+  height: 100%;
+  width: 100%;
 	  /* Location of the image */
-    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/cover_image_bocsg6.jpg');
+    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/time_off_small.jpg');
   
 	  /* Background image is centered vertically and horizontally at all times */
 	  background-position: center center;
@@ -16,64 +22,48 @@
   
 	  /* This is what makes the background image rescale based
 	     on the container's size */
+    background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
   
 	  /* Set a background color that will be displayed
 	     while the background image is loading */
 	  background-color: #fff;
 }
 
-.night_out {
-  height: 100%;
-  width: 100%;
-	  /* Location of the image */
-    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out_fun.jpg');
-  
-	  /* Background image is centered vertically and horizontally at all times */
-	  background-position: center center;
-  
-	  /* Background image doesn't tile */
-	  background-repeat: no-repeat;
-  
-	  /* This is what makes the background image rescale based
-	     on the container's size */
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  
-	  /* Set a background color that will be displayed
-	     while the background image is loading */
-	  background-color: #fff;
-  
+.landing-font {
+  font-family: 'Myriad Pro Regular';
 }
 
-.dinner_without_kids {
-  height: 100%;
-  width: 100%;
-	  /* Location of the image */
-    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/baby_dropping_food_small.jpg');
-  
-	  /* Background image is centered vertically and horizontally at all times */
-	  background-position: center center;
-  
-	  /* Background image doesn't tile */
-	  background-repeat: no-repeat;
-  
-	  /* This is what makes the background image rescale based
-	     on the container's size */
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-  
-	  /* Set a background color that will be displayed
-	     while the background image is loading */
-	  background-color: #fff;
-  
+.landing-font .landing-grey p,
+.landing-font .landing-grey .p {
+  color: #333;
+}
+
+.landing-font h1,
+.landing-font .h1 {
+  font-size: 35px;
+}
+
+.landing-font h2,
+.landing-font .h2 {
+  font-size: 25px;
+}
+
+.landing-font h3,
+.landing-font .h3 {
+  font-size: 20px;
+}
+
+.landing-font h4,
+.landing-font .h4 {
+  font-size: 18px;
+}
+
+.landing-font h5,
+.landing-font .h5 {
+  font-size: 15px;
 }
 
 .only-friends {
@@ -114,12 +104,12 @@
   color: #fff;
 }
 
-.easy-life h1 {
-  font-size: 25px;
-}
-
 .landing-btn-margin {
   margin-top: 20px;
+}
+
+.landing-btn-lg {
+  font-size: 25px;
 }
 
 .landing-footer {
@@ -135,17 +125,11 @@
   background-color: none;
   text-align: center;
   position: relative;
-  transform: translateY(3%);
-  -ms-transform: translateY(3%);
-  -webkit-transform: translateY(3%);
-  -o-transform: translateY(3%);
-  -moz-transform: translateY(3%);
-}
-
-.jumbotron-landing h1,
-.jumbotron-landing .h1 {
-  color: inherit;
-  font-size: 30px;
+  transform: translateY(8%);
+  -ms-transform: translateY(8%);
+  -webkit-transform: translateY(8%);
+  -o-transform: translateY(8%);
+  -moz-transform: translateY(8%);
 }
 
 .jumbotron-landing > hr {
@@ -200,9 +184,47 @@ a.landing-scroll {
   width:50px;
   height: 50px;
   border-radius: 50%;
-  line-height: 45px;
+  line-height: 50px;
   text-align: center;
   border-style: solid;
+}
+
+.signup-steps {
+  color: #fff;
+}
+
+.signup-icons {
+  font-size: 80px;
+  color: #fff;
+}
+
+.landing-columns.col-sm-4 {
+  margin-top: 30px;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.intro-section {
+  padding-top: 50px;
+  text-align: center;
+
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.benefits-section {
+  padding-top: 100px;
+  text-align: center;
+  background: #3C8DBC;
+}
+
+.full-page {
+  padding: 0px;
+}
+
+a.page-scroll {
+  font-size: 0px;
 }
 
 @media screen and (min-width: 600px) {
@@ -214,20 +236,16 @@ a.landing-scroll {
   .jumbotron-landing {
     margin-left: 10%;
     width: 80%;
-    transform: translateY(25%);
-    -ms-transform: translateY(25%);
-    -webkit-transform: translateY(25%);
-    -o-transform: translateY(25%);
-    -moz-transform: translateY(25%);
+    transform: translateY(35%);
+    -ms-transform: translateY(35%);
+    -webkit-transform: translateY(35%);
+    -o-transform: translateY(35%);
+    -moz-transform: translateY(35%);
   }
   .container .jumbotron-landing,
   .container-fluid .jumbotron-landing {
     padding-left: 60px;
     padding-right: 60px;
-  }
-  .jumbotron-landing h1,
-  .jumbotron-landing .h1 {
-    font-size: 50px;
   }
   
   .landing-bottom {
@@ -251,8 +269,29 @@ a.landing-scroll {
     color: #fff;
   }
   
-  .easy-life h1 {
-    font-size: 36px;
+  .landing-font h1,
+  .landing-font .h1 {
+    font-size: 60px;
+  }
+
+  .landing-font h2,
+  .landing-font .h2 {
+    font-size: 40px;
+  }
+
+  .landing-font h3,
+  .landing-font .h3 {
+    font-size: 30px;
+  }
+
+  .landing-font h4,
+  .landing-font .h4 {
+    font-size: 25px;
+  }
+
+  .landing-font h5,
+  .landing-font .h5 {
+    font-size: 18px;
   }
   
 }
@@ -268,75 +307,118 @@ a.landing-scroll {
   .jumbotron-altered .h1 {
     font-size: 50px;
   }
+  
+  .landing-font h1,
+  .landing-font .h1 {
+    font-size: 70px;
+  }
+
+  .landing-font h2,
+  .landing-font .h2 {
+    font-size: 50px;
+  }
+
+  .landing-font h3,
+  .landing-font .h3 {
+    font-size: 30px;
+  }
+
+  .landing-font h4,
+  .landing-font .h4 {
+    font-size: 25px;
+  }
+
+  .landing-font h5,
+  .landing-font .h5 {
+    font-size: 18px;
+  }
+  
+  .signup-icons {
+    font-size: 150px;
+    color: #fff;
+  }
+  
 }
 
 @media screen and (min-width: 991px) {
-  .night_out {
-    height: 100%;
-    width: 100%;
-  	  /* Location of the image */
-      background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/night_out_fun.jpg');
   
-  	  /* Background image is centered vertically and horizontally at all times */
-  	  background-position: center center;
+    .time_off {
+      height: 100%;
+      width: 100%;
+    	  /* Location of the image */
+        background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/time_off.jpg');
   
-  	  /* Background image doesn't tile */
-  	  background-repeat: no-repeat;
+    	  /* Background image is centered vertically and horizontally at all times */
+    	  background-position: center center;
   
-  	  /* This is what makes the background image rescale based
-  	     on the container's size */
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
+    	  /* Background image doesn't tile */
+    	  background-repeat: no-repeat;
   
-  	  /* Set a background color that will be displayed
-  	     while the background image is loading */
-  	  background-color: #fff;
+    	  /* This is what makes the background image rescale based
+    	     on the container's size */
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
   
-  }
-  
-  
-  .dinner_without_kids {
-    height: 100%;
-    width: 100%;
-  	  /* Location of the image */
-      background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2) ), url('https://res.cloudinary.com/da6v0vrqx/image/upload/baby_dropping_food.jpg');
-  
-  	  /* Background image is centered vertically and horizontally at all times */
-  	  background-position: center center;
-  
-  	  /* Background image doesn't tile */
-  	  background-repeat: no-repeat;
-  
-  	  /* This is what makes the background image rescale based
-  	     on the container's size */
-      background-size: cover;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-  
-  	  /* Set a background color that will be displayed
-  	     while the background image is loading */
-  	  background-color: #fff;
+    	  /* Set a background color that will be displayed
+    	     while the background image is loading */
+    	  background-color: #fff;
     }
     
     .jumbotron-landing {
       margin-left: 10%;
       width: 80%;
-      transform: translateY(35%);
-      -ms-transform: translateY(35%);
-      -webkit-transform: translateY(35%);
-      -o-transform: translateY(35%);
-      -moz-transform: translateY(35%);
+      transform: translateY(55%);
+      -ms-transform: translateY(55%);
+      -webkit-transform: translateY(55%);
+      -o-transform: translateY(55%);
+      -moz-transform: translateY(55%);
     }
     .container .jumbotron-landing,
     .container-fluid .jumbotron-landing {
       padding-left: 60px;
       padding-right: 60px;
     }
-    .jumbotron-landing h1,
-    .jumbotron-landing .h1 {
+    
+    .landing-font h1,
+    .landing-font .h1 {
+      font-size: 70px;
+    }
+
+    .landing-font h2,
+    .landing-font .h2 {
       font-size: 50px;
     }
+
+    .landing-font h3,
+    .landing-font .h3 {
+      font-size: 30px;
+    }
+
+    .landing-font h4,
+    .landing-font .h4 {
+      font-size: 25px;
+    }
+
+    .landing-font h5,
+    .landing-font .h5 {
+      font-size: 18px;
+    }
+    
+    .intro-section {
+      height: 100vh;
+    }
+  
+    .benefits-section {
+      height: 100vh;
+    }
+  
+    a.page-scroll {
+      font-size: 50px;
+      color: #fff;
+      position: relative;
+      bottom: 180px;
+    }
+    
 }

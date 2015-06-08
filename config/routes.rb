@@ -49,10 +49,11 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about'
   get '/privacy', to: 'pages#privacy'
   
-  get '/have_fun', to: 'pages#have_fun'
-  get '/dinner_without_kids', to: 'pages#dinner_without_kids'
+  # get '/have_fun', to: 'pages#have_fun'
+  # get '/dinner_without_kids', to: 'pages#dinner_without_kids'
+  get '/time_off', to: 'pages#time_off'
   
-  root to: 'pages#dinner_without_kids'
+  root to: 'pages#index'
   
   resources :user_groups, only: [:create]
   

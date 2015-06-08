@@ -1,7 +1,11 @@
 class PagesController < ApplicationController
   
   def index
-    redirect_to home_path if logged_in?
+    if logged_in?
+      redirect_to home_path 
+    else
+      render :layout => false
+    end
   end
   
   def expired_identifier; end
@@ -21,6 +25,14 @@ class PagesController < ApplicationController
   end
   
   def dinner_without_kids
+    if logged_in?
+      redirect_to home_path 
+    else
+      render :layout => false
+    end
+  end
+  
+  def time_off
     if logged_in?
       redirect_to home_path 
     else
