@@ -1,19 +1,23 @@
 - body_class "sidebar-collapse"
 - content_wrapper_class "welcome"
 %section
-  .container
-    .jumbotron-altered
-      %h1 About
-      %br
-      %p #{ENV['site_name']} is a really simple way to bring a group of friends together to create a babysitting circle.   Rather than have to keep track of people, dates and tokens yourself, #{ENV['site_name']} will do all of the administrative work for you.  After all, the whole idea of a babysititng circle is to give you time off and not create more work for you.  You've got enough on your plate already!
-      %br
+  .landing-font
+    .container
+      .jumbotron-altered
+        %h2 About
+        %br
+        .landing-grey
+          %p #{ENV['site_name']} is a really simple way to bring a group of friends together to create a babysitting circle.   Rather than have to keep track of people, dates and tokens yourself, #{ENV['site_name']} will do all of the administrative work for you.  After all, the whole idea of a babysititng circle is to give you time off and not create more work for you.  You've got enough on your plate already!
+        %br
   
-      %h2 Why
-      %p I'm the proud father of two young children and I love them to bits but because my wife and I don't have any family close by, we struggle to organise time to spend together as a couple.  We've started to get some friends togther that are in a similar situation to help each other out by looking after one anothers children to allow us all to have some much needed time together as couples!  #{ENV['site_name']} is just a really simple way to organise all of the dates and my hope is that it will encourage us to organise more dates because being busy parents, time just seems to disappear!
-      %br 
+        %h2 Why
+        .landing-grey
+          %p I'm the proud father of two young children and I love them to bits but because my wife and I don't have any family close by, we struggle to organise time to spend together as a couple.  We've started to get some friends togther that are in a similar situation to help each other out by looking after one anothers children to allow us all to have some much needed time together as couples!  #{ENV['site_name']} is just a really simple way to organise all of the dates and my hope is that it will encourage us to organise more dates because being busy parents, time just seems to disappear!
+        %br 
   
-      %h2 About Me
-      %p As mentioned above I am married with two young children and we're based in Edinburgh, Scotland.  I'm a web developer and thought this would be a fun project for me to build a site for friends to use.  With any luck, others will enjoy using the site as well!  I'm keen to hear any feedback you have so feel free to drop me an email:
-      %p
-        %a{:href => "mailto:knoxjeffrey@outlook.com", :target => "_top"} Send Mail
-      %br
+        %h2 About Me
+        .landing-grey
+          %p As mentioned above I am married with two young children and we're based in Edinburgh, Scotland.  I'm a web developer and thought this would be a fun project for me to build a site for friends to use.  With any luck, others will enjoy using the site as well!  I'm keen to hear any feedback you have so feel free to drop me an email:
+        %p
+          %a{:href => "mailto:info@timeofftokens.com", :target => "_top"} Send Mail
+        %br
