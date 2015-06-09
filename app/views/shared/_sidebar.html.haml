@@ -32,7 +32,7 @@
         %li.header CIRCLES
         - current_user.user_groups.each do |user_group|
           %li
-            =link_to group_path(user_group.group), class: "btn bg-olive btn-flat" do
+            =link_to group_path(user_group.group), class: "btn bg-olive btn-flat", style: "white-space: normal;" do
               %i.fa.icon-coins.text-warning
               #{user_group.group.group_name}
               %small.label.pull-right.bg-yellow{"data-toggle" => "tooltip", :title => "You have #{user_group.tokens} tokens"}
