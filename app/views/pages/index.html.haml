@@ -15,6 +15,7 @@
             %img.landing-logo{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
         .pull-right.navbar-login
           =link_to 'Login', sign_in_path, class: "btn bg-blue btn-flat btn-md"
+          =link_to 'Register', register_path, class: "btn bg-blue btn-flat btn-md button-fixed"
         .row
           .jumbotron-landing
             %br
@@ -106,7 +107,7 @@
           %h2 Time Off Tokens keeps track of all the babystitting dates for you and your friends. Using tokens ensures that everyone does their fair share. Less admin, more time off for you!
           %br
           .row
-            =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin"
+            =link_to 'Create your FREE account', register_path, class: "btn bg-olive btn-flat btn-lg landing-btn-margin hide-button"
             =link_to 'Find out more', instructions_path, class: "btn btn-default btn-flat btn-lg landing-btn-margin"  
     
     %footer.landing-footer
