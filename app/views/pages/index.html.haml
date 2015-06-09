@@ -7,7 +7,6 @@
     = favicon_link_tag 'favicon.png'
     = csrf_meta_tag
     = stylesheet_link_tag "application"
-    = javascript_include_tag "application"
   %body.landing-font
     .time_off
       .col-lg-12
@@ -120,5 +119,6 @@
       =link_to "About", about_path
       \/
       =link_to "Privacy", privacy_path
+    = javascript_include_tag "application"    
     = render 'shared/cookie_choices'
     = render 'shared/google_analytics'
