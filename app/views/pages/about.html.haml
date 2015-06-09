@@ -4,8 +4,10 @@
   .landing-font
     .container
       .jumbotron-altered
+        .text-center
+          %a{ href: "/",  } 
+            %img.login-register-logo{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
         %h2 About
-        %br
         .landing-grey
           %p #{ENV['site_name']} is a really simple way to bring a group of friends together to create a babysitting circle.   Rather than have to keep track of people, dates and tokens yourself, #{ENV['site_name']} will do all of the administrative work for you.  After all, the whole idea of a babysititng circle is to give you time off and not create more work for you.  You've got enough on your plate already!
         %br
