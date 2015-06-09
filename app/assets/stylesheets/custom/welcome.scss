@@ -1,5 +1,18 @@
 .navbar-login {
   padding: 10px 5px;
+  width: 140px;
+}
+
+.button-fixed {
+  position: fixed;
+  margin-left: 5px;
+  z-index: 1000;
+}
+
+.button-fixed-show-on-scroll {
+  position: fixed;
+  margin-left: 5px;
+  visibility: hidden;
 }
 
 .welcome {
