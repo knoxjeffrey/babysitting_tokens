@@ -4,6 +4,10 @@
   .landing-font
     .container
       .jumbotron-altered
+        .text-center
+          %a{ href: "/",  } 
+            %img.login-register-logo{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
+            
         %h1 Privacy Policy
         %br
   
@@ -13,12 +17,13 @@
   
         %h3 What do we use your information for?
         .landing-grey
-          %p - To track visits for Google Analytics to help us understand how visitors use the website
-          %p - To personalise your experience
-          %p - To improve the website
-          %p - To improve customer service
-          %p - To process requests for babysittng
-          %p - To send periodic emails such as letting you know when a friend has made a request for a babysitter
+          %ul
+            %li To track visits for Google Analytics to help us understand how visitors use the website
+            %li To personalise your experience
+            %li To improve the website
+            %li To improve customer service
+            %li To process requests for babysittng
+            %li To send periodic emails such as letting you know when a friend has made a request for a babysitter
   
         %h3 How do we protect your information?
         .landing-grey

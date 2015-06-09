@@ -4,18 +4,21 @@
   .landing-font
     .container
       .jumbotron-altered
-        %h1 #{ENV['site_name']} Instructions
+        .text-center
+          %a{ href: "/",  } 
+            %img.login-register-logo{:alt => "Time Off Tokens", :src => "https://res.cloudinary.com/da6v0vrqx/image/upload/logo_landing.png"}/
+        %h1 Instructions
         %br
         .landing-grey
           %p This site is designed to make your life easier by keeping track of the dates you are babysititng for friends and when they are babysitting for you.  Below are some simple instructions for how to use the site:
-  
-          %p - Register as a new user
-          %p - You have to either create a new babysitting circle or search for friends and request to join their circle
-          %p - When you are a member of a circle, you can send invites to other friends to join your circle
-          %p - You can be a member of as many circles as you like
-          %p - Now you can make requests for your friends to babysit for you.  Go on, have some time off!
-          %p - Token rules are pretty simple, 1 hour = 1 token and when you become a member of a group you automatically get 20 tokens
-          %p - For every hour you babysit for a friend you earn 1 token and for every hour a friend babysits for you, you are deducted 1 token. 
+          %ul
+            %li Register as a new user
+            %li You have to either create a new babysitting circle or search for friends and request to join their circle
+            %li When you are a member of a circle, you can send invites to other friends to join your circle
+            %li You can be a member of as many circles as you like
+            %li Now you can make requests for your friends to babysit for you.  Go on, have some time off!
+            %li Token rules are pretty simple, 1 hour = 1 token and when you become a member of a group you automatically get 20 tokens
+            %li For every hour you babysit for a friend you earn 1 token and for every hour a friend babysits for you, you are deducted 1 token. 
   
         %p That's pretty much it! Sign up now and organise a day off or a night out!
         %br
