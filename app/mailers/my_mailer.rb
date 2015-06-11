@@ -38,7 +38,7 @@ class MyMailer < MandrillMailer::TemplateMailer
       template: 'babysitting-tokens-friend-invite',
       subject: "Invitation from #{group_invitation.inviter.full_name} to join a Time Off Tokens babysitting circle",
       
-      from: group_invitation.inviter.email,
+      # from: group_invitation.inviter.email,
       to: group_invitation.friend_email,
       vars: {
         'INVITER_NAME' => group_invitation.inviter.full_name,
@@ -56,7 +56,7 @@ class MyMailer < MandrillMailer::TemplateMailer
       template: 'babysitting-tokens-request-to-join-group',
       subject: "Request by #{request_to_join_group.requester.full_name} to your group #{request_to_join_group.group.group_name}",
       
-      from: request_to_join_group.requester.email,
+      # from: request_to_join_group.requester.email,
       to: request_to_join_group.group_member.email,
       vars: {
         'REQUESTER_NAME' => request_to_join_group.requester.full_name,
@@ -91,7 +91,7 @@ class MyMailer < MandrillMailer::TemplateMailer
       template: 'babysitting-tokens-cancel-babysitting-agreement',
       subject: "#{babysitter.full_name} has had to cancel their date to babysit for you",
       
-      from: babysitter.email,
+      # from: babysitter.email,
       to: request.user.email,
       vars: {
         'BABYSITTER_NAME' => babysitter.full_name,
@@ -109,7 +109,7 @@ class MyMailer < MandrillMailer::TemplateMailer
       template: 'babysitting-tokens-request-a-sitter',
       subject: "#{request.user.full_name} needs a babysitter!",
       
-      from: request.user.email,
+      # from: request.user.email,
       to: user_group_email_and_name_array_of_hashes,
       vars: {
         'REQUESTER_NAME' => request.user.full_name,
