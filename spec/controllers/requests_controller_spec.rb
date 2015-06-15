@@ -321,6 +321,64 @@ describe RequestsController do
     
   end
   
+  describe "GET show" do
+    
+    context "with authenticated user" do
+      
+      context "that created the request" do
+        
+        before { set_current_user_session }
+      
+        let!(:friend_user) { object_generator(:user) }
+        let!(:group) { object_generator(:group, admin: current_user) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
+        let!(:request) { object_generator(:request, user: current_user, group_ids: group.id) }
+      
+        it "only shows the requests the current user is babysitting for" do
+          get :show, id: request.id
+          expect(assigns(:request)).to eq(request)
+          expect(assigns(:request)).to be_instance_of(Request)
+        end
+        
+      end
+        
+      context "that did not create the request" do
+        
+        before { set_current_user_session }
+      
+        let!(:friend_user) { object_generator(:user) }
+        let!(:group) { object_generator(:group, admin: current_user) }
+        let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+        let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
+        let!(:request) { object_generator(:request, user: friend_user, group_ids: group.id) }
+        
+        it "redirects to home_path" do
+          get :show, id: request.id
+          expect(request).to redirect_to home_path
+        end
+        
+        it "generates a danger flash message" do
+          get :show, id: request.id
+          expect(flash[:danger]).to be_present
+        end
+      end
+
+    end
+    
+    context "with unauthenticated user" do
+      
+      let!(:friend_user) { object_generator(:user) }
+      let!(:group) { object_generator(:group, admin: friend_user) }
+      let!(:group_member) { object_generator(:user_group, user: friend_user, group: group) }
+      let!(:request) { object_generator(:request, user: friend_user, group_ids: group.id) }
+      
+      it_behaves_like "require_sign_in" do
+        let(:action) { get :show, id: request.id }
+      end
+    end
+  end
+  
   describe "GET edit" do
     
     context "with authenticated user" do
@@ -331,7 +389,7 @@ describe RequestsController do
       let!(:group) { object_generator(:group, admin: current_user) }
       let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
       let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
-      let!(:request) { object_generator(:request, user: friend_user, group_ids: group.id) }
+      let!(:request) { object_generator(:request, user: current_user, group_ids: group.id) }
       
       it "only shows the requests the current user is babysitting for" do
         get :edit, id: request.id

@@ -1,0 +1,98 @@
+%br  
+%br
+.row
+  .col-md-8.col-md-offset-1
+    = bootstrap_form_for @request, url: update_my_request_path(@request), method: :put do |f|
+      %header
+        %span
+          %h1 
+            %i.fa.fa-comment-o
+            Your Request For A Babysitter
+%br
+.row              
+  .col-md-10.col-md-offset-1
+    / TABLE: Babysitting Groups
+    .box.box-primary
+      .box-header.with-border
+        %h3.box-title Request Information
+      / /.box-header
+      .box-body
+        .table-responsive
+          %table.table.no-margin
+            %thead
+              %tr
+                %th Start
+                %th Finish
+                %th Request Made To
+            %tbody
+              %tr
+                %td= display_friendly_date_and_time(@request.start)
+                %td= display_friendly_date_and_time(@request.finish)
+                - @request.groups.each do |group|
+                  %td.badge.bg-blue.request-group-badge= group.group_name
+        / /.table-responsive
+      / /.box-body
+
+- if @request.status == 'accepted'
+  %br
+  .row              
+    .col-md-10.col-md-offset-1
+      .alert.alert-success
+        %h4
+          %i.icon.fa.fa-check
+          = @request.babysitter_name
+          is babysitting for you!
+%br
+.col-md-5.col-md-offset-1
+  .row
+    - if @request.status == 'waiting'
+      =link_to edit_my_request_path(@request), class: "btn bg-olive btn-flat btn-lg" do
+        Edit
+    =link_to request_path(@request), method: 'delete', class: "btn bg-olive btn-flat btn-lg", :data => {:confirm => 'Are you sure?'} do
+      Delete
+%br
+%br
+- if @request.status == 'waiting'
+  .row
+    %br
+    %br
+      .col-lg-5.col-lg-offset-1.col-md-10.col-md-offset-1
+        / Custom Tabs
+        .nav-tabs-custom
+          %ul.nav.nav-tabs
+            %li.active
+              %a{"data-toggle" => "tab", :href => "#tab_1"} Yet To Respond
+            %li
+              %a{"data-toggle" => "tab", :href => "#tab_2"} Declined
+          .tab-content
+            #tab_1.tab-pane.active
+              / USERS LIST
+              .box.box-primary
+                / /.box-header
+                .box-body.no-padding
+                  %ul.users-list.clearfix
+                    - @no_reply.each do |user|
+                      %li
+                        %img{:alt => "User Image", :src => avatar_url(user.email, 150), "data-toggle" => "tooltip", :title => "#{user.full_name}"}/
+                        %a{ :href => user_path(user) }
+                          .users-list-name #{ user.full_name }
+                  / /.users-list
+                / /.box-body
+            / /.tab-pane
+            #tab_2.tab-pane
+              / USERS LIST
+              .box.box-primary
+                / /.box-header
+                .box-body.no-padding
+                  %ul.users-list.clearfix
+                    - @request.friends_declined.each do |friend|
+                      %li
+                        %img{:alt => "User Image", :src => avatar_url(friend.email, 150), "data-toggle" => "tooltip", :title => "#{friend.full_name}"}/
+                        %a{ :href => user_path(friend) }
+                          .users-list-name #{ friend.full_name }
+                  / /.users-list
+                / /.box-body
+            / /.tab-pane
+          / /.tab-content
+        / nav-tabs-custom
+      / /.col

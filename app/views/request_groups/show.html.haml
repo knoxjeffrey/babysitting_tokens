@@ -35,6 +35,9 @@
                 %td #{ @request_group.tokens_for_babysitter }
       
           %br
-          .col-lg-2             
-            = button_to "Accept", {controller: :request_groups, action: :update}, {:method => :put, class: "btn bg-olive btn-flat btn-lg" }
+          .col-md-12
+            .row
+              = link_to "Accept", {controller: :request_groups, action: :update, decision: "accepted"}, {:method => :put, class: "btn bg-olive btn-flat btn-lg" }
+              - if !@request_group.has_request_been_declined(current_user)
+                = link_to "Decline", {controller: :request_groups, action: :update, decision: "declined"}, {:method => :put, class: "btn bg-olive btn-flat btn-lg" }
           %br

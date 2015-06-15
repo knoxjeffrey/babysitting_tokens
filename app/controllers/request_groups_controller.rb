@@ -8,17 +8,27 @@ class RequestGroupsController < ApplicationController
   
   def update
     @request_group = RequestGroup.find(params[:id])
-    update_status
-    set_babysitter
-    set_babysitter_group
-    add_tokens_to_babysitter_user_group
-    credit_requester_for_unused_group_requests
-    flash[:success] = "Well done, you've given a friend some well deserved time off!"
-    redirect_to home_path
+    decision = params[:decision]
+    
+    if decision == "accepted"
+      update_status
+      set_babysitter
+      set_babysitter_group
+      add_tokens_to_babysitter_user_group
+      credit_requester_for_unused_group_requests
+      flash[:success] = "Well done, you've given a friend some well deserved time off!"
+      redirect_to home_path
+    elsif decision == "declined"
+      update_request_decision
+      redirect_to home_path
+    end
   end
   
   private
   
+  def update_request_decision
+    DeclinedRequest.add_decision_entry(@request_group.request, current_user, @request_group.group)
+  end
   # request status is changed from waiting to accepted when another group member accepts the users babysitting request
   def update_status
     @request_group.request.change_status_to_accepted

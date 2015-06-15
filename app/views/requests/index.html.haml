@@ -35,64 +35,48 @@
     / /. tools
     %i.fa.fa-comment-o
     %h3.box-title
-      Babysitting Requests
+      Friend Requests
   .box-body
     / Small boxes (Friend request box)
+    .row
+      .col-md-12
+        .label.label-warning.friend-request-label
+          Awaiting Response
+        .label.label-danger.friend-request-label
+          Declined
+    %br
     .row
       - @friend_request_groups.each do |request_group|
         .col-lg-3.col-xs-6
           / small box
-          .small-box.bg-aqua
-            .inner
-              %h4= request_group.request.full_name
-              %p= request_group.group.group_name
-              %p= display_friendly_date(request_group.request.start)
-            .icon
-              %i.fa.fa-user
-            =link_to request_group_path(request_group), class: "small-box-footer" do
-              Click For Details 
-              %i.fa.fa-arrow-circle-right
+          - if request_group.has_request_been_declined(current_user)
+            .small-box.bg-red
+              = render 'friend_request_info', request_group: request_group
+          - else
+            .small-box.bg-yellow
+              = render 'friend_request_info', request_group: request_group
       
 .row                 
   .col-md-12
     / TABLE: Friends Babysitting
     .box.box-primary
       .box-header.with-border
-        %h3.box-title Friends Babysitting For You
+        %h3.box-title Your Requests
         .box-tools.pull-right
           %button.btn.btn-primary.btn-sm.pull-right{"data-toggle" => "tooltip", "data-widget" => "collapse", :style => "margin-right: 5px;", :title => "Collapse"}
             %i.fa.fa-minus
       / /.box-header
       .box-body
-        .table-responsive
-          %table.table.no-margin
-            %thead
-              %tr
-                %th Start
-                %th Finish
-                %th Babysitter
-                %th Status
-                %th 
-                %th
-            %tbody
-              - @user_requests.each do |user_request|
-                %tr
-                  %td= display_friendly_date_and_time(user_request.start)
-                  %td= display_friendly_date_and_time(user_request.finish)
-                  %td= user_request.babysitter_name
-                  - if user_request.status == 'waiting'
-                    %td
-                      %span.label.label-warning Waiting
-                    %td
-                      =link_to edit_my_request_path(user_request), id: 'edit_icon', "data-toggle" => "tooltip", :title => "Edit Your Request" do
-                        %i.scroll.fa.fa-pencil
-                  - else
-                    %td
-                      %span.label.label-success Accepted
-                    %td
-                  %td
-                    =link_to request_path(user_request), method: 'delete', id: 'delete_icon', "data-toggle" => "tooltip", :title => "Delete Your Request", :data => {:confirm => 'Are you sure?'} do
-                      %i.fa.fa-times
-        / /.table-responsive
-      / /.box-body
-  / /.col
+        / Small boxes (Friend request box)
+        .row
+          - @user_requests.each do |user_request|
+            .col-lg-3.col-xs-6
+              / small box
+              .small-box.bg-aqua
+                .inner
+                  %h4.text-center= display_friendly_date_and_time(user_request.start)
+                  %p.text-center until
+                  %h4.text-center= display_friendly_date_and_time(user_request.finish)
+                =link_to show_my_request_path(user_request), class: "small-box-footer" do
+                  Click For Details 
+                  %i.fa.fa-arrow-circle-right
