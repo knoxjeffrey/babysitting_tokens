@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :user_groups
   has_many :groups, -> { order group_name: :asc }, through: :user_groups
   has_many :authentications
+  has_many :declined_requests
   
   validates :email, presence: true, uniqueness: true
   validates :password, on: :create, presence: true, length: {minimum: 5}
