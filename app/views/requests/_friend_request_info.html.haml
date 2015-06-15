@@ -1,0 +1,9 @@
+.inner
+  %h4= request_group.request.full_name
+  %p= request_group.group.group_name
+  %p= display_friendly_date(request_group.request.start)
+.icon
+  %i.fa.fa-user
+=link_to request_group_path(request_group), class: "small-box-footer" do
+  Click For Details 
+  %i.fa.fa-arrow-circle-right

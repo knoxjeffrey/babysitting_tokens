@@ -20,6 +20,16 @@ class RequestsController < ApplicationController
     end
   end
   
+  def show
+    @request = Request.find(params[:id])
+    @no_reply = friends_that_have_not_declined
+
+    if @request.user != current_user
+      flash[:danger] = "You do not have permission to do that"
+      redirect_to home_path
+    end
+  end
+  
   def edit
     @request = Request.find(params[:id])
   end
@@ -103,6 +113,10 @@ class RequestsController < ApplicationController
       flash[:success] = "You've organised some well deserved time off!"
       redirect_to home_path
     end
+  end
+  
+  def friends_that_have_not_declined
+    @request.friends_not_declined(current_user)
   end
   
   # Only persit the update if all paramaters are valid

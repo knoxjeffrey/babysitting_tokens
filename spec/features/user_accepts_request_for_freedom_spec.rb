@@ -29,7 +29,7 @@ feature "user accepts date for freedom" do
   end
   
   def press_accept_button
-    click_button "Accept"
+    click_link "Accept"
   end
   
   def expect_current_path_to_be_home_path

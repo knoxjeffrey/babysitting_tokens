@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/home', to: 'requests#index'
   get '/my_request', to: 'requests#new'
   post '/my_request', to: 'requests#create'
+  get '/my_request/:id', to: 'requests#show', as: :show_my_request
   get '/edit_my_request/:id', to: 'requests#edit', as: :edit_my_request
   put '/edit_my_request/:id', to: 'requests#update', as: :update_my_request
   get '/my_babysitting_dates', to: 'requests#my_babysitting_dates'

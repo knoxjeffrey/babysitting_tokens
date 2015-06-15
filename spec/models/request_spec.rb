@@ -140,8 +140,8 @@ describe Request do
     let!(:current_user) { object_generator(:user) }
     let!(:friend_user) { object_generator(:user) }
     let!(:group) { object_generator(:group) }
-    let!(:group_member) { object_generator(:user_group, user: current_user, group: group) }
-    let!(:group_member) { object_generator(:user_group, user: friend_user, group: group) }
+    let!(:group_member1) { object_generator(:user_group, user: current_user, group: group) }
+    let!(:group_member2) { object_generator(:user_group, user: friend_user, group: group) }
     let!(:request) { object_generator(:request, user: friend_user, babysitter_id: current_user.id, group_ids: group.id, group: group, status: 'accepted' ) }
     
     it "sets the babysitter_id to nil" do
@@ -158,6 +158,51 @@ describe Request do
       request.cancel_babysitting_agreement
       expect(request.status).to eq('waiting')
     end
+  end
+  
+  describe :friends_not_declined do
+    let!(:current_user) { object_generator(:user) }
+    let!(:friend_user1) { object_generator(:user) }
+    let!(:friend_user2) { object_generator(:user) }
+    let!(:friend_user3) { object_generator(:user) }
+    let!(:group1) { object_generator(:group) }
+    let!(:group2) { object_generator(:group) }
+    let!(:group_member1) { object_generator(:user_group, user: current_user, group: group1) }
+    let!(:group_member2) { object_generator(:user_group, user: friend_user1, group: group1) }
+    let!(:group_member3) { object_generator(:user_group, user: friend_user2, group: group1) }
+    let!(:group_member4) { object_generator(:user_group, user: current_user, group: group2) }
+    let!(:group_member5) { object_generator(:user_group, user: friend_user1, group: group2) }
+    let!(:group_member5) { object_generator(:user_group, user: friend_user3, group: group2) }
+    let!(:request) { object_generator(:request, user: current_user, group_ids: [group1.id, group2.id]) }
+    let!(:declined) {object_generator(:declined_request, request: request, user: friend_user3, group: group2)}
+    
+    it "returns an array of friends excluding those that have not declined" do
+      expect(request.friends_not_declined(current_user)).to eq([friend_user1, friend_user2])
+    end
+    
+  end
+  
+  describe :friends_declined do
+    let!(:current_user) { object_generator(:user) }
+    let!(:friend_user1) { object_generator(:user) }
+    let!(:group1) { object_generator(:group) }
+    let!(:group2) { object_generator(:group) }
+    let!(:group_member1) { object_generator(:user_group, user: current_user, group: group1) }
+    let!(:group_member2) { object_generator(:user_group, user: friend_user1, group: group1) }
+    let!(:group_member3) { object_generator(:user_group, user: current_user, group: group2) }
+    let!(:group_member4) { object_generator(:user_group, user: friend_user1, group: group2) }
+    let!(:request) { object_generator(:request, user: current_user, group_ids: [group1.id, group2.id]) }
+    let!(:declined) {object_generator(:declined_request, request: request, user: friend_user1, group: group1)}
+    let!(:declined) {object_generator(:declined_request, request: request, user: friend_user1, group: group2)}
+    
+    it "does not return multiple records of the same user" do
+      expect(request.friends_declined).not_to eq([friend_user1, friend_user1])
+    end
+    
+    it "returns a unique array of friends that have declined a request" do
+      expect(request.friends_declined).to eq([friend_user1])
+    end
+    
   end
   
 end

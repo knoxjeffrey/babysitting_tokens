@@ -12,6 +12,7 @@ feature "user alters nights of freedom" do
     request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 21:00:00", user: user, group_ids: group.id)
     
     sign_in_user(user)
+    click_link "Click For Details"
     expect_to_see_edit_and_delete_buttons
     edit_request
   end
@@ -20,23 +21,23 @@ feature "user alters nights of freedom" do
     request = object_generator(:request, start: "2030-03-17 19:00:00", finish: "2030-03-17 21:00:00", status: 'accepted', user: user, group_ids: group.id, babysitter_id: friend.id, group_id: group.id)
     
     sign_in_user(user)
+    click_link "Click For Details"
     expect_to_see_only_delete_button
     delete_request
   end
   
   def expect_to_see_edit_and_delete_buttons
-    expect(page).to have_css('i.fa.fa-pencil')
-    expect(page).to have_css('i.fa.fa-times')
+    expect(page).to have_link("Edit", exact: true)
+    expect(page).to have_link('Delete')
   end
   
   def expect_to_see_only_delete_button
-    expect(page).not_to have_css('i.fa.fa-pencil')
-    expect(page).to have_css('i.fa.fa-times')
-    expect(page).to have_content("#{friend.full_name}")
+    expect(page).not_to have_link("Edit", exact: true)
+    expect(page).to have_link('Delete')
   end
   
   def edit_request
-    click_link 'edit_icon'
+    click_link 'Edit'
     fill_in 'datetimepicker1', with: "2030-03-17 19:00:00"
     fill_in 'datetimepicker2', with: "2030-03-17 23:00:00"
     click_button "Update Request"
@@ -45,7 +46,7 @@ feature "user alters nights of freedom" do
   end
   
   def delete_request
-    click_link 'delete_icon'
+    click_link 'Delete'
     expect(page).not_to have_content("Mar 17th, 2030")
     expect(page).to have_content('22') # to represent the tokens being reallocated to the current user due to cancelation
   end

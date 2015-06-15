@@ -6,6 +6,7 @@ class Request < ActiveRecord::Base
   
   has_many :request_groups, dependent: :destroy
   has_many :groups, through: :request_groups
+  has_many :declined_requests
   
   validates :start, presence: true
   validates :finish, presence: true
@@ -87,6 +88,29 @@ class Request < ActiveRecord::Base
       user_group_email_and_name_array_of_hashes = user_group_records.map { |user_group| { email: user_group.user.email, name: user_group.user.full_name } }
       MyMailer.delay.notify_users_of_request(user_group_email_and_name_array_of_hashes, self)
     end
+  end
+  
+  # A request is made out to a chosen list of groups. The list of friends in these groups that have not declined is returned
+  def friends_not_declined(current_user)
+    friends_in_group = []
+    
+    self.groups.each do |group|
+      friends_in_group << group.friends_in_group(current_user)
+    end
+    friends_in_group.flatten!.uniq! 
+    
+    friends_in_group - self.friends_declined
+  end
+  
+  # A request is made out to a chosen list of groups. The list of friends in these groups that have declined is returned
+  def friends_declined
+    friends_already_declined = []
+    
+    self.declined_requests.each do |decision|
+      friends_already_declined << decision.user
+    end
+    friends_already_declined.uniq! 
+    friends_already_declined
   end
   
   private
