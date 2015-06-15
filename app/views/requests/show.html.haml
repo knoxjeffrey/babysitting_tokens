@@ -46,9 +46,9 @@
 .col-md-5.col-md-offset-1
   .row
     - if @request.status == 'waiting'
-      =link_to edit_my_request_path(@request), class: "btn bg-olive btn-flat btn-lg" do
+      =link_to edit_my_request_path(@request), class: "btn bg-olive btn-flat btn-lg accept-decline-button" do
         Edit
-    =link_to request_path(@request), method: 'delete', class: "btn bg-olive btn-flat btn-lg", :data => {:confirm => 'Are you sure?'} do
+    =link_to request_path(@request), method: 'delete', class: "btn bg-olive btn-flat btn-lg accept-decline-button", :data => {:confirm => 'Are you sure?'} do
       Delete
 %br
 %br
